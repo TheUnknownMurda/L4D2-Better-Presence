@@ -1,179 +1,170 @@
-# Résultats de la reconnaissance — Left 4 Dead 2
+# Findings — Left 4 Dead 2
 
-Chaque entrée : date, ce qui a été mesuré, la preuve (commande ou fichier).
-« Non vérifié » = pas encore mesuré sur le PC de Sam.
+What was measured, when, and the proof (command, file or recording). "Not verified" = not measured on Sam's PC yet.
+Raw recordings live in `recordings/` (not versioned); anonymised cuts are in `tests/fixtures/`
+(`python tools/make_fixtures.py`).
 
-## Installation (vérifié sur le PC le 2026-10-14)
+## Install (verified on the PC, 2026-10-14)
 
-| Info | Valeur | Preuve |
+| Item | Value | Proof |
 |---|---|---|
-| Boutique | Steam, appid `550` | `steamapps/appmanifest_550.acf` |
-| Dossier | `C:\Program Files (x86)\Steam\steamapps\common\Left 4 Dead 2` | idem, `installdir` |
-| Exécutable | `left4dead2.exe` (racine du dossier) | `ls` du dossier |
-| Version | `PatchVersion=2.2.4.3`, `NetworkVersion=2.1.0.0`, buildid `23990068` | `left4dead2/steam.inf`, manifeste |
-| Moteur | Source (branche L4D2), 32 bits, `bin/engine.dll`, `bin/vscript.dll`, rendu `shaderapivk.dll`/`dxvk_d3d9.dll` présents | `ls bin` |
-| Langue du jeu | `french` | manifeste (`UserConfig.language`), registre `HKCU\Software\Valve\Steam\Language` |
-| Compte Steam | `<SteamID64>` (dossier `userdata/<account id>`) | manifeste `LastOwner` |
-| Options de lancement | **`-netconport 27015`** (déjà présentes, origine inconnue) | `userdata/<account id>/config/localconfig.vdf`, bloc `550` |
-| Addons actifs | `mwrmovement.vpk` (mod Melty « Modern Warfare 4 Dead »), workshop `2646883501`, `278735311` | `left4dead2/addonlist.txt` |
-| Fichiers écrits en jouant | `cfg/config.cfg` (réglages), `save/game_instructor_counts.txt`, `serverconfig.vdf` (`z_difficulty "normal"`), `ems/mwrmove/*` (écrits par le mod Melty) | dates de modification du 2026-10-09 |
-| Anti-triche | VAC (multijoueur Valve) — **aucune injection, aucun mod client, aucune lecture mémoire** | règle du projet |
+| Store | Steam, appid `550` | `steamapps/appmanifest_550.acf` |
+| Folder | `C:\Program Files (x86)\Steam\steamapps\common\Left 4 Dead 2` | manifest `installdir` |
+| Executable | `left4dead2.exe` (folder root) | `ls` |
+| Version | `PatchVersion=2.2.4.3`, `NetworkVersion=2.1.0.0`, buildid `23990068`, `Exe build: 11:44:59 Jun 30 2026 (10097)` | `left4dead2/steam.inf`, manifest, console `version` |
+| Engine | Source (L4D2 branch), 32-bit, `bin/engine.dll`, `bin/vscript.dll` | `ls bin` |
+| Game language | `french` | manifest `UserConfig.language`, registry `HKCU\Software\Valve\Steam\Language`, cvar `cl_language` |
+| Steam account | `userdata/<account id>` | manifest `LastOwner` |
+| Anti-cheat | VAC (Valve multiplayer) → no injection, no client mod, no memory reading | project rule |
+| Add-ons | `mwrmovement.vpk` (Melty mod "Modern Warfare 4 Dead", VScript), workshop `2646883501`, `278735311` | `left4dead2/addonlist.txt` |
+| Files written while playing | `cfg/config.cfg`, `save/game_instructor_counts.txt`, `serverconfig.vdf` (`z_difficulty "normal"`) | timestamps |
 
-Pas de `console.log` (l'option `-condebug` n'est pas active), pas d'`autoexec.cfg`.
+Launch options found at the start: `-netconport 27015` (origin unknown). No `console.log`, no `autoexec.cfg`.
 
-## Discord (vérifié le 2026-10-14)
+## Discord (verified 2026-10-14)
 
-`GET https://discord.com/api/v9/applications/detectable` (12,9 Mo, HTTP 200) :
+`GET https://discord.com/api/v9/applications/detectable` (12.9 MB, HTTP 200):
+- **Left 4 Dead 2**: application `356954277803065354`, executables `left 4 dead 2/left4dead2.exe` and
+  `left4dead2.exe` (arguments `-game left4dead2`), `bin/l4d2_workshop_manager.exe`, Steam SKU `550`.
+- Left 4 Dead (1): `425749516583698432`.
+- No native Rich Presence for L4D2 (no `rpc_origins`); no L4D2 Rich Presence project found on GitHub.
 
-- **Left 4 Dead 2** : ID d'application `356954277803065354`, exécutables
-  `left 4 dead 2/left4dead2.exe` et `left4dead2.exe` (arguments `-game left4dead2`),
-  `bin/l4d2_workshop_manager.exe`, SKU Steam `550`, `hook: true`, `overlay: true`.
-- Left 4 Dead (1) : `425749516583698432`, `left4dead.exe`.
+Discord on the PC: **Discord Canary** desktop app (`%LOCALAPPDATA%\DiscordCanary\app-1.0.1228`), pipe
+`\\.\pipe\discord-ipc-0`. The account seen through the pipe changed during the session ("account A" at 18:05,
+"account B" from 18:09): Canary's account switcher; the card goes to the active account.
 
-Discord installé : **Discord Canary** (`%LOCALAPPDATA%\DiscordCanary\app-1.0.1228`), application de bureau, donc l'IPC local est disponible.
+## Process and window (verified 2026-10-14)
 
-Rich Presence native de L4D2 dans Discord : non vérifié (lancer le jeu et regarder le profil).
+- Command line: `"…\left4dead2.exe" -steam -netconport 27015 -netconpassword … -g15`.
+- Window title: `Left 4 Dead 2 - Direct3D 9` in menu and in game (useless).
+- The console port accepts connections ~50 s after the process starts (log 18:09:23 → 18:10:16).
 
-## Noms officiels dans les fichiers du jeu (vérifié le 2026-10-14)
+## Network console `-netconport` (verified 2026-10-14)
 
-Lus en lecture seule avec `tools/vpk.py` :
+Proof: `recordings/session1.log`, probe `tools/netcon_probe.py`.
 
-- Campagnes et chapitres : `update/pak01_dir.vpk` → `missions/campaign1.txt` … `campaign14.txt`
-  (`DisplayTitle "#L4D360UI_CampaignName_C1"`, puis par mode `coop`/`versus`/`survival`/`scavenge`…
-  `Map "c1m1_hotel"`, `DisplayName "#L4D360UI_LevelName_COOP_C1M1"`).
-- Textes : `left4dead2/pak01_dir.vpk` → `resource/l4d360ui_<langue>.txt` (C1 à C5) et fichiers
-  libres `update/resource/l4d360ui_tu_<langue>.txt` (toutes les campagnes, dont C7–C14).
-- Exemples FR : `L4D360UI_CampaignName_C1` = « Centre de la mort », `C2` = « Lugubre carnaval »,
-  `L4D360UI_LevelName_COOP_C1M1` = « 1: Hôtel », difficultés « Facile / Normal / Avancé / Expert »,
-  modes « Campagne / Réalisme / Survie / Versus / Collecte ».
+- Listens on **TCP `0.0.0.0:27015`** (all interfaces, `netstat -ano`). The Windows firewall has two "Left 4 Dead 2"
+  rules allowing TCP and UDP, all ports, Domain/Private/**Public**. Without `-netconpassword` **anyone on the local
+  network can type commands in the game** → the password is mandatory.
+- With `-netconpassword X`: without `PASS X` the console answers
+  `This server is password protected for console access. Must send PASS command`; after `PASS X` everything works.
+- Plain text, one command per line; several clients at once; **every client receives all console output**.
+- When the game exits the TCP connection is reset (`WinError 10054`), no line is printed.
 
-## Processus et fenêtre (vérifié le 2026-10-14, jeu au menu)
+### Commands and variables
 
-- Ligne de commande : `"…\Left 4 Dead 2\left4dead2.exe" -steam -netconport 27015`
-  (`Get-CimInstance Win32_Process -Filter "Name='left4dead2.exe'"`).
-- Titre de fenêtre : `Left 4 Dead 2 - Direct3D 9` (identique au menu et en jeu : inutile).
-
-## Console réseau `-netconport` (vérifié le 2026-10-14, session 1)
-
-Preuve : `recordings/session1.log` (non versionné), sonde `tools/netcon_probe.py`.
-
-- Écoute **TCP sur `0.0.0.0:27015`** (toutes les interfaces), PID du jeu (`netstat -ano`).
-  Le pare-feu Windows a deux règles « Left 4 Dead 2 » qui autorisent TCP et UDP, tous ports,
-  profils Domaine/Privé/**Public**. Sans `-netconpassword`, **n'importe qui sur le réseau local
-  peut envoyer des commandes au jeu**. → mot de passe obligatoire.
-- Pas de mot de passe demandé (option absente). Texte brut, une commande par ligne `\n`.
-- Plusieurs connexions simultanées acceptées ; **chaque connexion reçoit toute la sortie de la
-  console**, y compris les réponses aux commandes des autres connexions.
-- `version` → `Version 2.2.4.3 (left4dead2)`, `Exe build: 11:44:59 Jun 30 2026 (10097) (550)`.
-
-### Commandes et variables (au menu puis en solo)
-
-| Commande | Résultat | Utilité |
+| Command | Answer | Use |
 |---|---|---|
-| `z_difficulty` | `"z_difficulty" = "Easy" ( def. "Normal" )`, drapeaux `client replicated` | difficulté ✅ |
-| `host_map` | `"host_map" = "c1m1_hotel.bsp"` en jeu ; `""` avant la 1re partie ; **reste à l'ancienne carte après retour au menu** | carte (avec les lignes de connexion) |
-| `status` | rien au menu ; en jeu : `map : c1m1_hotel at ( 2301, 6862, 2718 )`, `players : 1 humans, 0 bots (4 max)`, liste `# 6 1 "Sam" STEAM_1:… active … loopback`, puis `# 7 "Nick" BOT active`… **et les infectés spéciaux en vie** : `#10 "Charger" BOT active`, `#11 "Spitter" BOT active`, `#12 "Jockey" BOT active` | personnage (par élimination en solo), infectés présents, nombre de joueurs. Contient position, SteamID, pseudos → vie privée |
-| `mp_gamemode` | `Unknown command "mp_gamemode"` (menu) / `Unknown command: mp_gamemode` (en jeu) | ❌ mode illisible ainsi |
-| `sv_gametypes` | `""` (variable serveur) | ❌ |
-| `cl_language` | `"french"` | langue du jeu ✅ |
+| `z_difficulty` | `"z_difficulty" = "Easy" ( def. "Normal" )`, flags `client replicated` | difficulty ✅ |
+| `host_map` | `"host_map" = "c1m1_hotel.bsp"`; `""` before the first game; **keeps the old map after going back to the menu** | not used |
+| `status` | nothing in the menu; in game: `hostname: Sam`, `os : Windows Listen`, `map : c2m1_highway at ( x, y, z )`, `players : 1 humans, 0 bots (4 max)`, rows `#  2 1 "Sam" STEAM_1:… loopback`, `# 3 "Coach" BOT active` … and **specials alive**: `#10 "Charger" BOT active` | character by elimination, specials, players (contains IDs and positions → never shown) |
+| `name`, `cl_language` | `"name" = "Sam"`, `"cl_language" = "french"` | own name (to recognise own lines), language ✅ |
+| `mp_gamemode` | `Unknown command "mp_gamemode"` (menu) / `Unknown command: mp_gamemode` (in game) | ❌ mode unreadable |
+| `find mode` | no readable mode variable | ❌ |
+| `sv_gametypes` | `""` | ❌ |
 | `net_showevents`, `con_logfile` | `Unknown command` | ❌ |
-| `cl_showevents` | existe mais drapeau `cheat` | ❌ |
-| `kill` | `Can't use cheat command kill in multiplayer, unless the server has sv_cheats set to 1.` | (c'est une triche en L4D2) |
-| `g15_dumpplayer` | `Must run with -g15 to enable support for the LCD Keyboard` (drapeau `client`, pas `cheat`) | à tester avec `-g15` |
+| `cl_showevents` | exists, flag `cheat` | ❌ |
+| `kill` | `Can't use cheat command kill in multiplayer, unless the server has sv_cheats set to 1.` | (cheat) |
+| `g15_dumpplayer` | without `-g15`: `Must run with -g15 to enable support for the LCD Keyboard` (flag `client`, not `cheat`) | see below |
 
-### Lignes écrites par la console pendant la partie
+### Lines the console prints by itself
 
-| Moment | Ligne(s) exacte(s) |
+| Moment | Exact line(s) |
 |---|---|
-| Lancement d'une partie locale | `---- Host_NewGame ----` puis `Host_NewGame on map c1m1_hotel` |
-| Connexion terminée (carte chargée) | `Left 4 Dead 2` / `Map: c1m1_hotel` / `Players: 1 (0 bots) / 4 humans` / `Build: 10097` / `Server Number: 2` |
-| Partie locale | `   VAC secure mode disabled.` ; `Sending UDP connect to public IP 127.0.0.1:27015` |
-| Entrée en jeu | `#Cstrike_TitlesTXT_Game_connected` |
-| Fin de chapitre (porte de la pièce sécurisée) | `Saving weapon_…` (×10) puis `---- Host_Changelevel ----` puis le bloc `Map: c1m2_streets` |
-| Tir allié | `Sam attacked Nick` |
-| Retour au menu | `BinkOpen( …\media\l4d2_background05.bik )` puis `Dropped Sam from server (Server shutting down)` |
-| Réglages | `Host_WriteConfiguration: Wrote cfg/config.cfg` |
+| Local game started from the menu | `---- Host_NewGame ----`, `Host_NewGame on map c1m1_hotel` |
+| Map loaded | `Left 4 Dead 2` / `Map: c1m1_hotel` / `Players: 1 (0 bots) / 4 humans` / `Build: 10097` / `Server Number: 2` |
+| Local game | `   VAC secure mode disabled.`, `Sending UDP connect to public IP 127.0.0.1:27015` |
+| Player in | `#Cstrike_TitlesTXT_Game_connected` (also after each chapter change) |
+| Safe room door closed | `Saving weapon_…` (×10), ~9 s before `---- Host_Changelevel ----` |
+| Next chapter | `---- Host_Changelevel ----`, then the `Map: c1m2_streets` block, then `#Cstrike_TitlesTXT_Game_connected` |
+| Friendly fire | `Sam attacked Nick` |
+| Local player died | `Player: Sam - Damage Given` / `-------------------------` / `Damage Given to "Tank" - 700 in 3 hits` … / `Player: Sam - Damage Taken` … |
+| Chapter restarts after a wipe (solo: after the player died) | `Initializing Director's script` ×2 (also printed during every map load), then `Damage Given to "Sam" - 0 in 1 hit` |
+| Director (local server only) | `Initiating Ambush`, `Initiating Reserved Wanderers` |
+| Back to the menu | `BinkOpen( …\media\l4d2_background05.bik )` then `Dropped Sam from server (Server shutting down)` |
+| Settings saved | `Host_WriteConfiguration: Wrote cfg/config.cfg` |
 
-Délai : la ligne `Map:` arrive ~10 s après `Host_NewGame` (chargement). Événements reçus
-instantanément (TCP).
+Nothing is printed for: pause, special infected spawning, game mode. Loading takes ~10 s between `Host_NewGame`
+and `Map:` (c1m1), ~12 s for a chapter change.
 
-Rien n'est écrit pour : la pause (Échap), l'arrivée d'un infecté spécial, le mode de jeu.
-Mort / mise à terre : pas encore observées.
+Add-on VScripts print to the same console (`[MWRMove] 0.1.0 running`, `[MW Movement] …`), but only when the
+server is local.
 
-### Addons qui écrivent dans la console
+## `-netconpassword` and `-g15` (verified 2026-10-14, session 2)
 
-Le mod Melty « MW Movement » (VScript, côté serveur local) écrit `[MWRMove] 0.1.0 running` et
-`[MW Movement] …`. Preuve qu'un script VScript d'addon peut écrire dans la console, lisible par
-netcon — mais uniquement quand le serveur est local (solo / partie hébergée).
+Launch options set by Sam: `-netconport 27015 -netconpassword <16 hex> -g15`. `-g15` causes no error
+(no `g15.dll` shipped, the game runs normally).
 
-## `-netconpassword` et `-g15` (vérifié le 2026-10-14, session 2)
+**`g15_dumpplayer`** prints ~300 lines in ~7 ms: sections `(localplayer)` (`C_TerrorPlayer::…`), `(localteam)`,
+`(playerresource)`, `(localplayerweapon)` (weapon class, e.g. `CShotgun_Chrome::…`), then `Other replacements:`.
+Line format: `C_TerrorPlayer::m_iHealth integer (100)`. **char fields are printed as raw bytes**:
+`m_MoveType\x02`, and after death `m_lifeState\x01` followed by binary garbage (the parser drops control
+characters and ignores what follows a field name; found by the tests on the real recording).
 
-Options de lancement réglées par Sam : `-netconport 27015 -netconpassword <16 hex> -g15`.
-Ligne de commande relevée : `… left4dead2.exe -steam -netconport 27015 -netconpassword … -g15`.
+Proof: `recordings/session2.log` (`g15_dumpplayer;status;z_difficulty` every 2 s, 208 dumps), timeline
+`python tools/analyze_netcon.py recordings/session2.log`. Solo, Dark Carnival (`c2m1_highway`), Easy.
 
-- Sans mot de passe : `This server is password protected for console access. Must send PASS command`.
-  Avec `PASS <mot de passe>` en première ligne : tout fonctionne.
-- `-g15` ne provoque aucune erreur visible (pas de `g15.dll`, le jeu tourne normalement).
-- **`g15_dumpplayer`** (drapeau `client`, pas `cheat`) écrit ~300 lignes en 7 ms : sections
-  `(localplayer)` (`C_TerrorPlayer::…`), `(localteam)`, `(playerresource)`,
-  `(localplayerweapon)` (classe de l'arme en main, ex. `CShotgun_Chrome::…`), puis `Other replacements:`.
-  Format d'une ligne : `C_TerrorPlayer::m_iHealth integer (100)`.
-
-Preuve : `recordings/session2.log` (relevé `g15_dumpplayer;status;z_difficulty` toutes les 2 s,
-208 relevés), chronologie `python tools/analyze_netcon.py recordings/session2.log`.
-Partie solo, « Lugubre carnaval » (`c2m1_highway`), Facile.
-
-### Ce que donne le relevé
-
-| Info | Champ | Valeurs observées |
+| Info | Field | Values seen |
 |---|---|---|
-| Santé | `C_TerrorPlayer::m_iHealth` | 100 → 99 → 81 … 15 ; soin trousse → 80 |
-| **À terre** | `m_iHealth` > 100 et arme = `CPistol` | 297, 291, 288… (saigne), puis `m_iHealth=1` + `m_flMaxspeed=150` une fois relevé |
-| Santé temporaire (pilules, relevé) | absente du relevé | ❌ (seulement `m_iHealth`) |
-| Boiter | `m_flMaxspeed` | 220 normal, 150 blessé, 75 accroupi, 115 (avec `m_fFlags=641`, cause non identifiée) |
-| **Mort** | `deadflag` | `true`, `m_flMaxspeed=900`, `m_iHideHUD=2056` |
-| Équipe | `m_iTeamNum` | 2 = survivants (3 = infectés, non observé) |
-| **Arme en main** | classe de `(localplayerweapon)` | `CShotgun_Chrome`, `CSubMachinegun`, `CPistol`, `CTerrorMeleeWeapon` (sans le type de mêlée), `CChainsaw`, `CMolotov`, `CItem_VomitJar`, `CFirstAidKit`, `CPainPills`, `CItem_Adrenaline`, `CItemUpgradePackExplosive` |
-| Chargeur | `m_iClip1` | 8 (pompe), 50 (SMG), 15 (pistolet), -1 (objets) ; tronçonneuse = carburant 30 |
-| Réserve | `C_TerrorPlayer::m_iAmmo[m_iPrimaryAmmoType]` | 72 (type 7, fusil à pompe), 650 → 412 (type 5, SMG) |
-| Rechargement | `m_bInReload` | `true` / `false` |
-| **Pause (solo)** | `m_nTickBase` figé entre deux relevés | 3310 de 17:31:21 à 17:31:48 ; 14387 de 17:37:59 à 17:38:04 (Échap puis retour menu) |
-| Personnage | `m_nModelIndex` = 185 | dépend de la carte : inutilisable seul |
+| Health | `m_iHealth` | 100 → 99 → 81 … 15; first-aid kit → 80 |
+| **Incapacitated** | `m_iHealth` > 100 and weapon `CPistol` | 297, 291, 288… (bleeding), then `m_iHealth=1` + `m_flMaxspeed=150` once revived |
+| Temporary health | absent | ❌ |
+| Speed | `m_flMaxspeed` | 220 normal, 150 hurt, 75 crouched, 115 (with `m_fFlags=641`, cause unknown), 900 dead |
+| **Dead** | `deadflag` | `true`, `m_iHideHUD=2056` |
+| Team | `m_iTeamNum` | 2 survivors (3 infected, 1 spectator: not seen) |
+| **Weapon in hand** | class of `(localplayerweapon)` | `CShotgun_Chrome`, `CSubMachinegun`, `CPistol` (dual: clip 30), `CTerrorMeleeWeapon` (type not given), `CChainsaw`, `CMolotov`, `CItem_VomitJar`, `CFirstAidKit`, `CPainPills`, `CItem_Adrenaline`, `CItemUpgradePackExplosive`, `CPumpShotgun` |
+| Clip | `m_iClip1` | 8 pump, 50 SMG, 15 pistol, -1 items; chainsaw = fuel 30 |
+| Reserve | `C_TerrorPlayer::m_iAmmo[m_iPrimaryAmmoType]` | 72 (type 7), 650 → 412 (type 5) |
+| Reloading | `m_bInReload` | true/false |
+| **Pause (solo)** | `m_nTickBase` unchanged between dumps | 3310 from 17:31:21 to 17:31:48; 14387 from 17:37:59 to 17:38:04 |
+| Character | `m_nModelIndex` = 185 | map-dependent: unusable |
 
-`status` (même relevé) : `hostname: Sam` en solo ; liste des bots survivants
-(`Coach`, `Nick`, `Ellis` → Sam joue Rochelle, par élimination) et **infectés spéciaux en vie** :
-`Charger`, `Spitter`, `Jockey`, `Hunter`, `Smoker`, `Boomer`, **`Tank`** (17:33:54 → 17:35:15).
-La Witch n'apparaît pas (ce n'est pas un joueur).
+All weapon client classes (43, incl. infected claws `CTankClaw`, `CHunterClaw`…) were read from
+`left4dead2/bin/client.dll` (file on disk, not memory).
 
-### Lignes de console nouvelles (session 2)
+## Names (verified 2026-10-14, `tools/build_data.py`)
 
-| Moment | Ligne(s) |
-|---|---|
-| Mort du joueur | `Player: Sam - Damage Given` / `-------------------------` / `Damage Given to "Tank" - 700 in 3 hits` … / `Player: Sam - Damage Taken` / `Damage Taken from "Charger" - 40 in 3 hits` … |
-| Redémarrage du chapitre (mort en solo) | `Initializing Director's script` puis nouveau rapport `Damage Given to "Sam" - 0 in 1 hit` ; santé 100 + `CPistol` |
-| Directeur (serveur local seulement) | `Initiating Ambush`, `Initiating Reserved Wanderers` |
-| Tir allié | `Sam attacked Ellis`, `Sam attacked Coach` |
-| Retour au menu | `BinkOpen( …\media\l4d2_background01.bik )` puis `Dropped Sam from server (Server shutting down)` |
-| Jeu fermé | la connexion TCP est coupée (`WinError 10054`), aucune ligne |
+- Chapters: `update/pak01_dir.vpk` → `missions/campaign1.txt` … `campaign14.txt` (`modes/coop/<n>/Map`,
+  `DisplayName "#L4D360UI_LevelName_COOP_C1M1"`). 14 campaigns, 57 maps.
+- Strings: `left4dead2/pak01_dir.vpk` → `resource/l4d360ui_<lang>.txt`, `resource/left4dead2_<lang>.txt`, and the
+  loose `update/resource/l4d360ui_tu_<lang>.txt` (campaigns 6–14). FR examples: "Centre de la mort", "1: Hôtel",
+  difficulties Facile/Normal/Avancé/Expert (EN Easy/Normal/Advanced/Expert).
+- Weapons: the game only names the L4D1 weapons (`L4D_Weapon_*`) and melee types. Other English names are the
+  Left 4 Dead Wiki page titles (all checked through its API on 2026-10-14, except "Fireworks Crate" which has no
+  page); other French names are the project's.
+- Images (`--images`): Left 4 Dead Wiki page images (`prop=pageimages`) for 14 campaigns and 16 characters, Steam
+  `library_600x900.jpg`/`header.jpg`; each link checked HTTP 200. Cover image: Sam's own link
+  (`images.guns.lol/…/R7kq6VUsjDtVC7alNkrjk.png`, PNG, 790 KB, HTTP 200, 90 characters).
 
-### Mode de jeu : illisible directement
+## Steam (verified 2026-10-14)
 
-`mp_gamemode` → `Unknown command`, `find mode` ne liste aucune variable de mode lisible.
-Pistes : `status` → `players : … (4 max)` (Campagne/Réalisme/Survie) contre `(8 max)`
-(Versus/Collecte, non vérifié) ; `m_iTeamNum = 3` → Versus/Collecte côté infectés (non vérifié).
+- `https://steamcommunity.com/miniprofile/<account id>/json` in game: **no** `in_game` block (only `playtime`).
+- No Game State Integration (no `gamestate_integration` string in the DLLs).
+- Launch options are in `userdata/<account>/config/localconfig.vdf` →
+  `UserLocalConfigStore/Software/Valve/Steam/apps/550/LaunchOptions`; parsing the 137 KB file takes 44 ms.
+  Active account: `HKCU\Software\Valve\Steam\ActiveProcess\ActiveUser`.
 
-## Steam (vérifié le 2026-10-14)
+## Real runs of the companion (2026-10-14, `%LOCALAPPDATA%\L4D2RPC\l4d2rpc.log`, copy in `recordings/companion_run1.log`)
 
-- `https://steamcommunity.com/miniprofile/<account id>/json` (en jeu) ne renvoie **pas** de bloc
-  `in_game` (seulement `playtime`) : rich presence Steam illisible ainsi pour ce compte.
-- Le jeu n'a pas de Game State Integration (aucune chaîne `gamestate_integration` dans les DLL,
-  recherche du 2026-10-14).
+Solo, No Mercy then Dead Center, Discord Canary. Event → `Card sent` delay from the log:
 
-## À mesurer (non vérifié)
+| Situation | Event | Card sent |
+|---|---|---|
+| Menu | game detected 18:09:23 | 18:09:26 |
+| Paused | — | 18:16:54 (`⏸️ Paused`) |
+| Incapacitated / revived / dead / retry #2, #3 | — | 18:17:43, 18:17:48, 18:18:04, 18:18:09 |
+| Tank | — | 18:18:38 |
+| Safe room → next chapter | 18:21:16 `Loading c8m2_subway` | 18:21:11 safe room, 18:21:17 `2/5 The Subway · ⏳ Loading…` |
+| Back to menu | 18:22:00 | 18:22:00 |
+| New game (cover known) | 18:26:52.800 `Loading c1m1_hotel` | 18:26:52.812 |
 
-- Partie en ligne (serveur distant) : lignes `Connected to …`, `status`, `g15_dumpplayer` ?
-- Versus / Collecte / Survie / Réalisme : `(8 max)`, équipe 3, classe d'arme des infectés.
-- Finale, sauvetage, fin de campagne (générique).
-- Coût CPU du relevé toutes les 2 s (jeu et compagnon).
-- VAC : aucun rapport de bannissement trouvé pour `-netconport`/`-g15` (options du moteur),
-  mais pas de déclaration officielle de Valve.
+**Discord sometimes does not answer `SET_ACTIVITY` within 5 s**: 18:16:25 and 18:22:17 (first card of a newly
+loaded campaign), 18:25:38 (first card with the new cover image), 18:30:59 (in game). The first client copied from
+FL Studio disconnected on that timeout, so the "Loading…" card of a new game was lost (Sam saw nothing during the
+load). Fix: a reply that does not start within 5 s no longer drops the connection (`NoReply`). Cause not
+identified: likely Discord fetching a new external image before answering (3 of 4 cases), and the card is tied to
+the companion's PID instead of the game's (`card_owner`) in case Discord waits on the busy game process.
+
+Still to verify on the PC: one card only with `card_owner: companion`, the cover image shown, the card after a
+slow answer, the card cleared when the game closes, reconnection after a Discord restart, online games, Versus,
+finale, CPU cost.

@@ -21,6 +21,7 @@ PAD = chr(0x2800)  # blank Braille pattern: visible as nothing, not trimmed by D
 MAX_TEXT = 128
 MAX_URL = 256
 REVIVED_SECONDS = 20
+SETTLE_SECONDS = 45  # from the start of the load
 STATUS_DISPLAY_TYPES = {"name": 0, "state": 1, "details": 2}
 
 
@@ -206,7 +207,10 @@ def build_activity(s: GameState, cfg: dict, now: float, idle: float = 0.0) -> tu
         key = ("menu", state == text(lang, "menu_idle"))
     else:
         details = _where(s, lang)
-        if s.phase == "loading":
+        # Just in: the first health/weapon read is ~2 s away, keep "Loading…" rather than an empty line
+        settling = (s.phase == "ingame" and s.last_dump is None and s.chapter_start is not None
+                    and now - s.chapter_start < SETTLE_SECONDS)
+        if s.phase == "loading" or settling:
             state = _e(cfg, "loading") + text(lang, "loading")
             kind = "loading"
         else:

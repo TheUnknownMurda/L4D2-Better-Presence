@@ -1,67 +1,85 @@
-# L4D2 Better Presence — Rich Presence Discord pour Left 4 Dead 2
+# L4D2 Better Presence — detailed Discord Rich Presence for Left 4 Dead 2
 
-Brief du projet. Si la session est coupée : lis ce fichier, puis `FINDINGS.md`, et continue
-là où « État actuel » s'arrête. Le cahier des charges complet est `../_Prompt Better Presence.md`.
+Project brief. If a session is cut: read this file, then `FINDINGS.md`, and continue from "Current state".
+The full specification of the series is `../_Prompt Better Presence.md`.
 
-## Comment travailler avec moi
+## How to work with me
 
-- Je suis Sam. Je ne suis pas développeur : je code avec toi. Explique simplement, un terme
-  technique = une demi-phrase d'explication.
-- Windows 11, antivirus Bitdefender. Commandes exactes, prêtes à copier, en disant où les taper.
-- Lance toi-même sondes, tests et vraie connexion à Discord. Quand une mesure demande une action
-  de ma part (lancer le jeu, changer de chapitre, mourir…), dis exactement quoi faire, attends ma
-  confirmation, puis mesure.
-- Demande avant tout ce qui est risqué : toucher au dossier du jeu, aux options de lancement Steam,
-  au registre, installer un outil global, supprimer des fichiers.
-- Réponses en français. Code, commentaires, commits en anglais. README, console, carte en français.
-- Rien d'inventé : ce qui n'est pas mesuré est marqué « non vérifié » avec le moyen de le vérifier.
-  Distinguer : vérifié par les tests / vérifié sur le PC (carte vue dans Discord) / non testé.
-- Un commit à chaque étape qui marche.
+- I'm Sam. I'm not a developer: I code with you. Explain simply; a technical word gets a half-sentence explanation.
+- Windows 11, Bitdefender. Exact commands, ready to paste, saying where to type them (cmd or PowerShell).
+- Run probes, tests and the real Discord connection yourself. When a measurement needs me (start the game, change
+  chapter, die…), say exactly what to do, wait for my confirmation, then measure.
+- Ask before anything risky: game folder, Steam launch options, registry, global tools, deleting files.
+- **Chat in French. Everything else in English**: code, comments, commits, README, CLAUDE.md, FINDINGS.md, console
+  messages, and the card itself (default `language: "en"`; French stays available as an option).
+- Never invent: anything not measured is marked "not verified" with how to verify it. Always say which of
+  tests / verified on the PC (card seen in Discord) / not tested.
+- One commit per working step.
 
-## Le jeu (vérifié le 2026-10-14, détails dans FINDINGS.md)
+## Decisions taken with Sam (2026-10-14)
 
-- Steam, appid 550, `C:\Program Files (x86)\Steam\steamapps\common\Left 4 Dead 2\left4dead2.exe`,
-  version 2.2.4.3, moteur Source, langue française.
-- **VAC** : aucune injection, aucun mod client, aucune lecture mémoire. Seulement : interfaces
-  officielles du moteur (console), fichiers, infos Windows, écran.
-- Discord : application officielle « Left 4 Dead 2 » `356954277803065354` (liste de détection).
-- Options de lancement actuelles : `-netconport 27015` (console TCP du moteur).
+- Source: the engine's network console (`-netconport` + `-netconpassword` + `-g15`), no mod (VAC).
+- Card in English; no "Solo with N bots" line (team line only online); cover image = Sam's guns.lol link
+  (`cover_image`).
+- Usage: personal.
+
+## The game (verified, details in FINDINGS.md)
+
+Steam appid 550, `C:\Program Files (x86)\Steam\steamapps\common\Left 4 Dead 2\left4dead2.exe`, v2.2.4.3, Source
+engine, game in French. VAC. Discord app "Left 4 Dead 2" = `356954277803065354`. Discord Canary on this PC.
+Sam's launch options now: `-netconport 27015 -netconpassword <hex> -g15`.
 
 ## Stack
 
-Python 3.13 (installé : `%LOCALAPPDATA%\Programs\Python\Python313`), bibliothèque
-standard uniquement. Tests : `python -m unittest discover -s tests`. Pas de ruff/pyflakes installés :
-`python -m compileall`.
+Python 3.13 (`%LOCALAPPDATA%\Programs\Python\Python313`), standard library only (ctypes, socket,
+winreg). Tests: `python -m unittest discover -s tests`. No ruff/pyflakes installed: `python -m compileall -q
+l4d2_rpc tools tests`.
 
-## Architecture (prévue, à confirmer après la proposition)
+## Architecture
 
-- `l4d2_rpc/` : le programme (lecture de la source → état → carte → Discord).
-- `tools/` : sondes (`netcon_probe.py`), lecteur VPK (`vpk.py`), génération des tables de noms.
-- `data/` : noms officiels générés depuis les fichiers du jeu.
-- `tests/` : unittest, faux Discord.
+```
+game console (TCP 127.0.0.1:27015) ─► netcon.py ─► parser.py (lines → events) ─► state.py (Tracker, GameState)
+                                                                                      │
+Steam localconfig.vdf ─► steam.py (port, password)            presence.py (state → card, pure) ◄─ config.py
+process list / idle ─► system.py                                     │
+                                         app.py (loop, Sender: 5 s important / 15 s minor) ─► discord_ipc.py
+```
 
-## Projets de référence (dossier parent, licence MIT)
+- `l4d2_rpc/data/` — `game_data.json` (names from the game files) and `images.json` (wiki/Steam links), both
+  generated by `tools/build_data.py`.
+- `l4d2_rpc/simulate.py` — fake game through every situation, in the real line formats (`--simulate`, tests).
+- `__main__.py` — CLI: run, `--dry-run`, `--simulate`, `--dump`, `-v`, `doctor`, `setup`, `startup on|off`.
+- `tools/` — `vpk.py` (VPK reader), `netcon_probe.py`, `analyze_netcon.py`, `build_data.py`, `make_fixtures.py`.
+- `tests/` — fixtures cut from real recordings (anonymised), fake Discord (pipe), fake netcon (TCP).
+- Launchers: `L4D2RPC.bat`, `L4D2RPC-silent.bat`, `Setup.bat`, `Doctor.bat`, `Startup-on.bat`, `Startup-off.bat`.
 
-- Client IPC Discord : `FL Studio Better Presence/src/flbp/discord_ipc.py` (le plus robuste :
-  thread, délais, statut) + `pid` et `_finish()` de `Sons of the Forest Better Presence/sotf_rpc/`
-  + règles de nettoyage de `MeltyRPC/src/discord/ipc.ts`.
-- Lecture de journal : `Outlast Trials Better Presence/main.py` (suivi de fichier, rotation).
-- Rotation de la ligne 2, cadence d'envoi 5 s / 15 s, verrou, journal : `Sons of the Forest Better Presence/sotf_rpc/`.
-- Processus et fenêtre au premier plan : `Dead by Daylight Better Presence/dbd_rpc/game.py`.
-- `doctor` : `Crash Bandicoot N.Sane Trilogy Better Presence/crash_presence/cli/diagnostics.py`.
+Reused code (MIT, same author): Discord IPC client and fake Discord from `../FL Studio Better Presence`, process
+helpers from `../Dead by Daylight Better Presence/dbd_rpc/game.py`, pacing/rotation ideas from
+`../Sons of the Forest Better Presence/sotf_rpc/`.
 
-## Règles techniques
+## Technical rules
 
-Voir `../_Prompt Better Presence.md` (`<regles_discord>`, `<sources_de_donnees>`, `<pieges_connus>`).
-Rappels : jamais d'écriture dans le jeu ni ses sauvegardes ; pas de séquence `\uXXXX` écrite
-par les outils ; PowerShell lancé par le code sur une ligne, sans `-EncodedCommand`.
+See `../_Prompt Better Presence.md` (`<regles_discord>`, `<sources_de_donnees>`, `<pieges_connus>`). Reminders:
+- Only read-only console commands (`status`, cvar reads, `g15_dumpplayer`). Never write to the game, Steam or
+  saves. Never show IDs, IPs, other players' names or positions.
+- Every card text goes through `presence.truncate()`. Timestamps in seconds.
+- Never write `\uXXXX` escapes or raw control characters in sources with the editing tools (use `chr()`).
+- PowerShell from code: one line for `-Command`, no double quotes, never `-EncodedCommand`.
 
-## État actuel — étape 2, proposition envoyée (2026-10-14)
+## Current state — v1.0 (2026-10-14)
 
-- Fait : reconnaissance complète (FINDINGS.md). Deux parties solo mesurées. Options de lancement
-  de Sam maintenant : `-netconport 27015 -netconpassword <hex> -g15` (Sam les a mises lui-même).
-- Source retenue (proposée) : console réseau du moteur (TCP 127.0.0.1, mot de passe lu dans
-  `localconfig.vdf`), événements en continu + relevé `g15_dumpplayer;status` toutes les 2 s.
-- Sondes : `tools/vpk.py`, `tools/netcon_probe.py`, `tools/analyze_netcon.py`.
-- En attente : OK de Sam sur la proposition (carte par situation). Ensuite : étape 3, construction.
-- Non vérifié : partie en ligne, Versus/Collecte/Survie, finale/sauvetage, coût CPU.
+Done and verified:
+- Tests: 33 green (`python -m unittest discover -s tests`), incl. real recordings, Discord limits, fake Discord,
+  fake console. `--simulate --dry-run` shows every situation.
+- On the PC with Sam (log `%LOCALAPPDATA%\L4D2RPC\l4d2rpc.log`): menu, loading, in game (health, weapon, ammo,
+  specials), pause, incapacitated, revived, dead, retry, Tank, safe room, next chapter, back to menu were all sent;
+  Sam confirmed one single card in the menu.
+- Fixed after the PC run: Discord answering late (>5 s) no longer drops the connection (the "Loading…" card was
+  lost); card tied to the companion PID (`card_owner`); no solo team line; `cover_image`; "Loading…" kept until the
+  first health read.
+
+To verify with Sam (not verified yet):
+- Cover image visible; still one card with `card_owner: companion`; "Loading…" seen during a new game's load.
+- Card cleared when the game closes; reconnection after a Discord restart; CPU cost.
+- Online co-op, Versus, finale/rescue, buttons (needs a 2nd account).
+- README steps from a fresh folder.
