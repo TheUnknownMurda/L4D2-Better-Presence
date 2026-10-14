@@ -136,6 +136,21 @@ All weapon client classes (43, incl. infected claws `CTankClaw`, `CHunterClaw`�
   `library_600x900.jpg`/`header.jpg`; each link checked HTTP 200. Cover image: Sam's own link
   (`images.guns.lol/…/R7kq6VUsjDtVC7alNkrjk.png`, PNG, 790 KB, HTTP 200, 90 characters).
 
+## Survivor portraits (verified 2026-10-14)
+
+Sam asked for the portraits of a screen recording (a Steam Workshop page, "Survivor Better Materials",
+id 2968256804). Findings:
+- The game's own HUD portraits are `materials/vgui/s_panel_<internal>.vtf` (`update/pak01_dir.vpk`), internal names
+  coach, mechanic (Ellis), gambler (Nick), producer (Rochelle), namvet (Bill), teenangst (Zoey), biker (Francis),
+  manager (Louis); plus `_incap` variants and `s_panel_dead.vtf`. Decoded with `tools/vtf.py`: the four L4D2
+  survivors are front-facing and identical to the recording; **the four L4D1 survivors are side profiles**.
+- The wiki hosts the same files (`File:S_panel_coach.png` … 128x128).
+- The front-facing L4D1 portraits only exist in the workshop preview: a 512x512 GIF, 8 frames of 1 s, order Ellis,
+  Rochelle, Coach, Nick, Louis, Zoey, Francis, Bill (`images.steamusercontent.com/ugc/2216394743367178406/…`).
+  `tools/extract_portraits.py` saves them; Sam hosted the 8 PNGs on guns.lol. Each of the 8 links answered HTTP 200
+  (PNG 512x512) and matched its local frame exactly (mean grey difference 0.0). They are the defaults of
+  `character_images`.
+
 ## Steam (verified 2026-10-14)
 
 - `https://steamcommunity.com/miniprofile/<account id>/json` in game: **no** `in_game` block (only `playtime`).

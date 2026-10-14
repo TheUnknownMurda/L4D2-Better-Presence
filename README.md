@@ -92,8 +92,8 @@ Nothing was ever written to the game folder or to Steam.
   rotates every 20 s between your health and weapon (with ammo: clip/reserve), the specials alive, and the team
   (online only).
 - **Big image**: the campaign poster; tooltip: difficulty, attempt number, "online".
-- **Small image**: your survivor (found by elimination: the three bots are known, so you are the fourth) or the
-  special infected you play in Versus.
+- **Small image**: your survivor's portrait (found by elimination: the three bots are known, so you are the fourth)
+  or the special infected you play in Versus.
 - **Timer**: since the start of the campaign (kept across chapters), or as set in `timer`.
 - **Online**: "(2 of 4)" next to line 2.
 - Sending pace: an important change (map, strong state) reaches Discord within 5 s, health and ammo at most every
@@ -143,6 +143,7 @@ replaced by its default.
 | `timer` | `"campaign"` | `"campaign"` (kept across chapters), `"chapter"`, `"session"` (since the game started), `"none"`. |
 | `emoji` | `true` | Emoji markers (❤️ 🔫 🧟 💀…). |
 | `images` | `true` | Poster and survivor images. |
+| `character_images` | your 8 guns.lol portraits | Survivor portraits by name (`"Coach": "https://…"`). A survivor missing here uses the game's HUD portrait from the wiki. |
 | `cover_image` | your guns.lol link | Image used in the menu and when a map has no poster (`https://`, ≤256 characters). `""` = Steam's art. |
 | `buttons` | `[]` | Up to 2 `{"label": "…", "url": "https://…"}` (label ≤32 characters). You cannot see your own buttons. |
 | `state_rotation` | `["vitals", "specials", "vitals", "team"]` | Order of line 2 when nothing urgent happens. Items without anything to say are skipped. |
@@ -179,6 +180,8 @@ replaced by its default.
 | `L4D2RPC.bat --dump` | Raw console answer and state read from the running game. |
 | `L4D2RPC.bat -v` | Logs every console line and event. |
 | `python tools/build_data.py [--images]` | Rebuilds the name tables from the game files (and the image links from the Left 4 Dead Wiki). |
+| `python tools/extract_portraits.py` | Saves the 8 portraits of the "Survivor Better Materials" workshop preview to `assets/portraits/` (to host them yourself). |
+| `python tools/vtf.py <vpk> <file.vtf> <out.png>` | Converts one of the game's textures to PNG. |
 | `python tools/netcon_probe.py` | Records the game console (reconnaissance). |
 | `python tools/analyze_netcon.py <recording>` | Turns a recording into a readable timeline. |
 | `python -m unittest discover -s tests` | Tests (on anonymised real recordings, with a fake Discord). |
@@ -204,5 +207,7 @@ MIT (see `LICENSE`). Discord IPC client and fake Discord adapted from *FL Studio
 from *Dead by Daylight Better Presence* (same author, MIT).
 
 Fan project, not affiliated with Valve. Left 4 Dead 2 names come from the game's files; campaign posters and
-character images are hot-linked from the [Left 4 Dead Wiki](https://left4dead.fandom.com) (CC BY-SA) and Steam;
-nothing is redistributed.
+special infected images are hot-linked from the [Left 4 Dead Wiki](https://left4dead.fandom.com) (CC BY-SA) and
+Steam. The default survivor portraits come from the preview of the Steam Workshop item
+[Survivor Better Materials](https://steamcommunity.com/sharedfiles/filedetails/?id=2968256804) (art by its authors),
+hosted by Sam for personal use; they are not part of this repository.

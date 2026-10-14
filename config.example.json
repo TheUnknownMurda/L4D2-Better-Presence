@@ -6,7 +6,16 @@
   "timer": "campaign",
   "emoji": true,
   "images": true,
-  "character_images": {},
+  "character_images": {
+    "Coach": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/sGWZ799inw1xcwXX9tQGz.png",
+    "Ellis": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/YahTLLkcf79rUWXJfqR6o.png",
+    "Nick": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/9twGryOKpthNEtbM8Tp2W.png",
+    "Rochelle": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/dpoAi8kddFfdVf6ASbROO.png",
+    "Bill": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/W7wDKSDtdtGSQqOG7kJnQ.png",
+    "Zoey": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/FwQry26L33A1n8NmGTzOR.png",
+    "Francis": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/2rdohtxtfvoaUjaL0LBVq.png",
+    "Louis": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/Cd5kqErF8OaH7YeIWkibr.png"
+  },
   "cover_image": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/R7kq6VUsjDtVC7alNkrjk.png",
   "buttons": [],
   "state_rotation": [

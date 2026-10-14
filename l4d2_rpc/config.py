@@ -20,6 +20,8 @@ ROTATION_ITEMS = ("vitals", "specials", "team")
 TIMERS = ("campaign", "chapter", "session", "none")
 STATUS_DISPLAY = ("name", "state", "details")
 
+IMAGE_HOST = "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/"
+
 DEFAULTS: dict = {
     "client_id": OFFICIAL_CLIENT_ID,
     "language": "en",
@@ -27,8 +29,18 @@ DEFAULTS: dict = {
     "timer": "campaign",
     "emoji": True,
     "images": True,
-    "character_images": {},
-    "cover_image": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/R7kq6VUsjDtVC7alNkrjk.png",
+    # Sam's hosted portraits (from the "Survivor Better Materials" workshop preview, tools/extract_portraits.py)
+    "character_images": {
+        "Coach": IMAGE_HOST + "sGWZ799inw1xcwXX9tQGz.png",
+        "Ellis": IMAGE_HOST + "YahTLLkcf79rUWXJfqR6o.png",
+        "Nick": IMAGE_HOST + "9twGryOKpthNEtbM8Tp2W.png",
+        "Rochelle": IMAGE_HOST + "dpoAi8kddFfdVf6ASbROO.png",
+        "Bill": IMAGE_HOST + "W7wDKSDtdtGSQqOG7kJnQ.png",
+        "Zoey": IMAGE_HOST + "FwQry26L33A1n8NmGTzOR.png",
+        "Francis": IMAGE_HOST + "2rdohtxtfvoaUjaL0LBVq.png",
+        "Louis": IMAGE_HOST + "Cd5kqErF8OaH7YeIWkibr.png",
+    },
+    "cover_image": IMAGE_HOST + "R7kq6VUsjDtVC7alNkrjk.png",
     "buttons": [],
     "state_rotation": ["vitals", "specials", "vitals", "team"],
     "rotate_seconds": 20,
