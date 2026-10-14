@@ -110,7 +110,7 @@ class Scenario(unittest.TestCase):
         seen = [build_activity(tracker.state, cfg, T0 + k * 20)[0]["state"] for k in range(4)]
         self.assertIn("🧟 Specials: Charger, Jockey", seen)
         self.assertIn("❤️ 81 HP · 🔫 Submachine Gun 50/650", seen)
-        self.assertIn("🤖 Solo with 3 bots", seen)
+        self.assertFalse(any("Solo" in line or "bots" in line for line in seen))  # no team line in solo
         # The key does not change with the rotation: those updates go at the slow pace
         keys = {build_activity(tracker.state, cfg, T0 + k * 20)[1] for k in range(4)}
         self.assertEqual(len(keys), 1)

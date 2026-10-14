@@ -129,7 +129,7 @@ def _team(s: GameState, cfg: dict, lang: str) -> str | None:
         return None
     bots = len(s.survivor_bots)
     if s.humans <= 1:
-        return _e(cfg, "solo") + (text(lang, "solo_bots", bots=bots) if bots else text(lang, "solo"))
+        return None  # solo: nothing worth a line (Sam's choice, 2026-10-14)
     if bots:
         return _e(cfg, "team") + text(lang, "players_bots", players=s.humans, bots=bots)
     return _e(cfg, "team") + text(lang, "players", players=s.humans)
