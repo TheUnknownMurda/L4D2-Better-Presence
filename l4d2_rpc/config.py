@@ -22,6 +22,9 @@ STATUS_DISPLAY = ("name", "state", "details")
 
 IMAGE_HOST = "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/"
 
+STARTER = {"_comment": "Your settings. Copy here only the keys you want to change from config.example.json "
+                        "(all keys and their role: README > Configuration)."}
+
 DEFAULTS: dict = {
     "client_id": OFFICIAL_CLIENT_ID,
     "language": "en",
@@ -42,7 +45,7 @@ DEFAULTS: dict = {
     },
     "cover_image": IMAGE_HOST + "R7kq6VUsjDtVC7alNkrjk.png",
     "buttons": [],
-    "state_rotation": ["vitals", "specials", "vitals", "team", "record"],
+    "state_rotation": ["vitals", "team", "record"],  # "specials" available, off by Sam's choice
     "rotate_seconds": 20,
     "idle_minutes": 5,
     "show_health": True,
@@ -145,9 +148,8 @@ def load(path: Path | None = None, create: bool = True) -> tuple[dict, list[str]
     if not path.exists():
         if create:
             try:
-                source = EXAMPLE_PATH.read_text(encoding="utf-8") if EXAMPLE_PATH.exists() else json.dumps(
-                    DEFAULTS, indent=2)
-                path.write_text(source, encoding="utf-8")
+                # Only the keys you change go here: a full copy would freeze today's defaults
+                path.write_text(json.dumps(STARTER, indent=2), encoding="utf-8")
                 log.info("Created %s with the default settings.", path.name)
             except OSError as e:
                 return copy.deepcopy(DEFAULTS), [f"Could not create {path}: {e}"]

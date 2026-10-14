@@ -6,21 +6,21 @@ No mod, no injection, nothing read from the game's memory: it only talks to the 
 
 ```
 Playing Left 4 Dead 2                             [campaign poster]  [your survivor]
-Dark Carnival · 1/5 Highway                        ← details: where you are
+Dark Carnival · Highway                        ← details: where you are
 ❤️ 81 HP · 🔫 Submachine Gun 50/650                 ← state: what moves (changes every 20 s):
-🧟 Specials: Charger, Jockey                           health & weapon / specials alive / team (online)
+                                                      health & weapon / team (online) / best time (Survival)
 12:34 elapsed                                      (2 of 4 online)
 ```
 
 | Situation | Line 1 (`details`) | Line 2 (`state`) | Images |
 |---|---|---|---|
 | Main menu | In the main menu | Last game: Dark Carnival (or Getting ready) | your cover image, tooltip "Left 4 Dead 2" |
-| Loading | Dark Carnival · 1/5 Highway | ⏳ Loading… | poster, tooltip "Easy difficulty" |
-| In game | Dark Carnival · 1/5 Highway | rotates: ❤️ 81 HP · 🔫 Submachine Gun 50/650 / 🧟 Specials: Charger, Jockey / 👥 2 players + 2 bots (online only) | poster + your survivor (Rochelle) |
+| Loading | Dark Carnival · Highway | ⏳ Loading… | poster, tooltip "Easy difficulty" |
+| In game | Dark Carnival · Highway | rotates: ❤️ 81 HP · 🔫 Submachine Gun 50/650 / 👥 2 players + 2 bots (online only) | poster + your survivor (Rochelle) |
 | Finale | Dead Center · Finale: Atrium | same | same |
 | Tank alive | same | 🔥 TANK! · ❤️ 64 HP · 🔫 Submachine Gun 50/650 | same |
 | Incapacitated | same | 🩸 Incapacitated — needs help! | same |
-| Just revived | same | 🦯 Revived — limping, 1 HP (20 s) | same |
+| Just revived | same | 🦯 Revived — 45 HP, or 🦯 Revived — limping, 1 HP under 30 HP (20 s) | same |
 | Two revives without a kit | same | 🖤 1 HP (last life) · 🔫 Pistol 15 | same |
 | Paused (solo) | same | ⏸️ Paused | same |
 | Dead | same | 💀 Dead (solo) / 💀 Dead — waiting for a rescue | same |
@@ -30,7 +30,7 @@ Dark Carnival · 1/5 Highway                        ← details: where you are
 | Survival, round on | Survival · Gun Shop | same rotation and alerts as in game, plus 🏆 Best here: 3:21 (or 🏆 Beating the best (3:21)!); **the timer counts the round** | same |
 | Survival, dead (solo) | same | 💀 Round over — 2:47 · 🏆 new best! (timer stops), then 🔁 Round #2 | same |
 | Survival, dead (online, team still up) | same | 💀 Dead — the round goes on | same |
-| Versus, as infected | The Parish · 1/5 Waterfront | 🧟 Playing as the Hunter · 250 HP | poster + Hunter |
+| Versus, as infected | The Parish · Waterfront | 🧟 Playing as the Hunter · 250 HP | poster + Hunter |
 | No keyboard/mouse for 5 min | same | 💤 Idle | same |
 | Game closed, Ctrl+C, window closed | — | the card disappears | — |
 
@@ -89,12 +89,12 @@ Nothing was ever written to the game folder or to Steam.
 
 ## What the card shows
 
-- **Line 1**: campaign and chapter with the game's own names (`1/5 Highway`, `Finale: Atrium`), or "In the main
-  menu". During a chapter change it already shows the next chapter.
+- **Line 1**: campaign and chapter with the game's own names (`Dark Carnival · Highway`, `Dead Center · Finale:
+  Atrium`), "Survival · Gun Shop", or "In the main menu". During a chapter change it already shows the next chapter.
 - **Line 2**: a strong state while it lasts — 💀 dead, 🩸 incapacitated, ⏸️ paused (solo), 🦯 just revived,
   🚪 safe room, 🔥 Tank alive, 🔁 retry, 👀 spectating, 🧟 playing a special infected, 💤 idle — otherwise it
-  rotates every 20 s between your health and weapon (with ammo: clip/reserve), the specials alive, and the team
-  (online only).
+  rotates every 20 s between your health and weapon (with ammo: clip/reserve), the team (online only) and, in
+  Survival, your best time. "Limping" is only written when you are revived under 30 HP.
 - **Big image**: the campaign poster; tooltip: difficulty, attempt number, "online".
 - **Small image**: your survivor's portrait (found by elimination: the three bots are known, so you are the fourth)
   or the special infected you play in Versus.
@@ -150,13 +150,13 @@ replaced by its default.
 | `character_images` | your 8 guns.lol portraits | Survivor portraits by name (`"Coach": "https://…"`). A survivor missing here uses the game's HUD portrait from the wiki. |
 | `cover_image` | your guns.lol link | Image used in the menu and when a map has no poster (`https://`, ≤256 characters). `""` = Steam's art. |
 | `buttons` | `[]` | Up to 2 `{"label": "…", "url": "https://…"}` (label ≤32 characters). You cannot see your own buttons. |
-| `state_rotation` | `["vitals", "specials", "vitals", "team", "record"]` | Order of line 2 when nothing urgent happens. Items without anything to say are skipped. |
+| `state_rotation` | `["vitals", "team", "record"]` | Order of line 2 when nothing urgent happens: `vitals` (health & weapon), `team` (online), `record` (Survival best), `specials` (specials alive, off by default). Items without anything to say are skipped. |
 | `rotate_seconds` | `20` | Seconds per rotation step (5 minimum). |
 | `idle_minutes` | `5` | Minutes without keyboard/mouse before 💤 Idle (`0` = never). |
 | `show_health` | `true` | Health on line 2. |
 | `show_weapon` | `true` | Weapon in hand. |
 | `show_ammo` | `true` | Clip/reserve after the weapon. |
-| `show_specials` | `true` | Specials alive and the Tank alert. |
+| `show_specials` | `true` | The Tank alert (and the `specials` rotation item if you add it). |
 | `show_team` | `true` | "2 players + 2 bots" online (never in solo). |
 | `show_character` | `true` | Your survivor's image. |
 | `show_difficulty` | `true` | Difficulty in the poster tooltip. |

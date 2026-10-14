@@ -85,7 +85,7 @@ class Scenario(unittest.TestCase):
         self.assertEqual(cards["Dead"]["state"], "💀 Dead")
         self.assertEqual(cards["Chapter restarts (retry)"]["state"], "🔁 Retry #2")
         self.assertEqual(cards["Safe room reached"]["state"], "🚪 Reached the safe room")
-        self.assertEqual(cards["Next chapter loading"]["details"], "Dark Carnival · 2/5 Fairground")
+        self.assertEqual(cards["Next chapter loading"]["details"], "Dark Carnival · Fairground")
         self.assertEqual(cards["Finale"]["details"], "Dark Carnival · Finale: Concert")
         self.assertEqual(cards["Idle (no keyboard/mouse for 5 min)"]["state"], "💤 Idle")
         self.assertEqual(cards["Back to the main menu"]["state"], "Last game: Dark Carnival")
@@ -106,7 +106,9 @@ class Scenario(unittest.TestCase):
         for line in lines:
             for ev in parser.feed(line):
                 tracker.apply(ev, T0)
-        cfg = dict(DEFAULTS)
+        seen = [build_activity(tracker.state, dict(DEFAULTS), T0 + k * 20)[0]["state"] for k in range(4)]
+        self.assertFalse(any("Specials" in line for line in seen))  # off by default (Sam's choice)
+        cfg = dict(DEFAULTS, state_rotation=["vitals", "specials", "team"])
         seen = [build_activity(tracker.state, cfg, T0 + k * 20)[0]["state"] for k in range(4)]
         self.assertIn("🧟 Specials: Charger, Jockey", seen)
         self.assertIn("❤️ 81 HP · 🔫 Submachine Gun 50/650", seen)
@@ -121,7 +123,7 @@ class Scenario(unittest.TestCase):
         for card in cards.values():
             check_limits(self, card)
         self.assertEqual(cards["Main menu (game just started)"]["details"], "Au menu principal")
-        self.assertEqual(cards["In game: health and weapon"]["details"], "Lugubre carnaval · 1/5 Autoroute")
+        self.assertEqual(cards["In game: health and weapon"]["details"], "Lugubre carnaval · Autoroute")
         self.assertEqual(cards["In game: health and weapon"]["state"], "81 PV · Mitrailleuse 50/650")
         self.assertEqual(cards["Incapacitated"]["state"], "À terre — a besoin d'aide !")
         self.assertEqual(cards["Finale"]["details"], "Lugubre carnaval · Finale : Concert")
@@ -135,7 +137,7 @@ class Scenario(unittest.TestCase):
             for ev in parser.feed(line):
                 tracker.apply(ev, T0)
         card, _ = build_activity(tracker.state, cfg, T0)
-        self.assertEqual(card["details"], "Centre de la mort · 1/4 Hôtel")
+        self.assertEqual(card["details"], "Centre de la mort · Hôtel")
 
     def test_privacy_switches(self):
         cfg = dict(DEFAULTS, show_health=False, show_weapon=False, show_specials=False, show_team=False,
@@ -158,6 +160,27 @@ class Scenario(unittest.TestCase):
         self.assertNotIn("timestamps", card)
         self.assertNotIn("assets", card)
         self.assertEqual(card["buttons"][0]["label"], "Left 4 Dead 2 on Steam")
+
+
+class Revived(unittest.TestCase):
+    def revived_at(self, health):
+        parser, tracker = ConsoleParser(), Tracker()
+        tracker.game_started(T0, T0)
+        lines = ["Host_NewGame on map c1m1_hotel", "Map: c1m1_hotel", "#Cstrike_TitlesTXT_Game_connected"]
+        lines += dump_lines(health=297, weapon="CPistol", clip=15, ammo_type=1, reserve=0, tick=10)
+        for line in lines:
+            for ev in parser.feed(line):
+                tracker.apply(ev, T0)
+        for line in dump_lines(health=health, tick=20):
+            for ev in parser.feed(line):
+                tracker.apply(ev, T0 + 2)
+        return build_activity(tracker.state, dict(DEFAULTS), T0 + 3)[0]["state"]
+
+    def test_limping_only_under_30_hp(self):
+        self.assertEqual(self.revived_at(1), "🦯 Revived — limping, 1 HP")
+        self.assertEqual(self.revived_at(29), "🦯 Revived — limping, 29 HP")
+        self.assertEqual(self.revived_at(30), "🦯 Revived — 30 HP")
+        self.assertEqual(self.revived_at(99), "🦯 Revived — 99 HP")
 
 
 class LastLife(unittest.TestCase):

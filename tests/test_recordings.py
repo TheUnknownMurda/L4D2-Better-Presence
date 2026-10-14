@@ -50,7 +50,7 @@ class NewGameChangelevelMenu(unittest.TestCase):
     def test_cards(self):
         self.r.until("17:19:46")
         card, _ = build_activity(self.r.tracker.state, dict(DEFAULTS), stamp("17:19:46"))
-        self.assertEqual(card["details"], "Dead Center · 1/4 Hotel")
+        self.assertEqual(card["details"], "Dead Center · Hotel")
         self.assertEqual(card["assets"]["small_text"], "Ellis")
         self.assertEqual(card["assets"]["large_text"], "Easy difficulty")
         self.assertEqual(card["timestamps"]["start"], int(stamp("17:18:01.580")))
@@ -98,7 +98,7 @@ class SoloVitals(unittest.TestCase):
         self.assertEqual(s.health, 1)
         self.assertEqual(s.revives, 1)
         card, _ = build_activity(s, dict(DEFAULTS), stamp("17:33:43"))
-        self.assertEqual(card["state"], "🦯 Revived — limping, 1 HP")
+        self.assertEqual(card["state"], "🦯 Revived — limping, 1 HP")  # under 30 HP
 
     def test_death_retry_menu(self):
         s = self.r.until("17:37:48")

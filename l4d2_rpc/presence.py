@@ -22,6 +22,7 @@ PAD = chr(0x2800)  # blank Braille pattern: visible as nothing, not trimmed by D
 MAX_TEXT = 128
 MAX_URL = 256
 REVIVED_SECONDS = 20
+LIMPING_BELOW = 30  # HP
 SETTLE_SECONDS = 45  # from the start of the load
 STATUS_DISPLAY_TYPES = {"name": 0, "state": 1, "details": 2}
 
@@ -136,7 +137,8 @@ def _team(s: GameState, cfg: dict, lang: str) -> str | None:
     if s.humans <= 1:
         return None  # solo: nothing worth a line (Sam's choice, 2026-10-14)
     if bots:
-        return _e(cfg, "team") + text(lang, "players_bots", players=s.humans, bots=bots)
+        return _e(cfg, "team") + text(lang, "players_bot" if bots == 1 else "players_bots", players=s.humans,
+                                      bots=bots)
     return _e(cfg, "team") + text(lang, "players", players=s.humans)
 
 
@@ -157,9 +159,11 @@ def _strong(s: GameState, cfg: dict, lang: str, now: float, idle: float) -> tupl
     if cfg["show_pause"] and fresh and s.paused:
         return "paused", _e(cfg, "paused") + text(lang, "paused")
     if fresh and s.revived_since is not None and now - s.revived_since <= REVIVED_SECONDS and s.health:
+        limping = s.health < LIMPING_BELOW  # Sam: "limping" only under 30 HP
         if cfg["show_health"]:
-            return "revived", _e(cfg, "revived") + text(lang, "revived", health=s.health)
-        return "revived", _e(cfg, "revived") + text(lang, "revived_short")
+            return "revived", _e(cfg, "revived") + text(lang, "revived_limping" if limping else "revived",
+                                                         health=s.health)
+        return "revived", _e(cfg, "revived") + text(lang, "revived_short_limping" if limping else "revived_short")
     if s.safe_room_since is not None:
         return "safe_room", _e(cfg, "safe_room") + text(lang, "safe_room")
     if cfg["show_specials"] and s.tank:

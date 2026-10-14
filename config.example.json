@@ -20,8 +20,6 @@
   "buttons": [],
   "state_rotation": [
     "vitals",
-    "specials",
-    "vitals",
     "team",
     "record"
   ],
