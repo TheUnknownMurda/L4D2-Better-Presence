@@ -15,6 +15,7 @@ from .discord_ipc import DiscordClient
 from .netcon import NetconClient
 from .parser import ConsoleParser
 from .presence import build_activity
+from .records import SurvivalRecords, clock
 from .state import Tracker
 
 log = logging.getLogger("l4d2rpc")
@@ -119,6 +120,7 @@ class App:
         self._polls = 0
         self._next_difficulty = 0.0
         self._warned: set[str] = set()
+        self.records = SurvivalRecords(log_dir() / "survival_records.json")
 
     # ------------------------------------------------------------------ helpers
     def _warn_once(self, key: str, message: str, *args) -> None:
@@ -246,6 +248,16 @@ class App:
         self._polls += 1
         self.netcon.send(";".join(commands))
 
+    def _save_rounds(self) -> None:
+        s = self.tracker.state
+        while self.tracker.finished_rounds:
+            map_name, seconds, end = self.tracker.finished_rounds.pop(0)
+            new_best = self.records.add(map_name, seconds, end)
+            if map_name == s.map:
+                s.last_round_record = new_best
+            log.info("Survival round on %s: %s%s.", map_name, clock(seconds), " (new best)" if new_best else "")
+        s.survival_best = self.records.best(s.map) if s.survival else None
+
     # ------------------------------------------------------------------ loop
     def step(self) -> None:
         mono = time.monotonic()
@@ -255,6 +267,7 @@ class App:
         self._poll(mono)
         now = time.time()
         self.tracker.tick(now)
+        self._save_rounds()
         idle = system.idle_seconds()
         try:
             activity, key = build_activity(self.tracker.state, self.cfg, now, idle)

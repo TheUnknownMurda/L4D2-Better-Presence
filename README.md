@@ -26,9 +26,10 @@ Dark Carnival · 1/5 Highway                        ← details: where you are
 | Dead | same | 💀 Dead (solo) / 💀 Dead — waiting for a rescue | same |
 | Chapter restarts | same | 🔁 Retry #2 (20 s), then "attempt 2" in the poster tooltip | same |
 | Safe room door closed | same | 🚪 Reached the safe room | same |
-| Survival, timer not started | Survival · Gun Shop | ⏱️ Waiting to start the round (no timer) | poster (tooltip: the campaign) + survivor |
-| Survival, round on | Survival · Gun Shop | same rotation and alerts as in game; the timer counts the round | same |
-| Survival, dead | same | 💀 Dead — the round goes on, then 🔁 Round #2 | same |
+| Survival, timer not started | Survival · Gun Shop | ⏱️ Waiting to start the round · best 3:21 (no timer) | poster (tooltip: the campaign) + survivor |
+| Survival, round on | Survival · Gun Shop | same rotation and alerts as in game, plus 🏆 Best here: 3:21 (or 🏆 Beating the best (3:21)!); **the timer counts the round** | same |
+| Survival, dead (solo) | same | 💀 Round over — 2:47 · 🏆 new best! (timer stops), then 🔁 Round #2 | same |
+| Survival, dead (online, team still up) | same | 💀 Dead — the round goes on | same |
 | Versus, as infected | The Parish · 1/5 Waterfront | 🧟 Playing as the Hunter · 250 HP | poster + Hunter |
 | No keyboard/mouse for 5 min | same | 💤 Idle | same |
 | Game closed, Ctrl+C, window closed | — | the card disappears | — |
@@ -82,7 +83,7 @@ enriched "Playing Left 4 Dead 2" instead of two activities.
 
 1. Double-click `Startup-off.bat` if you turned on the start with Windows.
 2. In Steam, remove `-netconport 27015 -netconpassword … -g15` from the game's launch options.
-3. Delete the folder, and `%LOCALAPPDATA%\L4D2RPC` (the log).
+3. Delete the folder, and `%LOCALAPPDATA%\L4D2RPC` (the log and your survival best times).
 
 Nothing was ever written to the game folder or to Steam.
 
@@ -149,7 +150,7 @@ replaced by its default.
 | `character_images` | your 8 guns.lol portraits | Survivor portraits by name (`"Coach": "https://…"`). A survivor missing here uses the game's HUD portrait from the wiki. |
 | `cover_image` | your guns.lol link | Image used in the menu and when a map has no poster (`https://`, ≤256 characters). `""` = Steam's art. |
 | `buttons` | `[]` | Up to 2 `{"label": "…", "url": "https://…"}` (label ≤32 characters). You cannot see your own buttons. |
-| `state_rotation` | `["vitals", "specials", "vitals", "team"]` | Order of line 2 when nothing urgent happens. Items without anything to say are skipped. |
+| `state_rotation` | `["vitals", "specials", "vitals", "team", "record"]` | Order of line 2 when nothing urgent happens. Items without anything to say are skipped. |
 | `rotate_seconds` | `20` | Seconds per rotation step (5 minimum). |
 | `idle_minutes` | `5` | Minutes without keyboard/mouse before 💤 Idle (`0` = never). |
 | `show_health` | `true` | Health on line 2. |
@@ -160,6 +161,7 @@ replaced by its default.
 | `show_character` | `true` | Your survivor's image. |
 | `show_difficulty` | `true` | Difficulty in the poster tooltip. |
 | `show_attempts` | `true` | 🔁 Retry and "attempt n". |
+| `show_records` | `true` | Survival best times (🏆). |
 | `show_online` | `true` | "(2 of 4)" and "online". |
 | `show_pause` | `true` | ⏸️ Paused. |
 | `show_idle` | `true` | 💤 Idle. |
@@ -195,7 +197,12 @@ replaced by its default.
   Scavenge cannot be told apart: the game does not expose the mode to its client console. Versus shows when you
   play infected.
 - **Survival timer**: the game prints nothing when the round starts; the card starts its timer at the first special
-  infected or the first damage, a few seconds after the real start. No survival time or medal is shown.
+  infected or the first damage, a few seconds after the real start.
+- **Survival best times** are the program's own: the game's records (and medals) cannot be read from outside —
+  Steam's stats have no per-map survival time and L4D2's leaderboards are not public. Every round played while the
+  program runs is measured (detected start → your death in solo, or → your death / the next round online) and the
+  best per map is kept in `%LOCALAPPDATA%\L4D2RPC\survival_records.json`. Being measured from the detected
+  start, they can be a few seconds shorter than the game's. Records made before installing it are unknown.
 - **Temporary health** (pills, adrenaline) is not in the dump: only permanent health is shown.
 - **Melee weapon type** (katana, bat…) is not in the dump: "Melee weapon".
 - **The Witch** is not a player, so `status` does not list her.

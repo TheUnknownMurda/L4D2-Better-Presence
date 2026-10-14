@@ -6,7 +6,11 @@ import unittest
 from helpers import Replay, stamp
 
 from l4d2_rpc.config import DEFAULTS
+from l4d2_rpc.parser import ConsoleParser
 from l4d2_rpc.presence import build_activity
+from l4d2_rpc.records import SurvivalRecords, clock
+from l4d2_rpc.simulate import dump_lines, status_lines
+from l4d2_rpc.state import Tracker
 
 
 class SurvivalRecording(unittest.TestCase):
@@ -46,7 +50,12 @@ class SurvivalRecording(unittest.TestCase):
         s = self.r.until("18:52:30")
         self.assertTrue(s.dead)
         card, _ = build_activity(s, dict(DEFAULTS), stamp("18:52:30"))
-        self.assertEqual(card["state"], "💀 Dead — the round goes on")
+        # Solo: the round ends with the player (18:51:05 -> 18:52:29)
+        self.assertEqual(card["state"], "💀 Round over — 1:23")
+        self.assertNotIn("timestamps", card)
+        [(map_name, seconds, _end)] = self.r.tracker.finished_rounds
+        self.assertEqual(map_name, "c1m2_streets")
+        self.assertAlmostEqual(seconds, 83.8, delta=0.2)
         s = self.r.until("18:52:39")
         self.assertEqual(s.attempt, 2)
         self.assertIsNone(s.round_start)
@@ -56,6 +65,71 @@ class SurvivalRecording(unittest.TestCase):
         self.assertIsNotNone(s.round_start)  # a Boomer appeared: the second round is on
         card, _ = build_activity(s, dict(DEFAULTS), stamp("18:53:20"))
         self.assertEqual(card["assets"]["large_text"], "Dead Center · round 2")
+
+
+class BestTimes(unittest.TestCase):
+    def feed(self, tracker, parser, lines, t):
+        for line in lines:
+            for ev in parser.feed(line):
+                tracker.apply(ev, t)
+
+    def start_survival(self, humans=None):
+        parser, tracker = ConsoleParser(), Tracker()
+        t = 1000.0
+        tracker.game_started(t, t)
+        self.feed(tracker, parser, ["Host_NewGame on map c1m2_streets",
+                                    "Precache called on a point_template that has no templates: "
+                                    "survival_start_explain_template", "Map: c1m2_streets",
+                                    "#Cstrike_TitlesTXT_Game_connected", "Unknown command: survival_record"]
+                  + status_lines("c1m2_streets", humans=humans, bots=("Ellis", "Rochelle", "Coach"))
+                  + dump_lines(health=100, tick=1), t)
+        return parser, tracker
+
+    def test_rotation_and_waiting_line_show_the_best(self):
+        parser, tracker = self.start_survival()
+        s = tracker.state
+        s.survival_best = 201.0
+        cfg = dict(DEFAULTS, state_rotation=["record"])
+        card, _ = build_activity(s, cfg, 1001)
+        self.assertEqual(card["state"], "⏱️ Waiting to start the round · best 3:21")
+        self.feed(tracker, parser, status_lines("c1m2_streets", bots=("Ellis", "Rochelle", "Coach", "Hunter"))
+                  + dump_lines(health=90, tick=50), 1010)
+        self.assertEqual(s.round_start, 1010)
+        card, _ = build_activity(s, cfg, 1100)
+        self.assertEqual(card["state"], "🏆 Best here: 3:21")
+        self.feed(tracker, parser, dump_lines(health=90, tick=900), 1300)
+        card, _ = build_activity(s, cfg, 1300)
+        self.assertEqual(card["state"], "🏆 Beating the best (3:21)!")
+
+    def test_team_round_ends_at_restart(self):
+        """Online, our death does not end the round: it is closed by the next round's restart."""
+        parser, tracker = self.start_survival(humans=[("Sam", "loopback"), ("Friend", "198.51.100.3:27005")])
+        self.feed(tracker, parser, status_lines("c1m2_streets", humans=[("Sam", "loopback"),
+                                                                        ("Friend", "198.51.100.3:27005")],
+                                                bots=("Ellis", "Rochelle", "Hunter")), 1010)
+        self.feed(tracker, parser, dump_lines(health=0, dead=True, tick=500), 1100)
+        card, _ = build_activity(tracker.state, dict(DEFAULTS), 1101)
+        self.assertEqual(card["state"], "💀 Dead — the round goes on")
+        self.assertEqual(tracker.finished_rounds, [])
+        self.feed(tracker, parser, ["Initializing Director's script"], 1200)
+        [(_, seconds, _)] = tracker.finished_rounds
+        self.assertEqual(seconds, 90)  # our death, not the restart
+
+    def test_records_file(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "survival_records.json"
+            r = SurvivalRecords(path)
+            self.assertIsNone(r.best("c1m2_streets"))
+            self.assertTrue(r.add("c1m2_streets", 83.8, 1_791_000_000))
+            self.assertFalse(r.add("c1m2_streets", 60, 1_791_000_100))
+            self.assertTrue(SurvivalRecords(path).add("C1M2_STREETS", 201.4, 1_791_000_200))
+            again = SurvivalRecords(path)
+            self.assertEqual(again.best("c1m2_streets"), 201.4)
+            self.assertEqual(again.data["c1m2_streets"]["rounds"], 3)
+        self.assertEqual(clock(201.4), "3:21")
+        self.assertEqual(clock(3725), "1:02:05")
 
 
 if __name__ == "__main__":

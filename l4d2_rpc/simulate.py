@@ -115,7 +115,7 @@ def scenario() -> list[Step]:
              + dump_lines(health=100, weapon="CRifle_AK47", clip=40, ammo_type=3, reserve=360, tick=7000)),
         Step("Survival: round running", status_lines("c1m2_streets", bots=("Ellis", "Rochelle", "Coach", "Hunter"))
              + dump_lines(health=52, weapon="CRifle_AK47", clip=12, ammo_type=3, reserve=300, tick=7600), seconds=22),
-        Step("Survival: dead, the bots hold on", ["Player: Sam - Damage Given"]
+        Step("Survival: dead, round over (solo)", ["Player: Sam - Damage Given"]
              + dump_lines(health=0, dead=True, tick=8000)),
         Step("Survival: next round", ["Initializing Director's script", "Initializing Director's script"]
              + status_lines("c1m2_streets", bots=("Ellis", "Rochelle", "Coach"))

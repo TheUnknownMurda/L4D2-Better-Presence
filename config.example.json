@@ -22,7 +22,8 @@
     "vitals",
     "specials",
     "vitals",
-    "team"
+    "team",
+    "record"
   ],
   "rotate_seconds": 20,
   "idle_minutes": 5,
@@ -34,6 +35,7 @@
   "show_character": true,
   "show_difficulty": true,
   "show_attempts": true,
+  "show_records": true,
   "show_online": true,
   "show_pause": true,
   "show_idle": true,

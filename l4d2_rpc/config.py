@@ -16,7 +16,7 @@ CONFIG_PATH = ROOT / "config.json"
 EXAMPLE_PATH = ROOT / "config.example.json"
 
 OFFICIAL_CLIENT_ID = "356954277803065354"  # Discord's own "Left 4 Dead 2" application (detectable list)
-ROTATION_ITEMS = ("vitals", "specials", "team")
+ROTATION_ITEMS = ("vitals", "specials", "team", "record")
 TIMERS = ("campaign", "chapter", "session", "none")
 STATUS_DISPLAY = ("name", "state", "details")
 
@@ -42,7 +42,7 @@ DEFAULTS: dict = {
     },
     "cover_image": IMAGE_HOST + "R7kq6VUsjDtVC7alNkrjk.png",
     "buttons": [],
-    "state_rotation": ["vitals", "specials", "vitals", "team"],
+    "state_rotation": ["vitals", "specials", "vitals", "team", "record"],
     "rotate_seconds": 20,
     "idle_minutes": 5,
     "show_health": True,
@@ -53,6 +53,7 @@ DEFAULTS: dict = {
     "show_character": True,
     "show_difficulty": True,
     "show_attempts": True,
+    "show_records": True,
     "show_online": True,
     "show_pause": True,
     "show_idle": True,

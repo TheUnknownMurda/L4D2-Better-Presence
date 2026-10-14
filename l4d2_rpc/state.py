@@ -25,6 +25,7 @@ RETRY_MIN_SECONDS = 15  # a director restart this soon after a chapter start is 
 DUMP_STALE_SECONDS = 12  # without a fresh dump, health/weapon are no longer shown
 PAUSE_MIN_GAP = 1.5  # two dumps this far apart with the same tick count = paused
 MAX_INCAPS = 2  # default survivor_max_incapacitated_count: the next one after 2 revives is death
+RESULTS_SCREEN_SECONDS = 9  # Survival: death -> next round's "Initializing Director's script" (measured 9 s)
 
 
 @dataclass
@@ -33,6 +34,10 @@ class GameState:
     map: str | None = None
     mode: str | None = None  # "survival" when recognised, else unknown (campaign, realism…)
     round_start: float | None = None  # Survival: when the round was seen starting
+    round_end: float | None = None  # Survival: when the round ended (solo: the player's death)
+    last_round: float | None = None  # Survival: length of the round that just ended, seconds
+    last_round_record: bool = False  # …and whether it beat the best time
+    survival_best: float | None = None  # Survival: best time on this map (set by the app from its records)
     remote: bool = False  # on another computer's server (online)
     listen_server: bool = False  # this computer hosts the game (solo or local lobby)
     difficulty: str | None = None  # Easy | Normal | Hard | Impossible
@@ -107,6 +112,8 @@ class Tracker:
     def __init__(self, session_start: float | None = None):
         self.state = GameState(session_start=session_start)
         self._chapter_dumps = 0
+        self._death_time: float | None = None
+        self.finished_rounds: list[tuple[str, float, float]] = []  # (map, seconds, end time) for the app to save
 
     # ------------------------------------------------------------------ lifecycle
     def game_started(self, session_start: float, now: float) -> None:
@@ -161,7 +168,7 @@ class Tracker:
         s.chapter_start = now
         s.attempt = 1
         s.mode = None
-        s.round_start = None
+        self._reset_round()
         self._chapter_dumps = 0
         self._reset_vitals()
         if new_game or s.campaign_start is None or (s.campaign and s.campaign != previous_campaign):
@@ -234,6 +241,8 @@ class Tracker:
         s = self.state
         if s.phase == "ingame" and (s.player_name is None or d.get("player") == s.player_name):
             if s.team == TEAM_SURVIVOR or s.team is None:
+                if not s.dead:
+                    self._died(now)
                 s.dead = True
                 s.incapacitated = False
 
@@ -246,7 +255,11 @@ class Tracker:
             s.attempt += 1
             s.retry_since = now
             s.revived_since = None
-            s.round_start = None
+            if s.survival and s.round_start is not None and s.round_end is None:
+                # Not finished at our death (others alive, or we were incapacitated): it ended before this restart
+                end = self._death_time or now - RESULTS_SCREEN_SECONDS
+                self._finish_round(max(end, s.round_start), now)
+            self._reset_round()
             s.dead = False
             s.incapacitated = False
             s.revives = 0
@@ -257,6 +270,28 @@ class Tracker:
         s = self.state
         if s.phase == "ingame" and s.safe_room_since is None:
             s.safe_room_since = now
+
+    def _reset_round(self) -> None:
+        s = self.state
+        s.round_start = None
+        s.round_end = None
+        s.last_round = None
+        s.last_round_record = False
+        self._death_time = None
+
+    def _finish_round(self, end: float, now: float) -> None:
+        s = self.state
+        s.round_end = end
+        s.last_round = end - s.round_start
+        if s.map:
+            self.finished_rounds.append((s.map, s.last_round, end))
+
+    def _died(self, now: float) -> None:
+        """The local player just died."""
+        s = self.state
+        self._death_time = now
+        if s.survival and s.round_start is not None and s.round_end is None and s.solo:
+            self._finish_round(now, now)  # alone with bots, the round ends with us
 
     def _on_survival(self, d: dict, now: float) -> None:
         if self.state.phase in ("loading", "ingame"):
@@ -341,6 +376,8 @@ class Tracker:
                 and team == TEAM_SURVIVOR):
             self._survival_started(now)
         s.incapacitated = incap
+        if dead and not s.dead:
+            self._died(now)
         s.dead = dead
         if dead or incap:
             s.revived_since = None

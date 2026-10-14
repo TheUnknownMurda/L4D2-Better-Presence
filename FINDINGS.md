@@ -159,6 +159,17 @@ Survival game on "Concert" (`c2m5_concert`) left before starting the timer.
 - Survival map names come from `missions/campaignN.txt` → `modes/survival` (`#L4D360UI_LevelName_SURVIVAL_C1M2` =
   "Gun Shop" / "L'armerie"); 43 maps.
 
+### Survival best times: not readable from outside (verified 2026-10-14)
+
+- `Steam/appcache/stats/UserGameStatsSchema_550.bin` (459 KB): 682 `Stat.*` names; per-map stats exist only for
+  Scavenge (`Stat.TotalTime.Scavenge.c1m4_atrium`…); for Survival only `Stat.SurvivalGamesPlayed.Total`. No best
+  time, no medal per map.
+- `https://steamcommunity.com/stats/L4D2/leaderboards/?xml=1` → `No public global leaderboards available`.
+- The mission files' `x360leaderboard`/`besttime` blocks are for the Xbox 360 version.
+→ The companion keeps its own: round length = detected start → local death (solo: the round ends with the player:
+death 18:52:29, restart 18:52:38) or → local death / restart − 9 s online (not verified online). Saved in
+`%LOCALAPPDATA%\L4D2RPC\survival_records.json`.
+
 ## Survivor portraits (verified 2026-10-14)
 
 Sam asked for the portraits of a screen recording (a Steam Workshop page, "Survivor Better Materials",

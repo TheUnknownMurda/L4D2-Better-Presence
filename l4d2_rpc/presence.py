@@ -14,6 +14,7 @@ import re
 
 from . import data
 from .i18n import EMOJI, resolve_language, text
+from .records import clock
 from .state import TEAM_INFECTED, TEAM_SPECTATOR, GameState
 
 ACTIVITY_PLAYING = 0
@@ -143,6 +144,11 @@ def _strong(s: GameState, cfg: dict, lang: str, now: float, idle: float) -> tupl
     """(kind, text) for a state that stays on screen while it lasts, in priority order."""
     fresh = s.vitals_fresh(now)
     if s.dead and s.team != TEAM_INFECTED:
+        if s.survival and s.round_end is not None and s.last_round is not None:
+            line = _e(cfg, "dead") + text(lang, "round_over", time=clock(s.last_round))
+            if cfg["show_records"] and s.last_round_record:
+                line += " · " + _e(cfg, "record") + text(lang, "new_best")
+            return "round_over", line
         if s.survival:
             return "dead", _e(cfg, "dead") + text(lang, "dead_survival")
         return "dead", _e(cfg, "dead") + text(lang, "dead_solo" if s.solo else "dead")
@@ -162,7 +168,10 @@ def _strong(s: GameState, cfg: dict, lang: str, now: float, idle: float) -> tupl
     if cfg["show_attempts"] and s.retry_since is not None and now - s.retry_since <= 20 and s.attempt > 1:
         return "retry", _e(cfg, "retry") + text(lang, "round" if s.survival else "retry", n=s.attempt)
     if s.round_waiting:
-        return "survival_wait", _e(cfg, "survival_wait") + text(lang, "survival_wait")
+        line = _e(cfg, "survival_wait") + text(lang, "survival_wait")
+        if cfg["show_records"] and s.survival_best:
+            line += " · " + text(lang, "best_short", time=clock(s.survival_best))
+        return "survival_wait", line
     if fresh and s.team == TEAM_SPECTATOR:
         return "spectating", _e(cfg, "spectating") + text(lang, "spectating")
     if fresh and s.team == TEAM_INFECTED:
@@ -175,10 +184,20 @@ def _strong(s: GameState, cfg: dict, lang: str, now: float, idle: float) -> tupl
     return None
 
 
+def _record(s: GameState, cfg: dict, lang: str, now: float) -> str | None:
+    """Survival only: the best time on this map, or that the running round beats it."""
+    if not (cfg["show_records"] and s.survival and s.survival_best and s.round_start and s.round_end is None):
+        return None
+    if now - s.round_start > s.survival_best:
+        return _e(cfg, "record") + text(lang, "beating_best", time=clock(s.survival_best))
+    return _e(cfg, "record") + text(lang, "best_here", time=clock(s.survival_best))
+
+
 def _rotating(s: GameState, cfg: dict, lang: str, now: float) -> str:
     builders = {"vitals": lambda: _vitals(s, cfg, lang) if s.vitals_fresh(now) else None,
                 "specials": lambda: _specials(s, cfg, lang),
-                "team": lambda: _team(s, cfg, lang)}
+                "team": lambda: _team(s, cfg, lang),
+                "record": lambda: _record(s, cfg, lang, now)}
     rotation = cfg["state_rotation"]
     slot = int(now // cfg["rotate_seconds"]) % len(rotation)
     # Start at the current slot and take the first item that has something to say
@@ -255,8 +274,8 @@ def build_activity(s: GameState, cfg: dict, now: float, idle: float = 0.0) -> tu
         timer = cfg["timer"]
         start = {"campaign": s.campaign_start, "chapter": s.chapter_start, "session": s.session_start}.get(timer)
         if s.survival and timer != "none":
-            # Survival: the round's time (from when it was seen starting); no timer while waiting
-            start = s.round_start if timer != "session" else s.session_start
+            # Survival: the round's time (from when it was seen starting); none while waiting or once it is over
+            start = (s.round_start if s.round_end is None else None) if timer != "session" else s.session_start
         key = (s.phase, s.map, s.mode, kind, who, s.team)
         # Online: "(2 of 4)" after the state line
         if cfg["show_online"] and s.phase == "ingame" and s.humans and s.max_players and (s.remote or s.humans > 1):
