@@ -104,6 +104,22 @@ def scenario() -> list[Step]:
              + status_lines("c5m1_waterfront", humans=[("Sam", "198.51.100.2:27005"), ("P2", "1.2.3.4:1")],
                             bots=(), local=False, max_players=8)
              + dump_lines(health=250, team=3, weapon="CHunterClaw", clip=-1, ammo_type=-1, reserve=0, tick=6000)),
+        Step("Survival: waiting to start", [
+            "BinkOpen( c:\\program files (x86)\\steam\\steamapps\\common\\left 4 dead 2\\left4dead2\\media\\l4d2_background05.bik )",
+            "Dropped Sam from server (Server shutting down)",
+            "---- Host_NewGame ----", "Host_NewGame on map c1m2_streets",
+            "Precache called on a point_template that has no templates: survival_start_explain_template",
+            "Left 4 Dead 2", "Map: c1m2_streets", "Players: 1 (0 bots) / 4 humans",
+            "#Cstrike_TitlesTXT_Game_connected", "Unknown command: survival_record"]
+             + status_lines("c1m2_streets", bots=("Ellis", "Rochelle", "Coach"))
+             + dump_lines(health=100, weapon="CRifle_AK47", clip=40, ammo_type=3, reserve=360, tick=7000)),
+        Step("Survival: round running", status_lines("c1m2_streets", bots=("Ellis", "Rochelle", "Coach", "Hunter"))
+             + dump_lines(health=52, weapon="CRifle_AK47", clip=12, ammo_type=3, reserve=300, tick=7600), seconds=22),
+        Step("Survival: dead, the bots hold on", ["Player: Sam - Damage Given"]
+             + dump_lines(health=0, dead=True, tick=8000)),
+        Step("Survival: next round", ["Initializing Director's script", "Initializing Director's script"]
+             + status_lines("c1m2_streets", bots=("Ellis", "Rochelle", "Coach"))
+             + dump_lines(health=100, weapon="CRifle_AK47", clip=40, ammo_type=3, reserve=360, tick=8300)),
         Step("Game closed", [], process="closed"),
     ]
     return steps

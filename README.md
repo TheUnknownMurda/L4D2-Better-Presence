@@ -26,6 +26,9 @@ Dark Carnival · 1/5 Highway                        ← details: where you are
 | Dead | same | 💀 Dead (solo) / 💀 Dead — waiting for a rescue | same |
 | Chapter restarts | same | 🔁 Retry #2 (20 s), then "attempt 2" in the poster tooltip | same |
 | Safe room door closed | same | 🚪 Reached the safe room | same |
+| Survival, timer not started | Survival · Gun Shop | ⏱️ Waiting to start the round (no timer) | poster (tooltip: the campaign) + survivor |
+| Survival, round on | Survival · Gun Shop | same rotation and alerts as in game; the timer counts the round | same |
+| Survival, dead | same | 💀 Dead — the round goes on, then 🔁 Round #2 | same |
 | Versus, as infected | The Parish · 1/5 Waterfront | 🧟 Playing as the Hunter · 250 HP | poster + Hunter |
 | No keyboard/mouse for 5 min | same | 💤 Idle | same |
 | Game closed, Ctrl+C, window closed | — | the card disappears | — |
@@ -188,8 +191,11 @@ replaced by its default.
 
 ## Limits
 
-- **Game mode** (Campaign, Realism, Survival, Scavenge) cannot be read: the game does not expose it to its
-  client console. Versus shows when you play infected.
+- **Game mode**: only **Survival** is recognised (from lines printed when its map loads). Campaign, Realism and
+  Scavenge cannot be told apart: the game does not expose the mode to its client console. Versus shows when you
+  play infected.
+- **Survival timer**: the game prints nothing when the round starts; the card starts its timer at the first special
+  infected or the first damage, a few seconds after the real start. No survival time or medal is shown.
 - **Temporary health** (pills, adrenaline) is not in the dump: only permanent health is shown.
 - **Melee weapon type** (katana, bat…) is not in the dump: "Melee weapon".
 - **The Witch** is not a player, so `status` does not list her.

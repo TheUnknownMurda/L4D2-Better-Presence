@@ -19,7 +19,7 @@ The full specification of the series is `../_Prompt Better Presence.md`.
 ## Decisions taken with Sam (2026-10-14)
 
 - Source: the engine's network console (`-netconport` + `-netconpassword` + `-g15`), no mod (VAC).
-- Card in English; no "Solo with N bots" line (team line only online); cover image = Sam's guns.lol link
+- Card in English; Survival has its own card; no "Solo with N bots" line (team line only online); cover image = Sam's guns.lol link
   (`cover_image`).
 - Usage: personal.
 
@@ -77,6 +77,9 @@ Done and verified:
 - Fixed after the PC run: Discord answering late (>5 s) no longer drops the connection (the "Loading…" card was
   lost); card tied to the companion PID (`card_owner`); no solo team line; `cover_image`; "Loading…" kept until the
   first health read.
+
+- Survival mode (Sam's request): recognised at load (`survival_start_explain`, `survival_record`), "⏱️ Waiting to
+  start the round", round timer from the first special/damage, "Round #n". Tests on Sam's real survival recording.
 
 To verify with Sam (not verified yet):
 - Cover image visible; still one card with `card_owner: companion`; "Loading…" seen during a new game's load.

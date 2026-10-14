@@ -79,6 +79,20 @@ def chapter_name(map_name: str | None, lang: str) -> str | None:
     return names.get(lang) or names.get("en")
 
 
+def mode_map_name(map_name: str | None, mode: str, lang: str) -> str | None:
+    """The name a mode gives to a map ("Gun Shop" for c1m2_streets in Survival), or None."""
+    info = map_info(map_name)
+    if not info:
+        return None
+    names = (game_data()["maps"].get(info.map, {}).get("mode_names") or {}).get(mode) or {}
+    return names.get(lang) or names.get("en")
+
+
+def mode_name(mode: str | None, lang: str) -> str | None:
+    names = game_data()["modes"].get(mode or "") or {}
+    return names.get(lang) or names.get("en")
+
+
 def difficulty_name(value: str | None, lang: str) -> str | None:
     if not value:
         return None

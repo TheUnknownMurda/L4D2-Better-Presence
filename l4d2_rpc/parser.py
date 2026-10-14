@@ -27,6 +27,9 @@ RE_ATTACKED = re.compile(r"^(.+) attacked (.+)$")
 RE_CVAR = re.compile(r'^"([^"]+)" = "([^"]*)"')
 RE_UNKNOWN = re.compile(r'^Unknown command:? "?([^"\s]+)"?')
 RE_PASSWORD = re.compile(r"^This server is password protected for console access")
+# Survival maps: printed while the map loads (local server), e.g.
+# "Precache called on a point_template that has no templates: survival_start_explain_template"
+RE_SURVIVAL_MAP = re.compile(r"survival_start_explain")
 
 # --- g15_dumpplayer ---------------------------------------------------------------------------------------------
 RE_DUMP_SECTION = re.compile(r"^\((localplayer|localteam|playerresource|localplayerweapon)\)\s*$")
@@ -176,7 +179,12 @@ class ConsoleParser:
             return [Event("cvar", {"name": m.group(1).lower(), "value": m.group(2)})]
         m = RE_UNKNOWN.match(text)
         if m:
+            # The server sends "survival_record" to the client when a Survival game starts
+            if m.group(1) == "survival_record":
+                return [Event("survival")]
             return [Event("unknown_command", {"name": m.group(1)})]
+        if RE_SURVIVAL_MAP.search(text):
+            return [Event("survival")]
         if RE_PASSWORD.match(text):
             return [Event("password_required")]
         m = RE_ATTACKED.match(text)

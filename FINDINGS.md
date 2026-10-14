@@ -136,6 +136,29 @@ All weapon client classes (43, incl. infected claws `CTankClaw`, `CHunterClaw`�
   `library_600x900.jpg`/`header.jpg`; each link checked HTTP 200. Cover image: Sam's own link
   (`images.guns.lol/…/R7kq6VUsjDtVC7alNkrjk.png`, PNG, 790 KB, HTTP 200, 90 characters).
 
+## Survival mode (verified 2026-10-14, `recordings/survival_session.log`, fixture `tests/fixtures/survival.log`)
+
+Solo Survival on "Gun Shop" (`c1m2_streets`), one round, death, a second round, back to the menu, then a new
+Survival game on "Concert" (`c2m5_concert`) left before starting the timer.
+
+- **The mode is recognisable at load**, by two lines:
+  - while the map loads (local server): `Couldn't find any entities named survival_start_explain, which
+    point_template survival_start_explain_template is specifying.` and `Precache called on a point_template that
+    has no templates: survival_start_explain_template`;
+  - right after `#Cstrike_TitlesTXT_Game_connected`: `Unknown command: survival_record` (a command the server sends
+    to the client; expected on remote servers too — not verified).
+- `z_difficulty` reads `"normal"` (lower case) in Survival.
+- **Nothing is printed when the round's timer starts** (no console line, no change in `g15_dumpplayer`'s
+  player/team/resource fields). Before the start no infected spawn, so the first special in `status` or the first
+  damage marks it: round 1 → first damage 18:51:05 (100 → 52 HP), specials at 18:51:09; round 2 → Boomer at
+  18:53:19. The real start is a few seconds earlier: the card's round timer can be a little short.
+- Death: same `Player: … - Damage Given` report; the round restarts ~9 s later with `Initializing Director's script`
+  ×2 (counted as round 2). No survival time or medal is printed.
+- First `g15_dumpplayer` right after connecting: `m_iTeamNum 0`, `m_iHealth 0`, `deadflag true` (not spawned yet):
+  ignored, otherwise the card showed "Dead" in the new game (found by the tests).
+- Survival map names come from `missions/campaignN.txt` → `modes/survival` (`#L4D360UI_LevelName_SURVIVAL_C1M2` =
+  "Gun Shop" / "L'armerie"); 43 maps.
+
 ## Survivor portraits (verified 2026-10-14)
 
 Sam asked for the portraits of a screen recording (a Steam Workshop page, "Survivor Better Materials",

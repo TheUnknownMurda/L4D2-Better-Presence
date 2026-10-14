@@ -633,22 +633,50 @@
   "c10m2_drainage": {
    "campaign": 10,
    "chapter": 2,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Drains",
+     "fr": "Les Conduits"
+    }
+   }
   },
   "c10m3_ranchhouse": {
    "campaign": 10,
    "chapter": 3,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Church",
+     "fr": "L'Église"
+    },
+    "scavenge": {
+     "en": "The Church",
+     "fr": "L'Église"
+    }
+   }
   },
   "c10m4_mainstreet": {
    "campaign": 10,
    "chapter": 4,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Street",
+     "fr": "La Rue"
+    }
+   }
   },
   "c10m5_houseboat": {
    "campaign": 10,
    "chapter": 5,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Boathouse",
+     "fr": "Le Hangar à Bateaux"
+    }
+   }
   },
   "c11m1_greenhouse": {
    "campaign": 11,
@@ -658,22 +686,50 @@
   "c11m2_offices": {
    "campaign": 11,
    "chapter": 2,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "The Crane",
+     "fr": "La Grue"
+    }
+   }
   },
   "c11m3_garage": {
    "campaign": 11,
    "chapter": 3,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "The Construction Site",
+     "fr": "Le Chantier"
+    }
+   }
   },
   "c11m4_terminal": {
    "campaign": 11,
    "chapter": 4,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "The Terminal",
+     "fr": "Le Terminal"
+    },
+    "scavenge": {
+     "en": "The Terminal",
+     "fr": "Le Terminal"
+    }
+   }
   },
   "c11m5_runway": {
    "campaign": 11,
    "chapter": 5,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "The Runway",
+     "fr": "La Piste"
+    }
+   }
   },
   "c12m1_hilltop": {
    "campaign": 12,
@@ -683,12 +739,24 @@
   "c12m2_traintunnel": {
    "campaign": 12,
    "chapter": 2,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Warehouse",
+     "fr": "L'Entrepôt"
+    }
+   }
   },
   "c12m3_bridge": {
    "campaign": 12,
    "chapter": 3,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "The Bridge",
+     "fr": "Le Pont"
+    }
+   }
   },
   "c12m4_barn": {
    "campaign": 12,
@@ -698,7 +766,17 @@
   "c12m5_cornfield": {
    "campaign": 12,
    "chapter": 5,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "The Farmhouse",
+     "fr": "La Ferme"
+    },
+    "scavenge": {
+     "en": "The Farmhouse",
+     "fr": "La Ferme"
+    }
+   }
   },
   "c13m1_alpinecreek": {
    "campaign": 13,
@@ -713,22 +791,54 @@
   "c13m3_memorialbridge": {
    "campaign": 13,
    "chapter": 3,
-   "chapters": 4
+   "chapters": 4,
+   "mode_names": {
+    "survival": {
+     "en": "Junkyard",
+     "fr": "Le casse"
+    }
+   }
   },
   "c13m4_cutthroatcreek": {
    "campaign": 13,
    "chapter": 4,
-   "chapters": 4
+   "chapters": 4,
+   "mode_names": {
+    "survival": {
+     "en": "Waterworks",
+     "fr": "Station d’épuration"
+    }
+   }
   },
   "c14m1_junkyard": {
    "campaign": 14,
    "chapter": 1,
-   "chapters": 2
+   "chapters": 2,
+   "mode_names": {
+    "survival": {
+     "en": "Junkyard",
+     "fr": "Le casse"
+    },
+    "scavenge": {
+     "en": "The Village",
+     "fr": "Le village"
+    }
+   }
   },
   "c14m2_lighthouse": {
    "campaign": 14,
    "chapter": 2,
-   "chapters": 2
+   "chapters": 2,
+   "mode_names": {
+    "survival": {
+     "en": "Lighthouse",
+     "fr": "Le phare"
+    },
+    "scavenge": {
+     "en": "The Lighthouse",
+     "fr": "Le phare"
+    }
+   }
   },
   "c1m1_hotel": {
    "campaign": 1,
@@ -738,7 +848,13 @@
   "c1m2_streets": {
    "campaign": 1,
    "chapter": 2,
-   "chapters": 4
+   "chapters": 4,
+   "mode_names": {
+    "survival": {
+     "en": "Gun Shop",
+     "fr": "L’armerie"
+    }
+   }
   },
   "c1m3_mall": {
    "campaign": 1,
@@ -748,12 +864,32 @@
   "c1m4_atrium": {
    "campaign": 1,
    "chapter": 4,
-   "chapters": 4
+   "chapters": 4,
+   "mode_names": {
+    "survival": {
+     "en": "Mall Atrium",
+     "fr": "Atrium"
+    },
+    "scavenge": {
+     "en": "Mall Atrium",
+     "fr": "Atrium"
+    }
+   }
   },
   "c2m1_highway": {
    "campaign": 2,
    "chapter": 1,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Motel",
+     "fr": "Autoroute"
+    },
+    "scavenge": {
+     "en": "Motel",
+     "fr": "Autoroute"
+    }
+   }
   },
   "c2m2_fairgrounds": {
    "campaign": 2,
@@ -768,17 +904,39 @@
   "c2m4_barns": {
    "campaign": 2,
    "chapter": 4,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Stadium Gate",
+     "fr": "Étables"
+    }
+   }
   },
   "c2m5_concert": {
    "campaign": 2,
    "chapter": 5,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Concert",
+     "fr": "Concert"
+    }
+   }
   },
   "c3m1_plankcountry": {
    "campaign": 3,
    "chapter": 1,
-   "chapters": 4
+   "chapters": 4,
+   "mode_names": {
+    "survival": {
+     "en": "Gator Village",
+     "fr": "Gator Village"
+    },
+    "scavenge": {
+     "en": "Plank Country",
+     "fr": "Pays des planches"
+    }
+   }
   },
   "c3m2_swamp": {
    "campaign": 3,
@@ -788,27 +946,69 @@
   "c3m3_shantytown": {
    "campaign": 3,
    "chapter": 3,
-   "chapters": 4
+   "chapters": 4,
+   "mode_names": {
+    "survival": {
+     "en": "Shanty Town",
+     "fr": "Cabanes"
+    }
+   }
   },
   "c3m4_plantation": {
    "campaign": 3,
    "chapter": 4,
-   "chapters": 4
+   "chapters": 4,
+   "mode_names": {
+    "survival": {
+     "en": "Plantation",
+     "fr": "Plantation"
+    }
+   }
   },
   "c4m1_milltown_a": {
    "campaign": 4,
    "chapter": 1,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Burger Tank",
+     "fr": "Burger Tank"
+    },
+    "scavenge": {
+     "en": "Milltown",
+     "fr": "Ville ouvrière"
+    }
+   }
   },
   "c4m2_sugarmill_a": {
    "campaign": 4,
    "chapter": 2,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Sugar Mill",
+     "fr": "Sucrerie"
+    },
+    "scavenge": {
+     "en": "Sugar Mill",
+     "fr": "Sucrerie"
+    }
+   }
   },
   "c4m3_sugarmill_b": {
    "campaign": 4,
    "chapter": 3,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Cane Field",
+     "fr": "Champ de canne"
+    },
+    "scavenge": {
+     "en": "Mill Escape",
+     "fr": "Fuite de la sucrerie"
+    }
+   }
   },
   "c4m4_milltown_b": {
    "campaign": 4,
@@ -823,92 +1023,232 @@
   "c5m1_waterfront": {
    "campaign": 5,
    "chapter": 1,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Waterfront",
+     "fr": "Front de mer"
+    }
+   }
   },
   "c5m2_park": {
    "campaign": 5,
    "chapter": 2,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Bus Depot",
+     "fr": "Dépôt des bus"
+    },
+    "scavenge": {
+     "en": "Park",
+     "fr": "Parc"
+    }
+   }
   },
   "c5m3_cemetery": {
    "campaign": 5,
    "chapter": 3,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Cemetery",
+     "fr": "Cimetière"
+    }
+   }
   },
   "c5m4_quarter": {
    "campaign": 5,
    "chapter": 4,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Float",
+     "fr": "Le char de parade"
+    }
+   }
   },
   "c5m5_bridge": {
    "campaign": 5,
    "chapter": 5,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Bridge",
+     "fr": "Pont"
+    }
+   }
   },
   "c6m1_riverbank": {
    "campaign": 6,
    "chapter": 1,
-   "chapters": 3
+   "chapters": 3,
+   "mode_names": {
+    "survival": {
+     "en": "Riverbank",
+     "fr": "Berge"
+    },
+    "scavenge": {
+     "en": "Riverbank",
+     "fr": "Berge"
+    }
+   }
   },
   "c6m2_bedlam": {
    "campaign": 6,
    "chapter": 2,
-   "chapters": 3
+   "chapters": 3,
+   "mode_names": {
+    "survival": {
+     "en": "Underground",
+     "fr": "Souterrain"
+    },
+    "scavenge": {
+     "en": "Underground",
+     "fr": "Souterrain"
+    }
+   }
   },
   "c6m3_port": {
    "campaign": 6,
    "chapter": 3,
-   "chapters": 3
+   "chapters": 3,
+   "mode_names": {
+    "survival": {
+     "en": "Port",
+     "fr": "Port"
+    },
+    "scavenge": {
+     "en": "Port",
+     "fr": "Port"
+    }
+   }
   },
   "c7m1_docks": {
    "campaign": 7,
    "chapter": 1,
-   "chapters": 3
+   "chapters": 3,
+   "mode_names": {
+    "survival": {
+     "en": "Train Car",
+     "fr": "Wagon"
+    },
+    "scavenge": {
+     "en": "Brick Factory",
+     "fr": "Briqueterie"
+    }
+   }
   },
   "c7m2_barge": {
    "campaign": 7,
    "chapter": 2,
-   "chapters": 3
+   "chapters": 3,
+   "mode_names": {
+    "survival": {
+     "en": "Barge",
+     "fr": "Barge"
+    },
+    "scavenge": {
+     "en": "Barge",
+     "fr": "Barge"
+    }
+   }
   },
   "c7m3_port": {
    "campaign": 7,
    "chapter": 3,
-   "chapters": 3
+   "chapters": 3,
+   "mode_names": {
+    "survival": {
+     "en": "Port",
+     "fr": "Port"
+    }
+   }
   },
   "c8m1_apartment": {
    "campaign": 8,
    "chapter": 1,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "scavenge": {
+     "en": "The Apartments",
+     "fr": "Appartements"
+    }
+   }
   },
   "c8m2_subway": {
    "campaign": 8,
    "chapter": 2,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Generator Room",
+     "fr": "Salle du générateur"
+    }
+   }
   },
   "c8m3_sewers": {
    "campaign": 8,
    "chapter": 3,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Gas Station",
+     "fr": "Station-Service"
+    }
+   }
   },
   "c8m4_interior": {
    "campaign": 8,
    "chapter": 4,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Hospital",
+     "fr": "Hôpital"
+    }
+   }
   },
   "c8m5_rooftop": {
    "campaign": 8,
    "chapter": 5,
-   "chapters": 5
+   "chapters": 5,
+   "mode_names": {
+    "survival": {
+     "en": "Rooftop",
+     "fr": "Toit"
+    },
+    "scavenge": {
+     "en": "The Rooftop",
+     "fr": "Toit"
+    }
+   }
   },
   "c9m1_alleys": {
    "campaign": 9,
    "chapter": 1,
-   "chapters": 2
+   "chapters": 2,
+   "mode_names": {
+    "survival": {
+     "en": "Bridge",
+     "fr": "Le Pont"
+    },
+    "scavenge": {
+     "en": "The Alleys",
+     "fr": "Les Allées"
+    }
+   }
   },
   "c9m2_lots": {
    "campaign": 9,
    "chapter": 2,
-   "chapters": 2
+   "chapters": 2,
+   "mode_names": {
+    "survival": {
+     "en": "Truck Depot",
+     "fr": "Le Dépôt des camions"
+    }
+   }
   }
  },
  "difficulties": {

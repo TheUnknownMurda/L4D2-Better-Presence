@@ -165,14 +165,20 @@ def build_game_data(game: Path) -> dict:
         total = len(chapters)
         for i, ch in enumerate(chapters, 1):
             maps[ch["map"].lower()] = {"campaign": n, "chapter": i, "chapters": total}
-        # Maps used only by other modes (none expected for the official campaigns, kept for safety)
+        # Survival and Scavenge give their own name to the maps they use ("Gun Shop" for c1m2_streets)
         for mode, block in modes.items():
             if mode == "coop" or not isinstance(block, dict):
                 continue
             for entry in block.values():
-                if isinstance(entry, dict) and entry.get("Map") and entry["Map"].lower() not in maps:
-                    maps[entry["Map"].lower()] = {"campaign": n, "chapter": None, "chapters": total,
-                                                  "names": {SHORT[l]: strip_number(localise(strings[l], entry.get("DisplayName")) or entry["Map"]) for l in LANGS}}
+                if not (isinstance(entry, dict) and entry.get("Map")):
+                    continue
+                key = entry["Map"].lower()
+                mode_names = {SHORT[l]: strip_number(localise(strings[l], entry.get("DisplayName")) or entry["Map"])
+                              for l in LANGS}
+                if key not in maps:  # a map used only by this mode
+                    maps[key] = {"campaign": n, "chapter": None, "chapters": total, "names": mode_names}
+                if mode in ("survival", "scavenge"):
+                    maps[key].setdefault("mode_names", {})[mode] = mode_names
 
     difficulties = {}
     for value, key in DIFFICULTIES.items():

@@ -79,6 +79,9 @@ def _where(s: GameState, lang: str) -> str:
     info = s.map_info
     if info is None:
         return text(lang, "unknown_map")
+    if s.survival:
+        place = data.mode_map_name(info.map, "survival", lang) or data.chapter_name(info.map, lang) or info.map
+        return f"{data.mode_name('survival', lang)} · {place}"
     if info.campaign is None:
         return text(lang, "custom_map", map=info.map)
     campaign = data.campaign_name(info.campaign, lang)
@@ -140,6 +143,8 @@ def _strong(s: GameState, cfg: dict, lang: str, now: float, idle: float) -> tupl
     """(kind, text) for a state that stays on screen while it lasts, in priority order."""
     fresh = s.vitals_fresh(now)
     if s.dead and s.team != TEAM_INFECTED:
+        if s.survival:
+            return "dead", _e(cfg, "dead") + text(lang, "dead_survival")
         return "dead", _e(cfg, "dead") + text(lang, "dead_solo" if s.solo else "dead")
     if fresh and s.incapacitated:
         return "incap", _e(cfg, "incap") + text(lang, "incap")
@@ -155,7 +160,9 @@ def _strong(s: GameState, cfg: dict, lang: str, now: float, idle: float) -> tupl
         vitals = _vitals(s, cfg, lang) if fresh else None
         return "tank", _join([_e(cfg, "tank") + text(lang, "tank"), vitals])
     if cfg["show_attempts"] and s.retry_since is not None and now - s.retry_since <= 20 and s.attempt > 1:
-        return "retry", _e(cfg, "retry") + text(lang, "retry", n=s.attempt)
+        return "retry", _e(cfg, "retry") + text(lang, "round" if s.survival else "retry", n=s.attempt)
+    if s.round_waiting:
+        return "survival_wait", _e(cfg, "survival_wait") + text(lang, "survival_wait")
     if fresh and s.team == TEAM_SPECTATOR:
         return "spectating", _e(cfg, "spectating") + text(lang, "spectating")
     if fresh and s.team == TEAM_INFECTED:
@@ -224,10 +231,12 @@ def build_activity(s: GameState, cfg: dict, now: float, idle: float = 0.0) -> tu
         if images and _url(poster):
             assets["large_image"] = poster
             tip = []
-            if cfg["show_difficulty"] and s.difficulty and s.team != TEAM_INFECTED:
+            if s.survival:
+                tip.append(data.campaign_name(s.campaign, lang))  # the map's campaign, not on line 1 here
+            elif cfg["show_difficulty"] and s.difficulty and s.team != TEAM_INFECTED:
                 tip.append(text(lang, "difficulty", difficulty=data.difficulty_name(s.difficulty, lang)))
             if cfg["show_attempts"] and s.attempt > 1:
-                tip.append(text(lang, "attempt", n=s.attempt))
+                tip.append(text(lang, "round_n" if s.survival else "attempt", n=s.attempt))
             if cfg["show_online"] and s.remote:
                 tip.append(text(lang, "online"))
             tooltip = _join(tip)
@@ -245,7 +254,10 @@ def build_activity(s: GameState, cfg: dict, now: float, idle: float = 0.0) -> tu
             assets["small_text"] = who
         timer = cfg["timer"]
         start = {"campaign": s.campaign_start, "chapter": s.chapter_start, "session": s.session_start}.get(timer)
-        key = (s.phase, s.map, kind, who, s.team)
+        if s.survival and timer != "none":
+            # Survival: the round's time (from when it was seen starting); no timer while waiting
+            start = s.round_start if timer != "session" else s.session_start
+        key = (s.phase, s.map, s.mode, kind, who, s.team)
         # Online: "(2 of 4)" after the state line
         if cfg["show_online"] and s.phase == "ingame" and s.humans and s.max_players and (s.remote or s.humans > 1):
             activity["party"] = {"id": "l4d2rpc-party", "size": [min(s.humans, s.max_players), s.max_players]}

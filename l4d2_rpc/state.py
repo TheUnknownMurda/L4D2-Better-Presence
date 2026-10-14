@@ -31,6 +31,8 @@ MAX_INCAPS = 2  # default survivor_max_incapacitated_count: the next one after 2
 class GameState:
     phase: str = "closed"  # closed | menu | loading | ingame
     map: str | None = None
+    mode: str | None = None  # "survival" when recognised, else unknown (campaign, realism…)
+    round_start: float | None = None  # Survival: when the round was seen starting
     remote: bool = False  # on another computer's server (online)
     listen_server: bool = False  # this computer hosts the game (solo or local lobby)
     difficulty: str | None = None  # Easy | Normal | Hard | Impossible
@@ -72,6 +74,15 @@ class GameState:
     def campaign(self) -> int | None:
         info = self.map_info
         return info.campaign if info else None
+
+    @property
+    def survival(self) -> bool:
+        return self.mode == "survival"
+
+    @property
+    def round_waiting(self) -> bool:
+        """Survival: in the map, the timer not started yet (no special infected, no damage so far)."""
+        return self.survival and self.phase == "ingame" and self.round_start is None
 
     @property
     def tank(self) -> bool:
@@ -149,6 +160,8 @@ class Tracker:
         s.phase = "loading"
         s.chapter_start = now
         s.attempt = 1
+        s.mode = None
+        s.round_start = None
         self._chapter_dumps = 0
         self._reset_vitals()
         if new_game or s.campaign_start is None or (s.campaign and s.campaign != previous_campaign):
@@ -233,6 +246,7 @@ class Tracker:
             s.attempt += 1
             s.retry_since = now
             s.revived_since = None
+            s.round_start = None
             s.dead = False
             s.incapacitated = False
             s.revives = 0
@@ -243,6 +257,17 @@ class Tracker:
         s = self.state
         if s.phase == "ingame" and s.safe_room_since is None:
             s.safe_room_since = now
+
+    def _on_survival(self, d: dict, now: float) -> None:
+        if self.state.phase in ("loading", "ingame"):
+            self.state.mode = "survival"
+
+    def _survival_started(self, now: float) -> None:
+        """No infected spawn before a Survival round starts: the first special or the first damage marks it.
+        It is seen a few seconds after the real start (the game prints nothing at that moment)."""
+        s = self.state
+        if s.survival and s.phase == "ingame" and s.round_start is None and not s.dead:
+            s.round_start = now
 
     def _on_cvar(self, d: dict, now: float) -> None:
         s = self.state
@@ -273,6 +298,8 @@ class Tracker:
         s.humans = len(humans) if rows else d.get("humans")
         specials = set(data.special_infected())
         s.specials_alive = sorted({b for b in bots if b in specials}, key=data.special_infected().index)
+        if s.specials_alive:
+            self._survival_started(now)
         s.survivor_bots = [b for b in bots if b in L4D2_SET or b in L4D1_SET]
         s.character = self._guess_character(s, humans)
 
@@ -296,6 +323,8 @@ class Tracker:
             else:
                 return
         team = player.get("m_iTeamNum")
+        if team not in (TEAM_SPECTATOR, TEAM_SURVIVOR, TEAM_INFECTED):
+            return  # team 0 right after connecting: not spawned yet (seen with deadflag true and 0 HP)
         health = player.get("m_iHealth")
         dead = bool(player.get("deadflag"))
         s.team = team
@@ -308,6 +337,9 @@ class Tracker:
         if (not incap and not was_incap and previous_health is not None and health is not None
                 and health > previous_health and not s.dead):
             s.revives = 0  # health only goes up with a first-aid kit
+        if (health is not None and previous_health is not None and health < previous_health and not dead
+                and team == TEAM_SURVIVOR):
+            self._survival_started(now)
         s.incapacitated = incap
         s.dead = dead
         if dead or incap:
