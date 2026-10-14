@@ -6,6 +6,7 @@
   "timer": "campaign",
   "emoji": true,
   "images": true,
+  "cover_image": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/R7kq6VUsjDtVC7alNkrjk.png",
   "buttons": [],
   "state_rotation": [
     "vitals",
@@ -26,6 +27,7 @@
   "show_online": true,
   "show_pause": true,
   "show_idle": true,
+  "card_owner": "companion",
   "netcon_host": "127.0.0.1",
   "netcon_port": 0,
   "netcon_password": "",

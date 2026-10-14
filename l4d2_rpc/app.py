@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ctypes
 import json
+import os
 import logging
 import queue
 import time
@@ -261,7 +262,10 @@ class App:
             self._warn_once("build", "Could not build the card for this state; showing a generic one.")
             log.debug("state: %r", self.tracker.state, exc_info=True)
             activity, key = (GENERIC_CARD if self.game else None), ("generic",)
-        self.sender.offer(activity, key, mono, pid=self.game.pid if self.game else None)
+        # Which process Discord ties the card to. "game": Discord removes it by itself when the game exits, but
+        # answered nothing for ~15 s while a map loaded from the menu (FINDINGS.md). "companion": avoids that.
+        pid = self.game.pid if (self.game and self.cfg["card_owner"] == "game") else os.getpid()
+        self.sender.offer(activity, key, mono, pid=pid)
 
     def run(self) -> int:
         guard = ConsoleCloseGuard()

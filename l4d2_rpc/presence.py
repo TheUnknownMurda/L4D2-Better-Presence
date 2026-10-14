@@ -60,6 +60,11 @@ def _url(value: str | None) -> str | None:
     return None
 
 
+def _cover(cfg: dict) -> str | None:
+    """The game's cover: the one set in config.json, else Steam's library art."""
+    return _url(cfg.get("cover_image")) or data.cover_image()
+
+
 def _e(cfg: dict, key: str) -> str:
     return (EMOJI[key] + " ") if cfg.get("emoji", True) else ""
 
@@ -194,8 +199,8 @@ def build_activity(s: GameState, cfg: dict, now: float, idle: float = 0.0) -> tu
         state = text(lang, "menu_last", campaign=last) if last else text(lang, "menu_idle")
         if cfg["show_idle"] and idle >= cfg["idle_minutes"] * 60 > 0:
             state = _e(cfg, "idle") + text(lang, "idle")
-        if images and _url(data.cover_image()):
-            assets["large_image"] = data.cover_image()
+        if images and _url(_cover(cfg)):
+            assets["large_image"] = _cover(cfg)
             assets["large_text"] = text(lang, "game_title")
         start = s.session_start if cfg["timer"] != "none" else None
         key = ("menu", state == text(lang, "menu_idle"))
@@ -211,7 +216,7 @@ def build_activity(s: GameState, cfg: dict, now: float, idle: float = 0.0) -> tu
             else:
                 kind, state = "normal", _rotating(s, cfg, lang, now)
         # Large image: the campaign poster; its tooltip carries what does not fit on the lines
-        poster = data.campaign_image(s.campaign) or data.cover_image()
+        poster = data.campaign_image(s.campaign) or _cover(cfg)
         if images and _url(poster):
             assets["large_image"] = poster
             tip = []

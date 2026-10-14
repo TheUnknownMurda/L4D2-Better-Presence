@@ -27,6 +27,7 @@ DEFAULTS: dict = {
     "timer": "campaign",
     "emoji": True,
     "images": True,
+    "cover_image": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/R7kq6VUsjDtVC7alNkrjk.png",
     "buttons": [],
     "state_rotation": ["vitals", "specials", "vitals", "team"],
     "rotate_seconds": 20,
@@ -42,6 +43,7 @@ DEFAULTS: dict = {
     "show_online": True,
     "show_pause": True,
     "show_idle": True,
+    "card_owner": "companion",
     "netcon_host": "127.0.0.1",
     "netcon_port": 0,
     "netcon_password": "",
@@ -72,6 +74,14 @@ def validate(raw: dict) -> tuple[dict, list[str]]:
         elif key == "timer":
             if value not in TIMERS:
                 problems.append(_problem(key, value, " / ".join(TIMERS)))
+                continue
+        elif key == "cover_image":
+            if not (isinstance(value, str) and (value == "" or (value.startswith("https://") and len(value) <= 256))):
+                problems.append(_problem(key, value, 'an "https://…" image link of 256 characters at most, or ""'))
+                continue
+        elif key == "card_owner":
+            if value not in ("companion", "game"):
+                problems.append(_problem(key, value, '"companion" or "game"'))
                 continue
         elif key == "status_display":
             if value not in STATUS_DISPLAY:

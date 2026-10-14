@@ -37,6 +37,10 @@ REFUSED_RETRY_INTERVAL = 60  # seconds before trying again after Discord refused
 REPLY_TIMEOUT = 5  # seconds Discord has to answer
 
 
+class NoReply(TimeoutError):
+    """Discord sent nothing at all before the deadline (the connection itself is still fine)."""
+
+
 class Status:
     OFF = "off"  # nothing to show, so not connected
     NO_DISCORD = "no_discord"  # something to show, but the Discord app isn't running
@@ -210,7 +214,13 @@ class DiscordClient:
         nonce = uuid.uuid4().hex
         self._send(FRAME, {"cmd": "SET_ACTIVITY", "args": {"pid": self.pid, "activity": activity}, "nonce": nonce})
         self._next_update = time.monotonic() + UPDATE_INTERVAL
-        reply = self._read_reply(nonce)
+        try:
+            reply = self._read_reply(nonce)
+        except NoReply:
+            # Seen while the game loads a map from the menu: Discord answers late. Keep the connection; the late
+            # answer is read (and ignored) later, and the card usually shows once Discord catches up.
+            log.info("Discord is slow to answer; the card will show when it catches up.")
+            reply = {}
         # Kept even when refused: the same activity would be refused again
         self._sent = activity
         self.sent_count += 1
@@ -246,20 +256,22 @@ class DiscordClient:
             raise ConnectionError("Discord closed the connection.")
         return available.value
 
-    def _read_exactly(self, size, deadline):
+    def _read_exactly(self, size, deadline, message_start=False):
         data = bytearray()
         while len(data) < size:
             available = self._available()
             if available:
                 data += self._pipe.read(min(available, size - len(data)))
             elif time.monotonic() > deadline:
-                raise TimeoutError("Discord didn't answer.")
+                if message_start and not data:
+                    raise NoReply("Discord didn't answer.")
+                raise TimeoutError("Discord stopped in the middle of a message.")
             else:
                 time.sleep(0.01)
         return bytes(data)
 
     def _read(self, deadline):
-        op, length = struct.unpack("<II", self._read_exactly(8, deadline))
+        op, length = struct.unpack("<II", self._read_exactly(8, deadline, message_start=True))
         payload = self._read_exactly(length, deadline)
         message = json.loads(payload.decode("utf-8")) if payload else {}
         return op, message if isinstance(message, dict) else {}
