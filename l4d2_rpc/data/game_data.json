@@ -1,0 +1,1457 @@
+{
+ "_generated_by": "tools/build_data.py from the game files (see FINDINGS.md)",
+ "campaigns": [
+  {
+   "id": 1,
+   "names": {
+    "en": "Dead Center",
+    "fr": "Centre de la mort"
+   },
+   "chapters": [
+    {
+     "map": "c1m1_hotel",
+     "names": {
+      "en": "Hotel",
+      "fr": "Hôtel"
+     }
+    },
+    {
+     "map": "c1m2_streets",
+     "names": {
+      "en": "Streets",
+      "fr": "Rue"
+     }
+    },
+    {
+     "map": "c1m3_mall",
+     "names": {
+      "en": "Mall",
+      "fr": "Centre commercial"
+     }
+    },
+    {
+     "map": "c1m4_atrium",
+     "names": {
+      "en": "Atrium",
+      "fr": "Atrium"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 2,
+   "names": {
+    "en": "Dark Carnival",
+    "fr": "Lugubre carnaval"
+   },
+   "chapters": [
+    {
+     "map": "c2m1_highway",
+     "names": {
+      "en": "Highway",
+      "fr": "Autoroute"
+     }
+    },
+    {
+     "map": "c2m2_fairgrounds",
+     "names": {
+      "en": "Fairground",
+      "fr": "Parc d'attractions"
+     }
+    },
+    {
+     "map": "c2m3_coaster",
+     "names": {
+      "en": "Coaster",
+      "fr": "Grand 8"
+     }
+    },
+    {
+     "map": "c2m4_barns",
+     "names": {
+      "en": "Barns",
+      "fr": "Étables"
+     }
+    },
+    {
+     "map": "c2m5_concert",
+     "names": {
+      "en": "Concert",
+      "fr": "Concert"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 3,
+   "names": {
+    "en": "Swamp Fever",
+    "fr": "Marais infectés"
+   },
+   "chapters": [
+    {
+     "map": "c3m1_plankcountry",
+     "names": {
+      "en": "Plank Country",
+      "fr": "Pays des planches"
+     }
+    },
+    {
+     "map": "c3m2_swamp",
+     "names": {
+      "en": "Swamp",
+      "fr": "Marais"
+     }
+    },
+    {
+     "map": "c3m3_shantytown",
+     "names": {
+      "en": "Shanty Town",
+      "fr": "Cabanes"
+     }
+    },
+    {
+     "map": "c3m4_plantation",
+     "names": {
+      "en": "Plantation",
+      "fr": "Plantation"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 4,
+   "names": {
+    "en": "Hard Rain",
+    "fr": "Pluies diluviennes"
+   },
+   "chapters": [
+    {
+     "map": "c4m1_milltown_a",
+     "names": {
+      "en": "Milltown",
+      "fr": "Ville ouvrière"
+     }
+    },
+    {
+     "map": "c4m2_sugarmill_a",
+     "names": {
+      "en": "Sugar Mill",
+      "fr": "Sucrerie"
+     }
+    },
+    {
+     "map": "c4m3_sugarmill_b",
+     "names": {
+      "en": "Mill Escape",
+      "fr": "Fuite de la sucrerie"
+     }
+    },
+    {
+     "map": "c4m4_milltown_b",
+     "names": {
+      "en": "Return to Town",
+      "fr": "Retour en ville"
+     }
+    },
+    {
+     "map": "c4m5_milltown_escape",
+     "names": {
+      "en": "Town Escape",
+      "fr": "Fuite de la ville"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 5,
+   "names": {
+    "en": "The Parish",
+    "fr": "La Paroisse"
+   },
+   "chapters": [
+    {
+     "map": "c5m1_waterfront",
+     "names": {
+      "en": "Waterfront",
+      "fr": "Front de mer"
+     }
+    },
+    {
+     "map": "c5m2_park",
+     "names": {
+      "en": "Park",
+      "fr": "Parc"
+     }
+    },
+    {
+     "map": "c5m3_cemetery",
+     "names": {
+      "en": "Cemetery",
+      "fr": "Cimetière"
+     }
+    },
+    {
+     "map": "c5m4_quarter",
+     "names": {
+      "en": "Quarter",
+      "fr": "Quartier français"
+     }
+    },
+    {
+     "map": "c5m5_bridge",
+     "names": {
+      "en": "Bridge",
+      "fr": "Pont"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 6,
+   "names": {
+    "en": "The Passing",
+    "fr": "Le Passage"
+   },
+   "chapters": [
+    {
+     "map": "c6m1_riverbank",
+     "names": {
+      "en": "Riverbank",
+      "fr": "Berge"
+     }
+    },
+    {
+     "map": "c6m2_bedlam",
+     "names": {
+      "en": "Underground",
+      "fr": "Souterrain"
+     }
+    },
+    {
+     "map": "c6m3_port",
+     "names": {
+      "en": "Port",
+      "fr": "Port"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 7,
+   "names": {
+    "en": "The Sacrifice",
+    "fr": "Le Sacrifice"
+   },
+   "chapters": [
+    {
+     "map": "c7m1_docks",
+     "names": {
+      "en": "Docks",
+      "fr": "Docks"
+     }
+    },
+    {
+     "map": "c7m2_barge",
+     "names": {
+      "en": "Barge",
+      "fr": "Barge"
+     }
+    },
+    {
+     "map": "c7m3_port",
+     "names": {
+      "en": "Port",
+      "fr": "Port"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 8,
+   "names": {
+    "en": "No Mercy",
+    "fr": "Sans merci"
+   },
+   "chapters": [
+    {
+     "map": "c8m1_apartment",
+     "names": {
+      "en": "The Apartments",
+      "fr": "Appartements"
+     }
+    },
+    {
+     "map": "c8m2_subway",
+     "names": {
+      "en": "The Subway",
+      "fr": "Métro"
+     }
+    },
+    {
+     "map": "c8m3_sewers",
+     "names": {
+      "en": "The Sewer",
+      "fr": "Égouts"
+     }
+    },
+    {
+     "map": "c8m4_interior",
+     "names": {
+      "en": "The Hospital",
+      "fr": "Hôpital"
+     }
+    },
+    {
+     "map": "c8m5_rooftop",
+     "names": {
+      "en": "Rooftop Finale",
+      "fr": "Toit"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 9,
+   "names": {
+    "en": "Crash Course",
+    "fr": "Crash Course"
+   },
+   "chapters": [
+    {
+     "map": "c9m1_alleys",
+     "names": {
+      "en": "The Alleys",
+      "fr": "Les Allées"
+     }
+    },
+    {
+     "map": "c9m2_lots",
+     "names": {
+      "en": "The Truck Depot Finale",
+      "fr": "Le Dépôt des Camions"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 10,
+   "names": {
+    "en": "Death Toll",
+    "fr": "Arrêt de mort"
+   },
+   "chapters": [
+    {
+     "map": "c10m1_caves",
+     "names": {
+      "en": "The Turnpike",
+      "fr": "Le Péage"
+     }
+    },
+    {
+     "map": "c10m2_drainage",
+     "names": {
+      "en": "The Drains",
+      "fr": "Les Conduits"
+     }
+    },
+    {
+     "map": "c10m3_ranchhouse",
+     "names": {
+      "en": "The Church",
+      "fr": "L'Église"
+     }
+    },
+    {
+     "map": "c10m4_mainstreet",
+     "names": {
+      "en": "The Town",
+      "fr": "La Ville"
+     }
+    },
+    {
+     "map": "c10m5_houseboat",
+     "names": {
+      "en": "Boathouse Finale",
+      "fr": "Final au hangar à bateaux"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 11,
+   "names": {
+    "en": "Dead Air",
+    "fr": "Trous d'air"
+   },
+   "chapters": [
+    {
+     "map": "c11m1_greenhouse",
+     "names": {
+      "en": "The Greenhouse",
+      "fr": "La Serre"
+     }
+    },
+    {
+     "map": "c11m2_offices",
+     "names": {
+      "en": "The Crane",
+      "fr": "La Grue"
+     }
+    },
+    {
+     "map": "c11m3_garage",
+     "names": {
+      "en": "The Construction Site",
+      "fr": "Le Chantier"
+     }
+    },
+    {
+     "map": "c11m4_terminal",
+     "names": {
+      "en": "The Terminal",
+      "fr": "Le Terminal"
+     }
+    },
+    {
+     "map": "c11m5_runway",
+     "names": {
+      "en": "Runway Finale",
+      "fr": "Final sur la piste"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 12,
+   "names": {
+    "en": "Blood Harvest",
+    "fr": "Sanglante moisson"
+   },
+   "chapters": [
+    {
+     "map": "c12m1_hilltop",
+     "names": {
+      "en": "The Woods",
+      "fr": "Les Bois"
+     }
+    },
+    {
+     "map": "c12m2_traintunnel",
+     "names": {
+      "en": "The Tunnel",
+      "fr": "Le Tunnel"
+     }
+    },
+    {
+     "map": "c12m3_bridge",
+     "names": {
+      "en": "The Bridge",
+      "fr": "Le Pont"
+     }
+    },
+    {
+     "map": "c12m4_barn",
+     "names": {
+      "en": "The Train Station",
+      "fr": "La Gare"
+     }
+    },
+    {
+     "map": "c12m5_cornfield",
+     "names": {
+      "en": "Farmhouse Finale",
+      "fr": "Final à la ferme"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 13,
+   "names": {
+    "en": "Cold Stream",
+    "fr": "Froide Rivière"
+   },
+   "chapters": [
+    {
+     "map": "c13m1_alpinecreek",
+     "names": {
+      "en": "Alpine Creek",
+      "fr": "Crique alpine"
+     }
+    },
+    {
+     "map": "c13m2_southpinestream",
+     "names": {
+      "en": "South Pine Stream",
+      "fr": "Rivière South Pine"
+     }
+    },
+    {
+     "map": "c13m3_memorialbridge",
+     "names": {
+      "en": "Memorial Bridge",
+      "fr": "Pont Memorial"
+     }
+    },
+    {
+     "map": "c13m4_cutthroatcreek",
+     "names": {
+      "en": "Cut-throat Creek",
+      "fr": "Crique coupe-gorge"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "survival",
+    "versus"
+   ]
+  },
+  {
+   "id": 14,
+   "names": {
+    "en": "The Last Stand",
+    "fr": "Bataille finale"
+   },
+   "chapters": [
+    {
+     "map": "c14m1_junkyard",
+     "names": {
+      "en": "The Junkyard",
+      "fr": "Le casse"
+     }
+    },
+    {
+     "map": "c14m2_lighthouse",
+     "names": {
+      "en": "Lighthouse Finale",
+      "fr": "Le phare"
+     }
+    }
+   ],
+   "modes": [
+    "coop",
+    "mutation10",
+    "scavenge",
+    "survival",
+    "versus"
+   ]
+  }
+ ],
+ "maps": {
+  "c10m1_caves": {
+   "campaign": 10,
+   "chapter": 1,
+   "chapters": 5
+  },
+  "c10m2_drainage": {
+   "campaign": 10,
+   "chapter": 2,
+   "chapters": 5
+  },
+  "c10m3_ranchhouse": {
+   "campaign": 10,
+   "chapter": 3,
+   "chapters": 5
+  },
+  "c10m4_mainstreet": {
+   "campaign": 10,
+   "chapter": 4,
+   "chapters": 5
+  },
+  "c10m5_houseboat": {
+   "campaign": 10,
+   "chapter": 5,
+   "chapters": 5
+  },
+  "c11m1_greenhouse": {
+   "campaign": 11,
+   "chapter": 1,
+   "chapters": 5
+  },
+  "c11m2_offices": {
+   "campaign": 11,
+   "chapter": 2,
+   "chapters": 5
+  },
+  "c11m3_garage": {
+   "campaign": 11,
+   "chapter": 3,
+   "chapters": 5
+  },
+  "c11m4_terminal": {
+   "campaign": 11,
+   "chapter": 4,
+   "chapters": 5
+  },
+  "c11m5_runway": {
+   "campaign": 11,
+   "chapter": 5,
+   "chapters": 5
+  },
+  "c12m1_hilltop": {
+   "campaign": 12,
+   "chapter": 1,
+   "chapters": 5
+  },
+  "c12m2_traintunnel": {
+   "campaign": 12,
+   "chapter": 2,
+   "chapters": 5
+  },
+  "c12m3_bridge": {
+   "campaign": 12,
+   "chapter": 3,
+   "chapters": 5
+  },
+  "c12m4_barn": {
+   "campaign": 12,
+   "chapter": 4,
+   "chapters": 5
+  },
+  "c12m5_cornfield": {
+   "campaign": 12,
+   "chapter": 5,
+   "chapters": 5
+  },
+  "c13m1_alpinecreek": {
+   "campaign": 13,
+   "chapter": 1,
+   "chapters": 4
+  },
+  "c13m2_southpinestream": {
+   "campaign": 13,
+   "chapter": 2,
+   "chapters": 4
+  },
+  "c13m3_memorialbridge": {
+   "campaign": 13,
+   "chapter": 3,
+   "chapters": 4
+  },
+  "c13m4_cutthroatcreek": {
+   "campaign": 13,
+   "chapter": 4,
+   "chapters": 4
+  },
+  "c14m1_junkyard": {
+   "campaign": 14,
+   "chapter": 1,
+   "chapters": 2
+  },
+  "c14m2_lighthouse": {
+   "campaign": 14,
+   "chapter": 2,
+   "chapters": 2
+  },
+  "c1m1_hotel": {
+   "campaign": 1,
+   "chapter": 1,
+   "chapters": 4
+  },
+  "c1m2_streets": {
+   "campaign": 1,
+   "chapter": 2,
+   "chapters": 4
+  },
+  "c1m3_mall": {
+   "campaign": 1,
+   "chapter": 3,
+   "chapters": 4
+  },
+  "c1m4_atrium": {
+   "campaign": 1,
+   "chapter": 4,
+   "chapters": 4
+  },
+  "c2m1_highway": {
+   "campaign": 2,
+   "chapter": 1,
+   "chapters": 5
+  },
+  "c2m2_fairgrounds": {
+   "campaign": 2,
+   "chapter": 2,
+   "chapters": 5
+  },
+  "c2m3_coaster": {
+   "campaign": 2,
+   "chapter": 3,
+   "chapters": 5
+  },
+  "c2m4_barns": {
+   "campaign": 2,
+   "chapter": 4,
+   "chapters": 5
+  },
+  "c2m5_concert": {
+   "campaign": 2,
+   "chapter": 5,
+   "chapters": 5
+  },
+  "c3m1_plankcountry": {
+   "campaign": 3,
+   "chapter": 1,
+   "chapters": 4
+  },
+  "c3m2_swamp": {
+   "campaign": 3,
+   "chapter": 2,
+   "chapters": 4
+  },
+  "c3m3_shantytown": {
+   "campaign": 3,
+   "chapter": 3,
+   "chapters": 4
+  },
+  "c3m4_plantation": {
+   "campaign": 3,
+   "chapter": 4,
+   "chapters": 4
+  },
+  "c4m1_milltown_a": {
+   "campaign": 4,
+   "chapter": 1,
+   "chapters": 5
+  },
+  "c4m2_sugarmill_a": {
+   "campaign": 4,
+   "chapter": 2,
+   "chapters": 5
+  },
+  "c4m3_sugarmill_b": {
+   "campaign": 4,
+   "chapter": 3,
+   "chapters": 5
+  },
+  "c4m4_milltown_b": {
+   "campaign": 4,
+   "chapter": 4,
+   "chapters": 5
+  },
+  "c4m5_milltown_escape": {
+   "campaign": 4,
+   "chapter": 5,
+   "chapters": 5
+  },
+  "c5m1_waterfront": {
+   "campaign": 5,
+   "chapter": 1,
+   "chapters": 5
+  },
+  "c5m2_park": {
+   "campaign": 5,
+   "chapter": 2,
+   "chapters": 5
+  },
+  "c5m3_cemetery": {
+   "campaign": 5,
+   "chapter": 3,
+   "chapters": 5
+  },
+  "c5m4_quarter": {
+   "campaign": 5,
+   "chapter": 4,
+   "chapters": 5
+  },
+  "c5m5_bridge": {
+   "campaign": 5,
+   "chapter": 5,
+   "chapters": 5
+  },
+  "c6m1_riverbank": {
+   "campaign": 6,
+   "chapter": 1,
+   "chapters": 3
+  },
+  "c6m2_bedlam": {
+   "campaign": 6,
+   "chapter": 2,
+   "chapters": 3
+  },
+  "c6m3_port": {
+   "campaign": 6,
+   "chapter": 3,
+   "chapters": 3
+  },
+  "c7m1_docks": {
+   "campaign": 7,
+   "chapter": 1,
+   "chapters": 3
+  },
+  "c7m2_barge": {
+   "campaign": 7,
+   "chapter": 2,
+   "chapters": 3
+  },
+  "c7m3_port": {
+   "campaign": 7,
+   "chapter": 3,
+   "chapters": 3
+  },
+  "c8m1_apartment": {
+   "campaign": 8,
+   "chapter": 1,
+   "chapters": 5
+  },
+  "c8m2_subway": {
+   "campaign": 8,
+   "chapter": 2,
+   "chapters": 5
+  },
+  "c8m3_sewers": {
+   "campaign": 8,
+   "chapter": 3,
+   "chapters": 5
+  },
+  "c8m4_interior": {
+   "campaign": 8,
+   "chapter": 4,
+   "chapters": 5
+  },
+  "c8m5_rooftop": {
+   "campaign": 8,
+   "chapter": 5,
+   "chapters": 5
+  },
+  "c9m1_alleys": {
+   "campaign": 9,
+   "chapter": 1,
+   "chapters": 2
+  },
+  "c9m2_lots": {
+   "campaign": 9,
+   "chapter": 2,
+   "chapters": 2
+  }
+ },
+ "difficulties": {
+  "Easy": {
+   "en": "Easy",
+   "fr": "Facile"
+  },
+  "Normal": {
+   "en": "Normal",
+   "fr": "Normal"
+  },
+  "Hard": {
+   "en": "Advanced",
+   "fr": "Avancé"
+  },
+  "Impossible": {
+   "en": "Expert",
+   "fr": "Expert"
+  }
+ },
+ "modes": {
+  "coop": {
+   "en": "Campaign",
+   "fr": "Campagne"
+  },
+  "realism": {
+   "en": "Realism",
+   "fr": "Réalisme"
+  },
+  "survival": {
+   "en": "Survival",
+   "fr": "Survie"
+  },
+  "versus": {
+   "en": "Versus",
+   "fr": "Versus"
+  },
+  "teamversus": {
+   "en": "Team Versus",
+   "fr": "Versus par équipe"
+  },
+  "scavenge": {
+   "en": "Scavenge",
+   "fr": "Collecte"
+  },
+  "teamscavenge": {
+   "en": "Team Scavenge",
+   "fr": "Collecte par équipe"
+  }
+ },
+ "weapons": {
+  "CPistol": {
+   "kind": "secondary",
+   "names": {
+    "en": "Pistol",
+    "fr": "Pistolet"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CMagnumPistol": {
+   "kind": "secondary",
+   "names": {
+    "en": "Magnum",
+    "fr": "Magnum"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CTerrorMeleeWeapon": {
+   "kind": "melee",
+   "names": {
+    "en": "Melee weapon",
+    "fr": "Arme de corps à corps"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CChainsaw": {
+   "kind": "melee",
+   "names": {
+    "en": "Chainsaw",
+    "fr": "Tronçonneuse"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CSubMachinegun": {
+   "kind": "primary",
+   "names": {
+    "en": "Submachine Gun",
+    "fr": "Mitrailleuse"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CSMG_Silenced": {
+   "kind": "primary",
+   "names": {
+    "en": "Silenced SMG",
+    "fr": "Mitrailleuse silencieuse"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CSMG_MP5": {
+   "kind": "primary",
+   "names": {
+    "en": "MP5",
+    "fr": "MP5"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CPumpShotgun": {
+   "kind": "primary",
+   "names": {
+    "en": "Pump Shotgun",
+    "fr": "Fusil à pompe"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CShotgun_Chrome": {
+   "kind": "primary",
+   "names": {
+    "en": "Chrome Shotgun",
+    "fr": "Fusil à pompe chromé"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CAutoShotgun": {
+   "kind": "primary",
+   "names": {
+    "en": "Auto Shotgun",
+    "fr": "Fusil automatique"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CShotgun_SPAS": {
+   "kind": "primary",
+   "names": {
+    "en": "Combat Shotgun",
+    "fr": "Fusil de combat SPAS"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CAssaultRifle": {
+   "kind": "primary",
+   "names": {
+    "en": "Assault Rifle",
+    "fr": "Fusil d'assaut"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CRifle_AK47": {
+   "kind": "primary",
+   "names": {
+    "en": "AK-47",
+    "fr": "AK-47"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CRifle_Desert": {
+   "kind": "primary",
+   "names": {
+    "en": "Combat Rifle",
+    "fr": "Fusil de combat"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CRifle_SG552": {
+   "kind": "primary",
+   "names": {
+    "en": "SG 552",
+    "fr": "SG 552"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CRifle_M60": {
+   "kind": "primary",
+   "names": {
+    "en": "M60",
+    "fr": "M60"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CSniperRifle": {
+   "kind": "primary",
+   "names": {
+    "en": "Hunting Rifle",
+    "fr": "Fusil de chasse"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CSniper_Military": {
+   "kind": "primary",
+   "names": {
+    "en": "Military Sniper Rifle",
+    "fr": "Fusil de précision militaire"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CSniper_Scout": {
+   "kind": "primary",
+   "names": {
+    "en": "Scout",
+    "fr": "Scout"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CSniper_AWP": {
+   "kind": "primary",
+   "names": {
+    "en": "AWP",
+    "fr": "AWP"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CGrenadeLauncher": {
+   "kind": "primary",
+   "names": {
+    "en": "Grenade Launcher",
+    "fr": "Lance-grenades"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CMolotov": {
+   "kind": "throwable",
+   "names": {
+    "en": "Molotov",
+    "fr": "Molotov"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CPipeBomb": {
+   "kind": "throwable",
+   "names": {
+    "en": "Pipe Bomb",
+    "fr": "Bombe"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CItem_VomitJar": {
+   "kind": "throwable",
+   "names": {
+    "en": "Bile Bomb",
+    "fr": "Bocal de bile"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CFirstAidKit": {
+   "kind": "medkit",
+   "names": {
+    "en": "First Aid Kit",
+    "fr": "Kit de soins"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CItemDefibrillator": {
+   "kind": "medkit",
+   "names": {
+    "en": "Defibrillator",
+    "fr": "Défibrillateur"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CItemUpgradePackExplosive": {
+   "kind": "ammo_upgrade",
+   "names": {
+    "en": "Explosive Ammo",
+    "fr": "Munitions explosives"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CItemUpgradePackIncendiary": {
+   "kind": "ammo_upgrade",
+   "names": {
+    "en": "Incendiary Ammo",
+    "fr": "Munitions incendiaires"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CPainPills": {
+   "kind": "pills",
+   "names": {
+    "en": "Pain Pills",
+    "fr": "Cachets anti-douleur"
+   },
+   "source": {
+    "en": "game",
+    "fr": "game"
+   }
+  },
+  "CItem_Adrenaline": {
+   "kind": "pills",
+   "names": {
+    "en": "Adrenaline",
+    "fr": "Adrénaline"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CGasCan": {
+   "kind": "carry",
+   "names": {
+    "en": "Gas Can",
+    "fr": "Bidon d'essence"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CPropaneTank": {
+   "kind": "carry",
+   "names": {
+    "en": "Propane Tank",
+    "fr": "Bonbonne de propane"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "COxygenTank": {
+   "kind": "carry",
+   "names": {
+    "en": "Oxygen Tank",
+    "fr": "Bouteille d'oxygène"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CFireworkCrate": {
+   "kind": "carry",
+   "names": {
+    "en": "Fireworks Crate",
+    "fr": "Caisse de feux d'artifice"
+   },
+   "source": {
+    "en": "project",
+    "fr": "project"
+   }
+  },
+  "CGnome": {
+   "kind": "carry",
+   "names": {
+    "en": "Gnome Chompski",
+    "fr": "Gnome Chompski"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CItemAmmoPack": {
+   "kind": "carry",
+   "names": {
+    "en": "Ammo Pack",
+    "fr": "Pack de munitions"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CTankClaw": {
+   "kind": "claw",
+   "names": {
+    "en": "Tank",
+    "fr": "Tank"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CHunterClaw": {
+   "kind": "claw",
+   "names": {
+    "en": "Hunter",
+    "fr": "Hunter"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CSmokerClaw": {
+   "kind": "claw",
+   "names": {
+    "en": "Smoker",
+    "fr": "Smoker"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CBoomerClaw": {
+   "kind": "claw",
+   "names": {
+    "en": "Boomer",
+    "fr": "Boomer"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CJockeyClaw": {
+   "kind": "claw",
+   "names": {
+    "en": "Jockey",
+    "fr": "Jockey"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CSpitterClaw": {
+   "kind": "claw",
+   "names": {
+    "en": "Spitter",
+    "fr": "Spitter"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  },
+  "CChargerClaw": {
+   "kind": "claw",
+   "names": {
+    "en": "Charger",
+    "fr": "Charger"
+   },
+   "source": {
+    "en": "wiki",
+    "fr": "project"
+   }
+  }
+ },
+ "survivors": [
+  "Coach",
+  "Ellis",
+  "Nick",
+  "Rochelle",
+  "Bill",
+  "Zoey",
+  "Francis",
+  "Louis"
+ ],
+ "special_infected": [
+  "Tank",
+  "Witch",
+  "Hunter",
+  "Smoker",
+  "Boomer",
+  "Spitter",
+  "Charger",
+  "Jockey"
+ ]
+}

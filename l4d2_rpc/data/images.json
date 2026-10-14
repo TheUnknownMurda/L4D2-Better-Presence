@@ -1,0 +1,41 @@
+{
+ "_generated_by": "tools/build_data.py --images (Left 4 Dead Wiki page images, Steam store art)",
+ "steam": {
+  "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/550/library_600x900.jpg",
+  "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/550/header.jpg"
+ },
+ "campaigns": {
+  "1": "https://static.wikia.nocookie.net/left4dead/images/6/6e/DeadCenter.jpg/revision/latest?cb=20091013013132",
+  "2": "https://static.wikia.nocookie.net/left4dead/images/6/6c/Dark_Carnival02.png/revision/latest?cb=20091018130146",
+  "3": "https://static.wikia.nocookie.net/left4dead/images/6/65/TheNewSwampFever.JPG/revision/latest?cb=20091011212553",
+  "4": "https://static.wikia.nocookie.net/left4dead/images/c/cd/HardRain.jpg/revision/latest?cb=20091013013305",
+  "5": "https://static.wikia.nocookie.net/left4dead/images/e/e8/TheNewParish.jpg/revision/latest?cb=20091011212359",
+  "6": "https://static.wikia.nocookie.net/left4dead/images/f/f3/The_Passing_Poster.jpg/revision/latest?cb=20100425172512",
+  "7": "https://static.wikia.nocookie.net/left4dead/images/f/ff/It%27s_Your_Funeral.jpg/revision/latest?cb=20210215114235",
+  "8": "https://static.wikia.nocookie.net/left4dead/images/d/d2/No_Mercy.jpg/revision/latest?cb=20081114202254",
+  "9": "https://static.wikia.nocookie.net/left4dead/images/8/89/Crash_Course.jpg/revision/latest?cb=20210215114143",
+  "10": "https://static.wikia.nocookie.net/left4dead/images/9/93/Death_Toll.jpg/revision/latest?cb=20081114202301",
+  "11": "https://static.wikia.nocookie.net/left4dead/images/8/8c/Dead_Air.jpg/revision/latest?cb=20081114202310",
+  "12": "https://static.wikia.nocookie.net/left4dead/images/0/03/Blood_Harvest.jpg/revision/latest?cb=20210215114253",
+  "13": "https://static.wikia.nocookie.net/left4dead/images/2/2c/COLDSTEAMPOSTER.png/revision/latest?cb=20120727203216",
+  "14": "https://static.wikia.nocookie.net/left4dead/images/9/9e/The_Last_Stand.jpg/revision/latest?cb=20220821083254"
+ },
+ "characters": {
+  "Coach": "https://static.wikia.nocookie.net/left4dead/images/f/f3/CoachWeaponsRender.jpg/revision/latest?cb=20091114030350",
+  "Ellis": "https://static.wikia.nocookie.net/left4dead/images/1/14/EllisWeaponsRender.jpg/revision/latest?cb=20091114030411",
+  "Nick": "https://static.wikia.nocookie.net/left4dead/images/7/77/NickWeaponsRender.jpg/revision/latest?cb=20091114030425",
+  "Rochelle": "https://static.wikia.nocookie.net/left4dead/images/5/5f/RochelleWeaponsRender.jpg/revision/latest?cb=20091114030448",
+  "Bill": "https://static.wikia.nocookie.net/left4dead/images/4/4e/Bill_Profile.png/revision/latest?cb=20091214031343",
+  "Zoey": "https://static.wikia.nocookie.net/left4dead/images/3/37/Zoey_Profile.png/revision/latest?cb=20091214031344",
+  "Francis": "https://static.wikia.nocookie.net/left4dead/images/3/3c/Francis_Profile.png/revision/latest?cb=20220918064846",
+  "Louis": "https://static.wikia.nocookie.net/left4dead/images/c/c1/Louis_profile.png/revision/latest?cb=20091214031342",
+  "Tank": "https://static.wikia.nocookie.net/left4dead/images/9/93/Tankidle.png/revision/latest?cb=20250622013003",
+  "Witch": "https://static.wikia.nocookie.net/left4dead/images/6/6b/Witch_2.PNG/revision/latest?cb=20250617075239",
+  "Hunter": "https://static.wikia.nocookie.net/left4dead/images/8/81/Hunter_1.png/revision/latest?cb=20250614110437",
+  "Smoker": "https://static.wikia.nocookie.net/left4dead/images/0/04/Smokeridle.png/revision/latest?cb=20250531051316",
+  "Boomer": "https://static.wikia.nocookie.net/left4dead/images/b/b5/Boomeridle_1.png/revision/latest?cb=20250614113740",
+  "Spitter": "https://static.wikia.nocookie.net/left4dead/images/f/f8/Spitter_2.png/revision/latest?cb=20250617075342",
+  "Charger": "https://static.wikia.nocookie.net/left4dead/images/1/13/Charger_2.png/revision/latest?cb=20250618024331",
+  "Jockey": "https://static.wikia.nocookie.net/left4dead/images/c/c1/Jockey.png/revision/latest?cb=20250618103804"
+ }
+}
