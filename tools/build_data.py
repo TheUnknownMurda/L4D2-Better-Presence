@@ -43,9 +43,13 @@ CAMPAIGN_PAGES = {
     6: "The Passing", 7: "The Sacrifice", 8: "No Mercy", 9: "Crash Course", 10: "Death Toll",
     11: "Dead Air", 12: "Blood Harvest", 13: "Cold Stream", 14: "The Last Stand (Left 4 Dead)",
 }
+# Survivors: the game's own HUD portraits (materials/vgui/s_panel_<internal name>.vtf), as uploaded on the wiki.
+SURVIVOR_FILES = {
+    "Coach": "File:S_panel_coach.png", "Ellis": "File:S_panel_mechanic.png", "Nick": "File:S_panel_gambler.png",
+    "Rochelle": "File:S_panel_producer.png", "Bill": "File:S_panel_namvet.png", "Zoey": "File:S_panel_teenangst.png",
+    "Francis": "File:S_panel_biker.png", "Louis": "File:S_panel_manager.png",
+}
 CHARACTER_PAGES = {
-    "Coach": "Coach", "Ellis": "Ellis", "Nick": "Nick", "Rochelle": "Rochelle",
-    "Bill": "Bill", "Zoey": "Zoey", "Francis": "Francis", "Louis": "Louis",
     "Tank": "The Tank", "Witch": "The Witch", "Hunter": "The Hunter", "Smoker": "The Smoker",
     "Boomer": "The Boomer", "Spitter": "The Spitter", "Charger": "The Charger", "Jockey": "The Jockey",
 }
@@ -226,6 +230,17 @@ def wiki_images(titles: list[str]) -> dict[str, str]:
     return out
 
 
+def wiki_files(titles: list[str]) -> dict[str, str]:
+    """Direct links of wiki files ("File:…" titles), keyed by their normalised title."""
+    query = urllib.parse.urlencode({"action": "query", "prop": "imageinfo", "iiprop": "url", "format": "json",
+                                    "titles": "|".join(titles)})
+    req = urllib.request.Request(f"https://left4dead.fandom.com/api.php?{query}",
+                                 headers={"User-Agent": "L4D2-Better-Presence-data-tool"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        pages = json.load(r)["query"]["pages"]
+    return {p["title"]: p["imageinfo"][0]["url"] for p in pages.values() if p.get("imageinfo")}
+
+
 def build_images() -> dict:
     result = {"_generated_by": "tools/build_data.py --images (Left 4 Dead Wiki page images, Steam store art)",
               "steam": {}, "campaigns": {}, "characters": {}}
@@ -241,6 +256,13 @@ def build_images() -> dict:
             result["campaigns"][str(n)] = url
         else:
             print(f"No usable image for campaign {n} ({title})")
+    found = wiki_files(list(SURVIVOR_FILES.values()))
+    for name, title in SURVIVOR_FILES.items():
+        url = found.get(title.replace("_", " "))
+        if url and len(url) <= 256 and http_ok(url):
+            result["characters"][name] = url
+        else:
+            print(f"No usable portrait for {name} ({title})")
     found = wiki_images(list(CHARACTER_PAGES.values()))
     for name, title in CHARACTER_PAGES.items():
         url = found.get(title)

@@ -6,6 +6,7 @@
   "timer": "campaign",
   "emoji": true,
   "images": true,
+  "character_images": {},
   "cover_image": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/R7kq6VUsjDtVC7alNkrjk.png",
   "buttons": [],
   "state_rotation": [

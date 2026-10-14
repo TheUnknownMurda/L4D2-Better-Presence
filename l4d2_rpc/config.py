@@ -27,6 +27,7 @@ DEFAULTS: dict = {
     "timer": "campaign",
     "emoji": True,
     "images": True,
+    "character_images": {},
     "cover_image": "https://images.guns.lol/2d34137430fbdf92ffab3a07ade119c29de30536/R7kq6VUsjDtVC7alNkrjk.png",
     "buttons": [],
     "state_rotation": ["vitals", "specials", "vitals", "team"],
@@ -74,6 +75,11 @@ def validate(raw: dict) -> tuple[dict, list[str]]:
         elif key == "timer":
             if value not in TIMERS:
                 problems.append(_problem(key, value, " / ".join(TIMERS)))
+                continue
+        elif key == "character_images":
+            if not isinstance(value, dict) or not all(
+                    isinstance(v, str) and v.startswith("https://") and len(v) <= 256 for v in value.values()):
+                problems.append(_problem(key, value, '{"Coach": "https://…", …} with links of 256 characters at most'))
                 continue
         elif key == "cover_image":
             if not (isinstance(value, str) and (value == "" or (value.startswith("https://") and len(value) <= 256))):

@@ -239,8 +239,9 @@ def build_activity(s: GameState, cfg: dict, now: float, idle: float = 0.0) -> tu
             who = w["names"]["en"] if w and w["kind"] == "claw" else None
         elif cfg["show_character"]:
             who = s.character
-        if images and who and _url(data.character_image(who)):
-            assets["small_image"] = data.character_image(who)
+        portrait = _url((cfg.get("character_images") or {}).get(who or "")) or _url(data.character_image(who))
+        if images and who and portrait:
+            assets["small_image"] = portrait
             assets["small_text"] = who
         timer = cfg["timer"]
         start = {"campaign": s.campaign_start, "chapter": s.chapter_start, "session": s.session_start}.get(timer)
