@@ -58,6 +58,32 @@ def discord_running(pipe_prefix=None):
         return False
 
 
+def handshake_test(client_id, pipe_prefix=None, timeout=REPLY_TIMEOUT):
+    """Connects, says hello and leaves, without showing anything: (accepted, user name, Discord's message)."""
+    prefix = pipe_prefix or PIPE_PREFIX
+    for number in range(PIPE_COUNT):
+        try:
+            pipe = open(f"{prefix}{number}", "r+b", buffering=0)
+            break
+        except OSError:
+            continue
+    else:
+        return False, "", "Discord is not running."
+    probe = DiscordClient.__new__(DiscordClient)
+    probe._pipe = pipe
+    try:
+        probe._send(HANDSHAKE, {"v": 1, "client_id": client_id})
+        op, message = probe._read(time.monotonic() + timeout)
+        if op == FRAME and message.get("evt") == "READY":
+            user = _dict(_dict(message.get("data")).get("user"))
+            return True, str(user.get("global_name") or user.get("username") or ""), ""
+        return False, "", str(message.get("message") or "Discord refused the connection.")
+    except (OSError, ValueError) as error:
+        return False, "", str(error)
+    finally:
+        pipe.close()
+
+
 class DiscordClient:
     """Shows an activity in the user's Discord status, and shows it again when Discord restarts."""
 

@@ -232,6 +232,7 @@ class Tracker:
         if s.phase == "ingame" and s.chapter_start is not None and now - s.chapter_start > RETRY_MIN_SECONDS:
             s.attempt += 1
             s.retry_since = now
+            s.revived_since = None
             s.dead = False
             s.incapacitated = False
             s.revives = 0

@@ -1,0 +1,33 @@
+{
+  "_comment": "Copy of the defaults. Every key is optional; see README > Configuration.",
+  "client_id": "356954277803065354",
+  "language": "en",
+  "status_display": "name",
+  "timer": "campaign",
+  "emoji": true,
+  "images": true,
+  "buttons": [],
+  "state_rotation": [
+    "vitals",
+    "specials",
+    "vitals",
+    "team"
+  ],
+  "rotate_seconds": 20,
+  "idle_minutes": 5,
+  "show_health": true,
+  "show_weapon": true,
+  "show_ammo": true,
+  "show_specials": true,
+  "show_team": true,
+  "show_character": true,
+  "show_difficulty": true,
+  "show_attempts": true,
+  "show_online": true,
+  "show_pause": true,
+  "show_idle": true,
+  "netcon_host": "127.0.0.1",
+  "netcon_port": 0,
+  "netcon_password": "",
+  "poll_seconds": 2
+}

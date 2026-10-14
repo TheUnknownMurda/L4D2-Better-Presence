@@ -28,7 +28,7 @@ from pathlib import Path
 from . import config as config_mod
 from . import data, steam, system
 from .app import App, DryRunClient, Sender
-from .discord_ipc import DiscordClient, discord_running
+from .discord_ipc import DiscordClient, discord_running, handshake_test
 from .parser import ConsoleParser
 from .presence import build_activity
 from .simulate import scenario
@@ -191,16 +191,9 @@ def run_doctor(cfg: dict, problems: list[str]) -> int:
     check(running, "Discord desktop app is running", "Discord desktop app not found (the browser version cannot "
                                                      "show game activities).", fatal=False)
     if running:
-        client = DiscordClient(cfg["client_id"])
-        client.show({"type": 0, "details": "doctor", "state": "connection test"})
-        deadline = time.monotonic() + 6
-        while time.monotonic() < deadline and client.status not in ("connected", "refused"):
-            time.sleep(0.1)
-        # Close before the test card is sent (it waits UPDATE_INTERVAL after connecting at the earliest)
-        client.stop()
-        check(client.status == "connected", f"Discord accepts application {cfg['client_id']}"
-              + (f" (user {client.user})" if client.user else ""),
-              f"Discord refused application {cfg['client_id']}: {client.error or client.status}")
+        accepted, user, error = handshake_test(cfg["client_id"])
+        check(accepted, f"Discord accepts application {cfg['client_id']}" + (f" (user {user})" if user else ""),
+              f"Discord refused application {cfg['client_id']}: {error}")
     gd = steam.game_dir()
     check(gd is not None, f"Left 4 Dead 2 installed: {gd}", "Left 4 Dead 2 not found in the Steam libraries.")
     port, password, opts = netcon_settings(cfg)

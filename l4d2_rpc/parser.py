@@ -30,7 +30,8 @@ RE_PASSWORD = re.compile(r"^This server is password protected for console access
 
 # --- g15_dumpplayer ---------------------------------------------------------------------------------------------
 RE_DUMP_SECTION = re.compile(r"^\((localplayer|localteam|playerresource|localplayerweapon)\)\s*$")
-RE_DUMP_FIELD = re.compile(r"^(C\w+)::([\w.\[\]]+)(?: (\w+) \((.*)\))?\s*$")
+# char fields are followed by raw bytes (seen after death: m_lifeState then binary data), so no end anchor
+RE_DUMP_FIELD = re.compile(r"^(C\w+)::([\w.\[\]]+)(?: (\w+) \(([^()]*)\))?")
 RE_DUMP_END = re.compile(r"^Other replacements:")
 
 # --- status -----------------------------------------------------------------------------------------------------
@@ -40,6 +41,7 @@ RE_STATUS_PLAYERS = re.compile(r"^players : (\d+) humans, (\d+) bots \((\d+) max
 RE_STATUS_HEADER = re.compile(r"^# userid name")
 RE_STATUS_ROW = re.compile(r'^#\s*(\d+)\s+(?:\d+\s+)?"(.*)"\s+(BOT|\S+)(.*)$')
 RE_STATUS_END = re.compile(r"^#end\s*$")
+RE_CONTROL = re.compile(r"[\x00-\x08\x0a-\x1f\x7f]")
 
 
 @dataclass
@@ -84,8 +86,8 @@ class ConsoleParser:
         self._status = None
 
     def feed(self, line: str) -> list[Event]:
-        line = line.rstrip("\r\n")
-        text = line.strip()
+        # char-typed fields are dumped as raw bytes (seen: "m_MoveType\x02"): drop control characters
+        text = RE_CONTROL.sub("", line).strip()
         out: list[Event] = []
 
         # ---- inside a g15_dumpplayer answer

@@ -137,10 +137,12 @@ def _strong(s: GameState, cfg: dict, lang: str, now: float, idle: float) -> tupl
         return "dead", _e(cfg, "dead") + text(lang, "dead_solo" if s.solo else "dead")
     if fresh and s.incapacitated:
         return "incap", _e(cfg, "incap") + text(lang, "incap")
-    if fresh and s.revived_since is not None and now - s.revived_since <= REVIVED_SECONDS and s.health:
-        return "revived", _e(cfg, "revived") + text(lang, "revived", health=s.health)
     if cfg["show_pause"] and fresh and s.paused:
         return "paused", _e(cfg, "paused") + text(lang, "paused")
+    if fresh and s.revived_since is not None and now - s.revived_since <= REVIVED_SECONDS and s.health:
+        if cfg["show_health"]:
+            return "revived", _e(cfg, "revived") + text(lang, "revived", health=s.health)
+        return "revived", _e(cfg, "revived") + text(lang, "revived_short")
     if s.safe_room_since is not None:
         return "safe_room", _e(cfg, "safe_room") + text(lang, "safe_room")
     if cfg["show_specials"] and s.tank:
