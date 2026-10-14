@@ -1,0 +1,11 @@
+config.json
+*.log
+logs/
+recordings/
+captures/
+screenshots/
+__pycache__/
+*.pyc
+.venv/
+dist/
+build/
