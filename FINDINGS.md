@@ -214,6 +214,18 @@ load). Fix: a reply that does not start within 5 s no longer drops the connectio
 identified: likely Discord fetching a new external image before answering (3 of 4 cases), and the card is tied to
 the companion's PID instead of the game's (`card_owner`) in case Discord waits on the busy game process.
 
-Still to verify on the PC: one card only with `card_owner: companion`, the cover image shown, the card after a
-slow answer, the card cleared when the game closes, reconnection after a Discord restart, online games, Versus,
-finale, CPU cost.
+Later the same evening (log 19:09–19:16):
+- Survival seen on Sam's profile (screenshot: "Survival · Street", "🔥 TANK! · 💖 100 HP · Assault Rifle 42/312",
+  Death Toll poster, Louis portrait, timer 0:49): one single card with `card_owner: companion`.
+- Survival round on Gun Shop: `Survival round on c1m2_streets: 2:14 (new best).` → card
+  `💀 Round over — 2:14 · 🏆 new best!`, then `🔁 Round #2`, then `⏱️ Waiting to start the round · best 2:14`;
+  `survival_records.json` written.
+- Loading a Survival map first shows the campaign card (`Dead Center · Streets | ⏳ Loading…`) for ~18 s: the
+  Survival lines only arrive with the end of the load.
+- Game closed at 19:16: console lost 19:16:34, `Game closed: clearing the card.` 19:16:36 (log; not confirmed on
+  the profile).
+- CPU: companion 0.45 s of CPU over 60 s in game = **0.76 % of one core**, 26 MB of memory (PowerShell
+  `TotalProcessorTime`, 18:35).
+
+Still to verify on the PC: reconnection after a Discord restart, card gone from the profile after closing the game
+(seen only in the log), online games, Versus, finale/rescue, buttons (needs a 2nd account).
