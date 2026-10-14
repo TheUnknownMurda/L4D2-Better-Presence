@@ -106,6 +106,62 @@ Le mod Melty « MW Movement » (VScript, côté serveur local) écrit `[MWRMove]
 `[MW Movement] …`. Preuve qu'un script VScript d'addon peut écrire dans la console, lisible par
 netcon — mais uniquement quand le serveur est local (solo / partie hébergée).
 
+## `-netconpassword` et `-g15` (vérifié le 2026-10-14, session 2)
+
+Options de lancement réglées par Sam : `-netconport 27015 -netconpassword <16 hex> -g15`.
+Ligne de commande relevée : `… left4dead2.exe -steam -netconport 27015 -netconpassword … -g15`.
+
+- Sans mot de passe : `This server is password protected for console access. Must send PASS command`.
+  Avec `PASS <mot de passe>` en première ligne : tout fonctionne.
+- `-g15` ne provoque aucune erreur visible (pas de `g15.dll`, le jeu tourne normalement).
+- **`g15_dumpplayer`** (drapeau `client`, pas `cheat`) écrit ~300 lignes en 7 ms : sections
+  `(localplayer)` (`C_TerrorPlayer::…`), `(localteam)`, `(playerresource)`,
+  `(localplayerweapon)` (classe de l'arme en main, ex. `CShotgun_Chrome::…`), puis `Other replacements:`.
+  Format d'une ligne : `C_TerrorPlayer::m_iHealth integer (100)`.
+
+Preuve : `recordings/session2.log` (relevé `g15_dumpplayer;status;z_difficulty` toutes les 2 s,
+208 relevés), chronologie `python tools/analyze_netcon.py recordings/session2.log`.
+Partie solo, « Lugubre carnaval » (`c2m1_highway`), Facile.
+
+### Ce que donne le relevé
+
+| Info | Champ | Valeurs observées |
+|---|---|---|
+| Santé | `C_TerrorPlayer::m_iHealth` | 100 → 99 → 81 … 15 ; soin trousse → 80 |
+| **À terre** | `m_iHealth` > 100 et arme = `CPistol` | 297, 291, 288… (saigne), puis `m_iHealth=1` + `m_flMaxspeed=150` une fois relevé |
+| Santé temporaire (pilules, relevé) | absente du relevé | ❌ (seulement `m_iHealth`) |
+| Boiter | `m_flMaxspeed` | 220 normal, 150 blessé, 75 accroupi, 115 (avec `m_fFlags=641`, cause non identifiée) |
+| **Mort** | `deadflag` | `true`, `m_flMaxspeed=900`, `m_iHideHUD=2056` |
+| Équipe | `m_iTeamNum` | 2 = survivants (3 = infectés, non observé) |
+| **Arme en main** | classe de `(localplayerweapon)` | `CShotgun_Chrome`, `CSubMachinegun`, `CPistol`, `CTerrorMeleeWeapon` (sans le type de mêlée), `CChainsaw`, `CMolotov`, `CItem_VomitJar`, `CFirstAidKit`, `CPainPills`, `CItem_Adrenaline`, `CItemUpgradePackExplosive` |
+| Chargeur | `m_iClip1` | 8 (pompe), 50 (SMG), 15 (pistolet), -1 (objets) ; tronçonneuse = carburant 30 |
+| Réserve | `C_TerrorPlayer::m_iAmmo[m_iPrimaryAmmoType]` | 72 (type 7, fusil à pompe), 650 → 412 (type 5, SMG) |
+| Rechargement | `m_bInReload` | `true` / `false` |
+| **Pause (solo)** | `m_nTickBase` figé entre deux relevés | 3310 de 17:31:21 à 17:31:48 ; 14387 de 17:37:59 à 17:38:04 (Échap puis retour menu) |
+| Personnage | `m_nModelIndex` = 185 | dépend de la carte : inutilisable seul |
+
+`status` (même relevé) : `hostname: Sam` en solo ; liste des bots survivants
+(`Coach`, `Nick`, `Ellis` → Sam joue Rochelle, par élimination) et **infectés spéciaux en vie** :
+`Charger`, `Spitter`, `Jockey`, `Hunter`, `Smoker`, `Boomer`, **`Tank`** (17:33:54 → 17:35:15).
+La Witch n'apparaît pas (ce n'est pas un joueur).
+
+### Lignes de console nouvelles (session 2)
+
+| Moment | Ligne(s) |
+|---|---|
+| Mort du joueur | `Player: Sam - Damage Given` / `-------------------------` / `Damage Given to "Tank" - 700 in 3 hits` … / `Player: Sam - Damage Taken` / `Damage Taken from "Charger" - 40 in 3 hits` … |
+| Redémarrage du chapitre (mort en solo) | `Initializing Director's script` puis nouveau rapport `Damage Given to "Sam" - 0 in 1 hit` ; santé 100 + `CPistol` |
+| Directeur (serveur local seulement) | `Initiating Ambush`, `Initiating Reserved Wanderers` |
+| Tir allié | `Sam attacked Ellis`, `Sam attacked Coach` |
+| Retour au menu | `BinkOpen( …\media\l4d2_background01.bik )` puis `Dropped Sam from server (Server shutting down)` |
+| Jeu fermé | la connexion TCP est coupée (`WinError 10054`), aucune ligne |
+
+### Mode de jeu : illisible directement
+
+`mp_gamemode` → `Unknown command`, `find mode` ne liste aucune variable de mode lisible.
+Pistes : `status` → `players : … (4 max)` (Campagne/Réalisme/Survie) contre `(8 max)`
+(Versus/Collecte, non vérifié) ; `m_iTeamNum = 3` → Versus/Collecte côté infectés (non vérifié).
+
 ## Steam (vérifié le 2026-10-14)
 
 - `https://steamcommunity.com/miniprofile/<account id>/json` (en jeu) ne renvoie **pas** de bloc
@@ -115,6 +171,9 @@ netcon — mais uniquement quand le serveur est local (solo / partie hébergée)
 
 ## À mesurer (non vérifié)
 
-- `-netconpassword` : le mot de passe est-il exigé (`PASS …`) ?
-- `-g15` + `g15_dumpplayer` : que contient la sortie (santé, arme, munitions, personnage) ?
-- Mort, mise à terre, Tank, fin de campagne, versus, serveur distant : lignes de console ?
+- Partie en ligne (serveur distant) : lignes `Connected to …`, `status`, `g15_dumpplayer` ?
+- Versus / Collecte / Survie / Réalisme : `(8 max)`, équipe 3, classe d'arme des infectés.
+- Finale, sauvetage, fin de campagne (générique).
+- Coût CPU du relevé toutes les 2 s (jeu et compagnon).
+- VAC : aucun rapport de bannissement trouvé pour `-netconport`/`-g15` (options du moteur),
+  mais pas de déclaration officielle de Valve.

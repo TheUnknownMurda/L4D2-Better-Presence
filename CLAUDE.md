@@ -56,9 +56,12 @@ Voir `../_Prompt Better Presence.md` (`<regles_discord>`, `<sources_de_donnees>`
 Rappels : jamais d'écriture dans le jeu ni ses sauvegardes ; pas de séquence `\uXXXX` écrite
 par les outils ; PowerShell lancé par le code sur une ligne, sans `-EncodedCommand`.
 
-## État actuel — étape 1, reconnaissance (2026-10-14)
+## État actuel — étape 2, proposition envoyée (2026-10-14)
 
-- Fait : installation repérée, application Discord officielle trouvée, noms officiels localisés
-  dans les VPK, sondes `tools/vpk.py` et `tools/netcon_probe.py` écrites.
-- En cours : mesures en jeu (console réseau, contenu de la console).
-- Ensuite : proposition + maquette (étape 2), puis arrêt pour l'OK de Sam.
+- Fait : reconnaissance complète (FINDINGS.md). Deux parties solo mesurées. Options de lancement
+  de Sam maintenant : `-netconport 27015 -netconpassword <hex> -g15` (Sam les a mises lui-même).
+- Source retenue (proposée) : console réseau du moteur (TCP 127.0.0.1, mot de passe lu dans
+  `localconfig.vdf`), événements en continu + relevé `g15_dumpplayer;status` toutes les 2 s.
+- Sondes : `tools/vpk.py`, `tools/netcon_probe.py`, `tools/analyze_netcon.py`.
+- En attente : OK de Sam sur la proposition (carte par situation). Ensuite : étape 3, construction.
+- Non vérifié : partie en ligne, Versus/Collecte/Survie, finale/sauvetage, coût CPU.
