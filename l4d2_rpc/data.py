@@ -99,12 +99,11 @@ def mode_name(mode: str | None, lang: str) -> str | None:
     return names.get(lang) or names.get("en")
 
 
-def difficulty_name(value: str | None, lang: str, realism: bool = False) -> str | None:
-    """The game's name for a z_difficulty value ("Hard" -> "Advanced"), "Realism Advanced" in Realism."""
+def difficulty_name(value: str | None, lang: str) -> str | None:
+    """The game's name for a z_difficulty value ("Hard" -> "Advanced")."""
     if not value:
         return None
-    table = game_data().get("difficulties_realism") if realism else None
-    for key, names in (table or game_data()["difficulties"]).items():
+    for key, names in game_data()["difficulties"].items():
         if key.lower() == value.lower():
             return names.get(lang) or names.get("en")
     return None

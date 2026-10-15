@@ -21,7 +21,8 @@ The full specification of the series is `../_Prompt Better Presence.md`.
 - Source: the engine's network console (`-netconport` + `-netconpassword` + `-g15`), no mod (VAC).
 - Card in English; Survival has its own card (best times kept by the companion); no "Solo with N bots" line;
   no chapter number (n/N); no specials line by default; "limping" only when revived under 30 HP;
-  config.json only holds the keys Sam changes (defaults stay live) (team line only online); cover image = Sam's guns.lol link
+  config.json only holds the keys Sam changes (defaults stay live); difficulty at the end of line 1;
+  Realism dropped (undetectable in solo without an add-on; Sam said no add-on, 2026-10-14) (team line only online); cover image = Sam's guns.lol link
   (`cover_image`).
 - Usage: personal.
 

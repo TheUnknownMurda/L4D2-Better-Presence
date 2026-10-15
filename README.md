@@ -15,8 +15,8 @@ Dark Carnival · Highway                        ← details: where you are
 | Situation | Line 1 (`details`) | Line 2 (`state`) | Images |
 |---|---|---|---|
 | Main menu | In the main menu | Last game: Dark Carnival (or Getting ready) | your cover image, tooltip "Left 4 Dead 2" |
-| Loading | Dark Carnival · Highway | ⏳ Loading… | poster, tooltip "Easy difficulty" |
-| In game | Dark Carnival · Highway | rotates: ❤️ 81 HP · 🔫 Submachine Gun 50/650 / 👥 2 players + 2 bots (online only) | poster + your survivor (Rochelle) |
+| Loading | Dark Carnival · Highway · Easy (only "Dark Carnival" from the menu, until the mode is known) | ⏳ Loading… | poster |
+| In game | Dark Carnival · Highway · Easy | rotates: ❤️ 81 HP · 🔫 Submachine Gun 50/650 / 👥 2 players + 2 bots (online only) | poster + your survivor (Rochelle) |
 | Finale | Dead Center · Finale: Atrium | same | same |
 | Tank alive | same | 🔥 TANK! · ❤️ 64 HP · 🔫 Submachine Gun 50/650 | same |
 | Incapacitated | same | 🩸 Incapacitated — needs help! | same |
@@ -95,7 +95,8 @@ Nothing was ever written to the game folder or to Steam.
   🚪 safe room, 🔥 Tank alive, 🔁 retry, 👀 spectating, 🧟 playing a special infected, 💤 idle — otherwise it
   rotates every 20 s between your health and weapon (with ammo: clip/reserve), the team (online only) and, in
   Survival, your best time. "Limping" is only written when you are revived under 30 HP.
-- **Big image**: the campaign poster; tooltip: difficulty, attempt number, "online".
+- **Line 1 ends with the difficulty** (the game's names: Easy, Normal, Advanced, Expert), except in Survival.
+- **Big image**: the campaign poster; tooltip: attempt number, "online".
 - **Small image**: your survivor's portrait (found by elimination: the three bots are known, so you are the fourth)
   or the special infected you play in Versus.
 - **Timer**: since the start of the campaign (kept across chapters), or as set in `timer`.
@@ -159,7 +160,7 @@ replaced by its default.
 | `show_specials` | `true` | The Tank alert (and the `specials` rotation item if you add it). |
 | `show_team` | `true` | "2 players + 2 bots" online (never in solo). |
 | `show_character` | `true` | Your survivor's image. |
-| `show_difficulty` | `true` | Difficulty in the poster tooltip. |
+| `show_difficulty` | `true` | Difficulty at the end of line 1. |
 | `show_attempts` | `true` | 🔁 Retry and "attempt n". |
 | `show_records` | `true` | Survival best times (🏆). |
 | `show_online` | `true` | "(2 of 4)" and "online". |
@@ -194,8 +195,8 @@ replaced by its default.
 ## Limits
 
 - **Game mode**: only **Survival** is recognised (from lines printed when its map loads). Campaign, Realism and
-  Scavenge cannot be told apart: the game does not expose the mode to its client console. Versus shows when you
-  play infected.
+  Scavenge cannot be told apart: in solo the game exposes the mode nowhere outside itself (console, files, server
+  queries and Steam were all tried, see FINDINGS.md). Versus shows when you play infected.
 - **Survival timer**: the game prints nothing when the round starts; the card starts its timer at the first special
   infected or the first damage, a few seconds after the real start.
 - **Survival best times** are the program's own: the game's records (and medals) cannot be read from outside —

@@ -83,9 +83,7 @@ def _where(s: GameState, cfg: dict, lang: str, now: float) -> str:
     if _mode_pending(s, now):
         return place  # Survival has no difficulty: wait to know the mode
     if cfg["show_difficulty"] and s.difficulty and not s.survival and s.team != TEAM_INFECTED and s.map_info             and s.map_info.campaign:
-        return f"{place} · {data.difficulty_name(s.difficulty, lang, realism=s.realism)}"
-    if cfg["show_difficulty"] and s.realism:
-        return f"{place} · {data.mode_name('realism', lang)}"
+        return f"{place} · {data.difficulty_name(s.difficulty, lang)}"
     return place
 
 

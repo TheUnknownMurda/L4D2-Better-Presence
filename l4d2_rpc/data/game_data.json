@@ -1269,24 +1269,6 @@
    "fr": "Expert"
   }
  },
- "difficulties_realism": {
-  "Easy": {
-   "en": "Realism Easy",
-   "fr": "Réalisme Facile"
-  },
-  "Normal": {
-   "en": "Realism Normal",
-   "fr": "Réalisme Normal"
-  },
-  "Hard": {
-   "en": "Realism Advanced",
-   "fr": "Réalisme Avancé"
-  },
-  "Impossible": {
-   "en": "Realism Expert",
-   "fr": "Réalisme Expert"
-  }
- },
  "modes": {
   "coop": {
    "en": "Campaign",
