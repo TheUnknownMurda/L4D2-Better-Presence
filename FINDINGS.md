@@ -170,6 +170,24 @@ Survival game on "Concert" (`c2m5_concert`) left before starting the timer.
 death 18:52:29, restart 18:52:38) or → local death / restart − 9 s online (not verified online). Saved in
 `%LOCALAPPDATA%\L4D2RPC\survival_records.json`.
 
+## Realism: not detectable from outside in solo (verified 2026-10-14, 22:10, `recordings/realism_session.log`)
+
+Solo Realism, The Parish "Waterfront" (`c5m1_waterfront`), Advanced (`z_difficulty "Hard"`).
+- Load lines: identical in kind to Campaign (`Host_NewGame on map c5m1_waterfront`, director/VScript lines,
+  `Map:` block). Note: **no `#Cstrike_TitlesTXT_Game_connected` this time** (only `Receiving uncompressed update
+  from server`): the tracker also enters "in game" on the first dump with a spawned player.
+- `sv_disable_glow_survivors`, `sv_disable_glow_faritems` (the glows Realism turns off; the names are in
+  client.dll) → `Unknown command` (development-only cvars, hidden in the retail game).
+- `mp_gamemode` → unknown (see above). `mm_debugprint` prints nothing in solo (no matchmaking session:
+  `Server using '<none>' lobbies`).
+- Server query A2S_INFO/A2S_PLAYER/A2S_RULES to `127.0.0.1`, `<virtual adapter IP>`, `<LAN IP>` port 27015 (UDP): no
+  answer from the listen server.
+- `g15_dumpplayer`: same values as in Campaign (`m_iHideHUD 2048`, `m_iEFlags 270336`, `m_fEffects 4`…).
+- `cfg/config.cfg`, `serverconfig.vdf` (only `z_difficulty`), `save/`: no mode.
+- Steam mini-profile: still no `in_game` block.
+- client.dll has `********** Game Mode: %s **********` and server.dll `Game Mode: %s`: never printed in our
+  recordings (probably developer-only).
+
 ## Survivor portraits (verified 2026-10-14)
 
 Sam asked for the portraits of a screen recording (a Steam Workshop page, "Survivor Better Materials",
