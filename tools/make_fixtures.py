@@ -44,7 +44,8 @@ def main() -> int:
         kept = []
         for line in lines:
             stamp = line[:8]
-            if any(a <= stamp <= b for a, b in windows) and " >>> " not in line[:16]:
+            # Lines starting with ">>> " are what the probe sent (PASS <password>…): never kept
+            if any(a <= stamp <= b for a, b in windows) and not line[12:].startswith(" >>> "):
                 kept.append(anonymise(line))
         (OUT / name).write_text("\n".join(kept) + "\n", encoding="utf-8")
         print(f"{name}: {len(kept)} lines")

@@ -1,0 +1,436 @@
+17:17:59.931 SignalXWriteOpportunity(1)
+17:17:59.954 ---- Host_NewGame ----
+17:18:00.546 CAsyncWavDataCache:  286 .wavs total 0 bytes, 0.00 % of capacity
+17:18:01.580 Host_NewGame on map c1m1_hotel
+17:18:01.595 Executing listen server config file
+17:18:03.270 VSCRIPT: Running mapspawn.nut
+17:18:03.273 SCRIPT PERF WARNING --- "main" ran long at 2.920787ms
+17:18:03.274 CSpeechScriptBridge initializing...
+17:18:03.277 SCRIPT PERF WARNING --- "main" ran long at 2.086580ms
+17:18:03.278 	HSCRIPT loaded successfully
+17:18:03.295 SCRIPT PERF WARNING --- "ScriptMode_Init" ran long at 4.097613ms
+17:18:03.296 Initializing Director's script
+17:18:03.299 [MWRMove] 0.1.0 running
+17:18:03.299 SCRIPT PERF WARNING --- "main" ran long at 2.022573ms
+17:18:03.347 Couldn't find any entities named fire13_timer, which point_template fire13_template is specifying.
+17:18:03.347 Couldn't find any entities named fire13_clip, which point_template fire13_template is specifying.
+17:18:03.347 Couldn't find any entities named fire13_smoke, which point_template fire13_template is specifying.
+17:18:03.347 Couldn't find any entities named fire13_fog_volume, which point_template fire13_template is specifying.
+17:18:03.348 Couldn't find any entities named fire14_timer, which point_template fire14_template is specifying.
+17:18:03.348 Couldn't find any entities named fire14_clip, which point_template fire14_template is specifying.
+17:18:03.348 Couldn't find any entities named fire14_smoke, which point_template fire14_template is specifying.
+17:18:03.348 Couldn't find any entities named fire14_fog_volume, which point_template fire14_template is specifying.
+17:18:03.349 Couldn't find any entities named fire15_timer, which point_template fire15_template is specifying.
+17:18:03.349 Couldn't find any entities named fire15_clip, which point_template fire15_template is specifying.
+17:18:03.349 Couldn't find any entities named fire15_smoke, which point_template fire15_template is specifying.
+17:18:03.349 Couldn't find any entities named fire15_fog_volume, which point_template fire15_template is specifying.
+17:18:03.350 Couldn't find any entities named fire16_timer, which point_template fire16_template is specifying.
+17:18:03.350 Couldn't find any entities named fire16_clip, which point_template fire16_template is specifying.
+17:18:03.350 Couldn't find any entities named fire16_smoke, which point_template fire16_template is specifying.
+17:18:03.350 Couldn't find any entities named fire16_fog_volume, which point_template fire16_template is specifying.
+17:18:03.352 Couldn't find any entities named sound, which point_template fire_ballroom_07-template is specifying.
+17:18:03.364 Couldn't find any entities named fire03-sound, which point_template fire03-template is specifying.
+17:18:03.365 Couldn't find any entities named fire04-sound, which point_template fire04-template is specifying.
+17:18:03.365 Couldn't find any entities named fire10-sound, which point_template fire10-template is specifying.
+17:18:03.365 Couldn't find any entities named fire27-sound, which point_template fire27-template is specifying.
+17:18:03.366 Couldn't find any entities named fire28-sound, which point_template fire28-template is specifying.
+17:18:03.366 Couldn't find any entities named fire_ballroom_02-sound, which point_template fire_ballroom_02-template is specifying.
+17:18:03.367 Couldn't find any entities named fire_ballroom_01-sound, which point_template fire_ballroom_01-template is specifying.
+17:18:03.367 Couldn't find any entities named fire_ballroom_03-sound, which point_template fire_ballroom_03-template is specifying.
+17:18:03.368 Couldn't find any entities named fire_ballroom_04-sound, which point_template fire_ballroom_04-template is specifying.
+17:18:03.369 Couldn't find any entities named fire_ballroom_05-sound, which point_template fire_ballroom_05-template is specifying.
+17:18:03.369 Couldn't find any entities named fire_ballroom_06-sound, which point_template fire_ballroom_06-template is specifying.
+17:18:03.369 Couldn't find any entities named fire_ballroom_07-particles, which point_template fire_ballroom_07-template is specifying.
+17:18:03.369 Couldn't find any entities named fire_ballroom_07-point1, which point_template fire_ballroom_07-template is specifying.
+17:18:03.369 Couldn't find any entities named fire_ballroom_07-point3, which point_template fire_ballroom_07-template is specifying.
+17:18:03.370 Couldn't find any entities named fire_ballroom_07-point5, which point_template fire_ballroom_07-template is specifying.
+17:18:03.370 Couldn't find any entities named fire_ballroom_07-point6, which point_template fire_ballroom_07-template is specifying.
+17:18:03.370 Couldn't find any entities named fire_ballroom_07-hurt, which point_template fire_ballroom_07-template is specifying.
+17:18:03.370 Couldn't find any entities named fire_ballroom_07-sound, which point_template fire_ballroom_07-template is specifying.
+17:18:03.370 Couldn't find any entities named fire_ballroom_08-sound, which point_template fire_ballroom_08-template is specifying.
+17:18:03.371 Couldn't find any entities named fire_ballroom_09-sound, which point_template fire_ballroom_09-template is specifying.
+17:18:03.371 Couldn't find any entities named fire_ballroom_10-sound, which point_template fire_ballroom_10-template is specifying.
+17:18:03.372 Couldn't find any entities named fire_ballroom_11-sound, which point_template fire_ballroom_11-template is specifying.
+17:18:03.372 Couldn't find any entities named inferno02-sound, which point_template inferno02-template is specifying.
+17:18:03.442 prop_door_rotating has Door model (models/props_downtown/metal_door_112_dm03_01.mdl) with no door_options! Verify that SKIN is valid, and has a corresponding options block in the model QC file
+17:18:03.443 prop_door_rotating has Door model (models/props_downtown/metal_door_112_dm03_01.mdl) with no door_options! Verify that SKIN is valid, and has a corresponding options block in the model QC file
+17:18:03.535 Commentary: Loading commentary data from maps/c1m1_hotel_commentary.txt. 
+17:18:03.555 SCRIPT PERF WARNING --- "ScriptMode_Init" ran long at 4.055580ms
+17:18:03.556 Initializing Director's script
+17:18:03.752 hostname: Player
+17:18:03.752 version : 2.2.4.3 10097 insecure  
+17:18:03.753 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:18:03.753 os      : Windows Listen
+17:18:03.753 map     : c1m1_hotel
+17:18:03.753 players : 0 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:18:03.753 
+17:18:03.753 # userid name uniqueid connected ping loss state rate adr
+17:18:03.753 #end
+17:18:03.753 Unknown command "mp_gamemode"
+17:18:03.753 "z_difficulty" = "Easy" ( def. "Normal" )
+17:18:03.753  client replicated
+17:18:03.753  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:18:03.753 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:18:03.753  - Current map name.
+17:18:03.754 Invalid counterterrorist spawnpoint at (1735.1,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (1698.3,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (1750.6,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (1762.1,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (1699.3,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (1742.4,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (1693.5,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (2608.0,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (2539.3,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (2560.1,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (2514.1,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (2440.0,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (1859.7,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (1797.5,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (1772.1,1184.0,1184.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (2144.0,2656.0,2656.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (2072.0,2656.0,2656.0)
+17:18:03.754 Invalid counterterrorist spawnpoint at (908.8,2817.0,2817.0)
+17:18:03.755 Invalid counterterrorist spawnpoint at (2303.4,2816.0,2816.0)
+17:18:03.761 VSCRIPT: Running anv_mapfixes.nut
+17:18:03.761 Sending UDP connect to public IP 127.0.0.1:27015
+17:18:03.778 Server using '<none>' lobbies, requiring pw no, lobby id 0
+17:18:03.778 RememberIPAddressForLobby: lobby 0 from address loopback
+17:18:03.779 CSteam3Client::InitiateConnection: loopback
+17:18:03.789 String Table dictionary for downloadables should be rebuilt, only found 37 of 46 strings in dictionary
+17:18:03.798 String Table dictionary for soundprecache should be rebuilt, only found 9712 of 19091 strings in dictionary
+17:18:03.816 String Table dictionary for Scenes should be rebuilt, only found 6728 of 15775 strings in dictionary
+17:18:04.709    VAC secure mode disabled.
+17:18:07.774 hostname: Player
+17:18:07.774 version : 2.2.4.3 10097 insecure  
+17:18:07.774 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:18:07.774 os      : Windows Listen
+17:18:07.774 map     : c1m1_hotel at ( 408, 5816, 2735 )
+17:18:07.774 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:18:07.774 
+17:18:07.774 # userid name uniqueid connected ping loss state rate adr
+17:18:07.774 #  6 1 "Player" STEAM_1:0:12345 00:03 32 29 spawning 30000 loopback
+17:18:07.774 #end
+17:18:07.774 "z_difficulty" = "Easy" ( def. "Normal" )
+17:18:07.774  client replicated
+17:18:07.774  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:18:07.774 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:18:07.774  - Current map name.
+17:18:09.874 
+17:18:09.874 Left 4 Dead 2
+17:18:09.874 Map: c1m1_hotel
+17:18:09.874 Players: 1 (0 bots) / 4 humans
+17:18:09.874 Build: 10097
+17:18:09.874 Server Number: 2
+17:18:09.874 
+17:18:09.876 CAsyncWavDataCache:  286 .wavs total 0 bytes, 0.00 % of capacity
+17:18:11.053 Attempted to precache unknown particle system "muzzle_fire_rifle"!
+17:18:11.053 Attempted to precache unknown particle system "muzzle_glow_rifle"!
+17:18:11.053 Attempted to precache unknown particle system "muzzle_lee_rifle"!
+17:18:11.053 Attempted to precache unknown particle system "muzzle_simple_smoke"!
+17:18:11.053 Attempted to precache unknown particle system "muzzle_smoke_trail"!
+17:18:11.053 Attempted to precache unknown particle system "muzzle_sparks_rifle"!
+17:18:11.127 No pure server whitelist. sv_pure = 0
+17:18:12.510 Redownloading all lightmaps
+17:18:13.032 hostname: Player
+17:18:13.032 version : 2.2.4.3 10097 insecure  
+17:18:13.032 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:18:13.032 os      : Windows Listen
+17:18:13.032 map     : c1m1_hotel at ( 408, 5816, 2735 )
+17:18:13.032 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:18:13.032 
+17:18:13.032 # userid name uniqueid connected ping loss state rate adr
+17:18:13.032 #  6 1 "Player" STEAM_1:0:12345 00:07 36 1 spawning 30000 loopback
+17:18:13.032 #end
+17:18:13.032 "z_difficulty" = "Easy" ( def. "Normal" )
+17:18:13.032  client replicated
+17:18:13.032  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:18:13.032 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:18:13.032  - Current map name.
+17:18:13.168 SignalXWriteOpportunity(2)
+17:18:13.178 SignalXWriteOpportunity(2)
+17:18:13.467 #Cstrike_TitlesTXT_Game_connected
+17:18:13.467 Receiving uncompressed update from server
+17:18:13.830 Anniversary Map Fixes: Restart with Launch Option -dev to reveal verbose entity debug dumps.
+17:18:13.831 Anniversary Demo Mode: Run "script_execute z_developer_showupdate" >> "script ShowUpdate()".
+17:18:16.773 SCRIPT PERF WARNING --- "<lambda or free run script>" ran long at 1.582096ms
+17:18:16.776 Initiating Reserved Wanderers
+17:18:16.813 [MW Movement] CoD4 sprint (tap to run, 4 s), weapon weight, mantling, CoD jumps and falls.
+17:18:16.813 [MW Movement] Loaded your Call of Duty: Modern Warfare Remastered keys.
+17:18:16.813 [MW Movement] Sprint SHIFT  Crouch c CTRL  Melee v  Jump/mantle SPACE  Talk z
+17:18:16.813 [MW Movement] Your own L4D2 keys: exec mwrmove_restore in the console (after removing the mod).
+17:19:40.296 hostname: Player
+17:19:40.296 version : 2.2.4.3 10097 insecure  
+17:19:40.296 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:19:40.296 os      : Windows Listen
+17:19:40.296 map     : c1m1_hotel at ( 2403, 6826, 2710 )
+17:19:40.296 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:19:40.296 
+17:19:40.296 # userid name uniqueid connected ping loss state rate adr
+17:19:40.296 #  6 1 "Player" STEAM_1:0:12345 01:34 33 0 active 30000 loopback
+17:19:40.296 # 7 "Nick" BOT active
+17:19:40.296 # 8 "Coach" BOT active
+17:19:40.296 # 9 "Rochelle" BOT active
+17:19:40.296 #12 "Jockey" BOT active
+17:19:40.296 #end
+17:19:40.296 "z_difficulty" = "Easy" ( def. "Normal" )
+17:19:40.296  client replicated
+17:19:40.296  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:19:40.296 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:19:40.296  - Current map name.
+17:19:40.299 Unknown command: mp_gamemode
+17:19:45.404 hostname: Player
+17:19:45.404 version : 2.2.4.3 10097 insecure  
+17:19:45.404 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:19:45.404 os      : Windows Listen
+17:19:45.404 map     : c1m1_hotel at ( 2374, 6821, 2763 )
+17:19:45.404 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:19:45.404 
+17:19:45.404 # userid name uniqueid connected ping loss state rate adr
+17:19:45.404 #  6 1 "Player" STEAM_1:0:12345 01:39 43 0 active 30000 loopback
+17:19:45.404 # 7 "Nick" BOT active
+17:19:45.404 # 8 "Coach" BOT active
+17:19:45.405 # 9 "Rochelle" BOT active
+17:19:45.405 #12 "Jockey" BOT active
+17:19:45.405 #end
+17:19:45.405 "z_difficulty" = "Easy" ( def. "Normal" )
+17:19:45.405  client replicated
+17:19:45.405  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:19:45.405 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:19:45.405  - Current map name.
+17:19:45.408 Unknown command: mp_gamemode
+17:19:46.637 SCRIPT PERF WARNING --- "<lambda or free run script>" ran long at 2.854944ms
+17:24:30.865 Saving weapon_first_aid_kit_spawn at 2022, 4298, 1214 (model models/w_models/weapons/w_eq_Medkit.mdl)
+17:24:30.865 Saving weapon_first_aid_kit_spawn at 2020, 4314, 1217 (model models/w_models/weapons/w_eq_Medkit.mdl)
+17:24:30.865 Saving weapon_first_aid_kit_spawn at 2035, 4301, 1214 (model models/w_models/weapons/w_eq_Medkit.mdl)
+17:24:30.865 Saving weapon_first_aid_kit_spawn at 2034, 4318, 1217 (model models/w_models/weapons/w_eq_Medkit.mdl)
+17:24:30.865 Saving weapon_ammo_spawn at 2072, 4312, 1214 (model models/props/terror/ammo_stack.mdl)
+17:24:30.865 Saving weapon_spawn at 2174, 4350, 1229 (model models/w_models/weapons/w_shotgun.mdl)
+17:24:30.865 Saving weapon_spawn at 2173, 4402, 1229 (model models/w_models/weapons/w_smg_uzi.mdl)
+17:24:30.865 Saving weapon_pistol_spawn at 2175, 4367, 1229 (model models/w_models/weapons/w_pistol_B.mdl)
+17:24:30.866 Saving weapon_pain_pills_spawn at 639, 4785, 1228 (model models/w_models/weapons/w_eq_painpills.mdl)
+17:24:30.866 Saving weapon_vomitjar at 666, 4460, 1186
+17:24:34.962 hostname: Player
+17:24:34.963 version : 2.2.4.3 10097 insecure  
+17:24:34.963 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:24:34.963 os      : Windows Listen
+17:24:34.963 map     : c1m1_hotel at ( 1937, 4570, 1246 )
+17:24:34.963 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:24:34.963 
+17:24:34.963 # userid name uniqueid connected ping loss state rate adr
+17:24:34.963 #  6 1 "Player" STEAM_1:0:12345 06:29 33 0 active 30000 loopback
+17:24:34.963 # 7 "Nick" BOT active
+17:24:34.963 # 8 "Coach" BOT active
+17:24:34.963 # 9 "Rochelle" BOT active
+17:24:34.963 #end
+17:24:34.963 "z_difficulty" = "Easy" ( def. "Normal" )
+17:24:34.963  client replicated
+17:24:34.963  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:24:34.963 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:24:34.963  - Current map name.
+17:24:34.966 Unknown command: mp_gamemode
+17:24:39.458 ---- Host_Changelevel ----
+17:24:40.444 CAsyncWavDataCache:  928 .wavs total 0 bytes, 0.00 % of capacity
+17:24:41.149 Duplicate sequence 3 in sheet file
+17:24:41.742 Executing listen server config file
+17:24:43.980 VSCRIPT: Running mapspawn.nut
+17:24:43.984 SCRIPT PERF WARNING --- "main" ran long at 4.085801ms
+17:24:43.985 CSpeechScriptBridge initializing...
+17:24:43.990 SCRIPT PERF WARNING --- "main" ran long at 2.717836ms
+17:24:43.991 	HSCRIPT loaded successfully
+17:24:44.014 SCRIPT PERF WARNING --- "ScriptMode_Init" ran long at 5.325650ms
+17:24:44.015 Initializing Director's script
+17:24:44.020 [MWRMove] 0.1.0 running
+17:24:44.020 SCRIPT PERF WARNING --- "main" ran long at 3.161631ms
+17:24:44.020 SCRIPT PERF WARNING --- "main" ran long at 3.939573ms
+17:24:44.071 Map Bug:  spotlight_beam4 has SpotLightWidth 256.000000 > 102.300003, clamping value
+17:24:44.209 an info_changelevel points to the current map
+17:24:44.292 ERROR: Tried to create bone follower on invalid bone joint27
+17:24:44.364 store_doors has Door model (models/props_doors/door_rotate_112.mdl) with no door_options! Verify that SKIN is valid, and has a corresponding options block in the model QC file
+17:24:44.374 store_doors has Door model (models/props_doors/door_rotate_112.mdl) with no door_options! Verify that SKIN is valid, and has a corresponding options block in the model QC file
+17:24:44.374 InstanceAuto10-trafficmessage_script executing script: c1_3_trafficmessage_frequency
+17:24:44.484 Commentary: Loading commentary data from maps/c1m2_streets_commentary.txt. 
+17:24:44.609 VSCRIPT: Running anv_mapfixes.nut
+17:24:44.620 SCRIPT PERF WARNING --- "ScriptMode_Init" ran long at 6.915018ms
+17:24:44.621 Initializing Director's script
+17:24:44.625 SCRIPT PERF WARNING --- "main" ran long at 1.935516ms
+17:24:44.625 SCRIPT PERF WARNING --- "main" ran long at 2.477064ms
+17:24:44.989 hostname: Player
+17:24:44.989 version : 2.2.4.3 10097 insecure  
+17:24:44.989 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:24:44.990 os      : Windows Listen
+17:24:44.990 map     : c1m2_streets at ( 1937, 4570, 1246 )
+17:24:44.990 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:24:44.990 
+17:24:44.990 # userid name uniqueid connected ping loss state rate adr
+17:24:44.990 #  6 1 "Player" STEAM_1:0:12345 06:34 33 0 connecting 30000 loopback
+17:24:44.990 #end
+17:24:44.990 "z_difficulty" = "Easy" ( def. "Normal" )
+17:24:44.990  client replicated
+17:24:44.990  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:24:44.990 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:24:44.990  - Current map name.
+17:24:45.009 hostname: Player
+17:24:45.009 version : 2.2.4.3 10097 insecure  
+17:24:45.009 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:24:45.009 os      : Windows Listen
+17:24:45.009 map     : c1m2_streets at ( 1937, 4570, 1246 )
+17:24:45.009 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:24:45.009 
+17:24:45.009 # userid name uniqueid connected ping loss state rate adr
+17:24:45.009 #  6 1 "Player" STEAM_1:0:12345 06:34 35 0 connecting 30000 loopback
+17:24:45.009 #end
+17:24:45.009 "z_difficulty" = "Easy" ( def. "Normal" )
+17:24:45.009  client replicated
+17:24:45.010  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:24:45.010 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:24:45.010  - Current map name.
+17:24:45.028 String Table dictionary for downloadables should be rebuilt, only found 37 of 46 strings in dictionary
+17:24:45.039 String Table dictionary for soundprecache should be rebuilt, only found 9711 of 19090 strings in dictionary
+17:24:45.060 String Table dictionary for Scenes should be rebuilt, only found 6727 of 15774 strings in dictionary
+17:24:50.196 hostname: Player
+17:24:50.196 version : 2.2.4.3 10097 insecure  
+17:24:50.196 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:24:50.196 os      : Windows Listen
+17:24:50.196 map     : c1m2_streets at ( 1937, 4570, 1246 )
+17:24:50.196 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:24:50.196 
+17:24:50.196 # userid name uniqueid connected ping loss state rate adr
+17:24:50.196 #  6 1 "Player" STEAM_1:0:12345 06:39 35 0 spawning 30000 loopback
+17:24:50.196 #end
+17:24:50.197 "z_difficulty" = "Easy" ( def. "Normal" )
+17:24:50.197  client replicated
+17:24:50.197  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:24:50.197 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:24:50.197  - Current map name.
+17:24:51.162 
+17:24:51.162 Left 4 Dead 2
+17:24:51.162 Map: c1m2_streets
+17:24:51.162 Players: 1 (0 bots) / 4 humans
+17:24:51.162 Build: 10097
+17:24:51.162 Server Number: 3
+17:24:51.162 
+17:24:51.195 CAsyncWavDataCache:  928 .wavs total 0 bytes, 0.00 % of capacity
+17:24:52.723 Attempted to precache unknown particle system "muzzle_fire_rifle"!
+17:24:52.723 Attempted to precache unknown particle system "muzzle_glow_rifle"!
+17:24:52.723 Attempted to precache unknown particle system "muzzle_lee_rifle"!
+17:24:52.723 Attempted to precache unknown particle system "muzzle_simple_smoke"!
+17:24:52.723 Attempted to precache unknown particle system "muzzle_smoke_trail"!
+17:24:52.723 Attempted to precache unknown particle system "muzzle_sparks_rifle"!
+17:24:52.819 No pure server whitelist. sv_pure = 0
+17:24:54.763 Redownloading all lightmaps
+17:24:55.295 hostname: Player
+17:24:55.295 version : 2.2.4.3 10097 insecure  
+17:24:55.295 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:24:55.295 os      : Windows Listen
+17:24:55.295 map     : c1m2_streets at ( 1937, 4570, 1246 )
+17:24:55.296 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:24:55.296 
+17:24:55.296 # userid name uniqueid connected ping loss state rate adr
+17:24:55.296 #  6 1 "Player" STEAM_1:0:12345 06:42 35 0 spawning 30000 loopback
+17:24:55.296 #end
+17:24:55.296 "z_difficulty" = "Easy" ( def. "Normal" )
+17:24:55.296  client replicated
+17:24:55.296  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:24:55.296 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:24:55.296  - Current map name.
+17:24:55.498 SignalXWriteOpportunity(2)
+17:24:55.506 SignalXWriteOpportunity(2)
+17:24:55.628 Checkpoint bounds: 2075.000000 4800.000000 298.428253 --> 2800.000000 5450.000000 598.428223 and has 8 weapon spawns
+17:24:55.629 Removing weapon_spawn
+17:24:55.629 Removing weapon_spawn
+17:24:55.629 Removing weapon_pistol_spawn
+17:24:55.629 Removing weapon_first_aid_kit_spawn
+17:24:55.629 Removing weapon_first_aid_kit_spawn
+17:24:55.629 Removing weapon_first_aid_kit_spawn
+17:24:55.629 Removing weapon_first_aid_kit_spawn
+17:24:55.629 Removing weapon_ammo_spawn
+17:24:55.629 Restoring 9 transitioned weapon spawns
+17:24:55.629 Recreating weapon_first_aid_kit_spawn at 2390, 4954, 478
+17:24:55.629 Recreating weapon_first_aid_kit_spawn at 2388, 4970, 481
+17:24:55.629 Recreating weapon_first_aid_kit_spawn at 2403, 4957, 478
+17:24:55.629 Recreating weapon_first_aid_kit_spawn at 2402, 4974, 481
+17:24:55.629 Recreating weapon_ammo_spawn at 2440, 4968, 478
+17:24:55.629 Recreating weapon_spawn at 2542, 5006, 493
+17:24:55.629 Recreating weapon_spawn at 2541, 5058, 493
+17:24:55.630 Recreating weapon_pistol_spawn at 2543, 5023, 493
+17:24:55.630 Recreating weapon_pain_pills_spawn at 1007, 5441, 492
+17:24:55.630 Restoring 1 transitioned weapons
+17:24:55.630 Recreating weapon_vomitjar at 1034, 5116, 450
+17:24:55.630 Restoring 0 transitioned prop_physics
+17:24:55.633 SCRIPT PERF WARNING --- "<lambda or free run script>" ran long at 2.491210ms
+17:24:56.018 #Cstrike_TitlesTXT_Game_connected
+17:24:56.019 [MW Movement] CoD4 sprint (tap to run, 4 s), weapon weight, mantling, CoD jumps and falls.
+17:24:56.019 [MW Movement] Loaded your Call of Duty: Modern Warfare Remastered keys.
+17:24:56.019 [MW Movement] Sprint SHIFT  Crouch c CTRL  Melee v  Jump/mantle SPACE  Talk z
+17:24:56.019 [MW Movement] Your own L4D2 keys: exec mwrmove_restore in the console (after removing the mod).
+17:24:56.020 Receiving uncompressed update from server
+17:24:57.408 Anniversary Map Fixes: Restart with Launch Option -dev to reveal verbose entity debug dumps.
+17:24:57.408 Anniversary Demo Mode: Run "script_execute z_developer_showupdate" >> "script ShowUpdate()".
+17:25:00.508 hostname: Player
+17:25:00.509 version : 2.2.4.3 10097 insecure  
+17:25:00.509 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:25:00.509 os      : Windows Listen
+17:25:00.509 map     : c1m2_streets at ( 2332, 5132, 509 )
+17:25:00.509 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:25:00.509 
+17:25:00.509 # userid name uniqueid connected ping loss state rate adr
+17:25:00.509 #  6 1 "Player" STEAM_1:0:12345 06:47 50 0 active 30000 loopback
+17:25:00.509 #20 "Nick" BOT active
+17:25:00.509 #21 "Coach" BOT active
+17:25:00.509 #22 "Rochelle" BOT active
+17:25:00.509 #end
+17:25:00.509 "z_difficulty" = "Easy" ( def. "Normal" )
+17:25:00.509  client replicated
+17:25:00.509  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:25:00.509 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:25:00.509  - Current map name.
+17:25:00.512 Unknown command: mp_gamemode
+17:25:05.608 hostname: Player
+17:25:05.608 version : 2.2.4.3 10097 insecure  
+17:25:05.608 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:25:05.608 os      : Windows Listen
+17:25:05.608 map     : c1m2_streets at ( 2337, 5123, 510 )
+17:25:05.608 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:25:05.608 
+17:25:05.608 # userid name uniqueid connected ping loss state rate adr
+17:25:05.608 #  6 1 "Player" STEAM_1:0:12345 06:52 36 0 active 30000 loopback
+17:25:05.608 #20 "Nick" BOT active
+17:25:05.608 #21 "Coach" BOT active
+17:25:05.608 #22 "Rochelle" BOT active
+17:25:05.608 #end
+17:25:05.609 "z_difficulty" = "Easy" ( def. "Normal" )
+17:25:05.609  client replicated
+17:25:05.609  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:25:05.609 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:25:05.609  - Current map name.
+17:25:05.610 Unknown command: mp_gamemode
+17:25:10.788 hostname: Player
+17:25:10.788 version : 2.2.4.3 10097 insecure  
+17:25:10.788 udp/ip  : 192.0.2.1:27015 [ public n/a ]
+17:25:10.788 os      : Windows Listen
+17:25:10.788 map     : c1m2_streets at ( 2337, 5123, 510 )
+17:25:10.788 players : 1 humans, 0 bots (4 max) (not hibernating) (unreserved)
+17:25:10.788 
+17:25:10.788 # userid name uniqueid connected ping loss state rate adr
+17:25:10.788 #  6 1 "Player" STEAM_1:0:12345 06:57 49 0 active 30000 loopback
+17:25:10.788 #20 "Nick" BOT active
+17:25:10.788 #21 "Coach" BOT active
+17:25:10.788 #22 "Rochelle" BOT active
+17:25:10.788 #end
+17:25:10.788 "z_difficulty" = "Easy" ( def. "Normal" )
+17:25:10.788  client replicated
+17:25:10.788  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:25:10.788 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:25:10.788  - Current map name.
+17:25:10.789 Unknown command: mp_gamemode
+17:25:15.779 CAsyncWavDataCache:  935 .wavs total 0 bytes, 0.00 % of capacity
+17:25:16.507 Duplicate sequence 3 in sheet file
+17:25:17.457 SignalXWriteOpportunity(3)
+17:25:18.413 BinkOpen( c:\program files (x86)\steam\steamapps\common\left 4 dead 2\left4dead2\media\l4d2_background05.bik )
+17:25:18.585 Dropped Player from server (Server shutting down)
+17:25:18.804 Unknown command "mp_gamemode"
+17:25:18.804 "z_difficulty" = "Easy" ( def. "Normal" )
+17:25:18.804  client replicated
+17:25:18.804  - Difficulty of the current game (Easy, Normal, Hard, Impossible)
+17:25:18.804 "host_map" = "c1m1_hotel.bsp" ( def. "" )
+17:25:18.804  - Current map name.
