@@ -12,7 +12,7 @@ from pathlib import Path
 import helpers  # noqa: F401
 
 from fake_discord import FakeDiscord
-from l4d2_rpc import config, discord_ipc, steam, vdf
+from l4d2_rpc import config, discord_ipc, install, steam, system, vdf
 from l4d2_rpc.app import FAST_UPDATE_SECONDS, SLOW_UPDATE_SECONDS, Sender
 from l4d2_rpc.netcon import NetconClient
 
@@ -79,6 +79,27 @@ class SteamFiles(unittest.TestCase):
         tokens = kv.path("lang", "tokens")
         self.assertEqual(tokens.get("a"), "pc")
         self.assertEqual(tokens.get("b"), 'b"q')
+
+
+class InstallSteps(unittest.TestCase):
+    def test_launch_options_kept_when_complete(self):
+        opts = steam.parse_launch_options("-novid -netconport 27015 -netconpassword abc -g15")
+        self.assertEqual(install.launch_options_line(opts), (opts.raw, False))
+
+    def test_existing_password_reused(self):
+        line, change = install.launch_options_line(steam.parse_launch_options("-netconport 27016 -netconpassword abc"))
+        self.assertTrue(change)
+        self.assertEqual(line, "-netconport 27016 -netconpassword abc -g15")
+
+    def test_new_password_when_none(self):
+        line, change = install.launch_options_line(None)
+        self.assertTrue(change)
+        o = steam.parse_launch_options(line)
+        self.assertEqual((o.netcon_port, len(o.netcon_password), o.g15), (27015, 16, True))
+
+    def test_never_terminates_a_non_python_process(self):
+        # A stale PID file could point anywhere: a non-Python process must be refused
+        self.assertFalse(system.terminate_python(4))  # "System"
 
 
 class DiscordOnFakePipe(unittest.TestCase):

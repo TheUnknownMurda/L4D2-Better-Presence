@@ -4,3 +4,9 @@
 *.json text eol=lf
 *.md text eol=lf
 *.log text eol=lf
+# Release zip (git archive): only what a user needs
+tests/ export-ignore
+tools/ export-ignore
+CLAUDE.md export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore

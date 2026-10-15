@@ -1,12 +1,15 @@
 # Left 4 Dead 2 · Detailed Discord Rich Presence
 
-Shows on your Discord profile what you are doing in **Left 4 Dead 2**, live: campaign and chapter, your health
-and the weapon in your hands, specials alive, Tank fights, when you are down, dead, paused or in the safe room.
-No mod, no injection, nothing read from the game's memory: it only talks to the game's own console.
+Shows on your Discord profile what you are doing in **Left 4 Dead 2**, live: campaign, chapter and difficulty, your
+health and the weapon in your hands, Tank fights, when you are down, dead, paused or in the safe room, and in
+Survival the round's time and your best time. No mod, no injection, nothing read from the game's memory: it only
+talks to the game's own console.
+
+**[⬇ Download the latest version](https://github.com/TheUnknownMurda/L4D2-Better-Presence/releases/latest/download/L4D2-Better-Presence.zip)**, then follow [Installation](#installation-5-minutes).
 
 ```
 Playing Left 4 Dead 2                             [campaign poster]  [your survivor]
-Dark Carnival · Highway                        ← details: where you are
+Dark Carnival · Highway · Easy                     ← details: where you are, difficulty
 ❤️ 81 HP · 🔫 Submachine Gun 50/650                 ← state: what moves (changes every 20 s):
                                                       health & weapon / team (online) / best time (Survival)
 12:34 elapsed                                      (2 of 4 online)
@@ -14,17 +17,17 @@ Dark Carnival · Highway                        ← details: where you are
 
 | Situation | Line 1 (`details`) | Line 2 (`state`) | Images |
 |---|---|---|---|
-| Main menu | In the main menu | Last game: Dark Carnival (or Getting ready) | your cover image, tooltip "Left 4 Dead 2" |
+| Main menu | In the main menu | Last game: Dark Carnival (or Getting ready) | cover image, tooltip "Left 4 Dead 2" |
 | Loading | Dark Carnival · Highway · Easy (only "Dark Carnival" from the menu, until the mode is known) | ⏳ Loading… | poster |
 | In game | Dark Carnival · Highway · Easy | rotates: ❤️ 81 HP · 🔫 Submachine Gun 50/650 / 👥 2 players + 2 bots (online only) | poster + your survivor (Rochelle) |
-| Finale | Dead Center · Finale: Atrium | same | same |
+| Finale | Dead Center · Finale: Atrium · Expert | same | same |
 | Tank alive | same | 🔥 TANK! · ❤️ 64 HP · 🔫 Submachine Gun 50/650 | same |
 | Incapacitated | same | 🩸 Incapacitated — needs help! | same |
 | Just revived | same | 🦯 Revived — 45 HP, or 🦯 Revived — limping, 1 HP under 30 HP (20 s) | same |
 | Two revives without a kit | same | 🖤 1 HP (last life) · 🔫 Pistol 15 | same |
 | Paused (solo) | same | ⏸️ Paused | same |
 | Dead | same | 💀 Dead (solo) / 💀 Dead — waiting for a rescue | same |
-| Chapter restarts | same | 🔁 Retry #2 (20 s), then "attempt 2" in the poster tooltip | same |
+| Chapter restarts | same | 🔁 Retry #2 (20 s), then "Attempt 2" in the poster tooltip | same |
 | Safe room door closed | same | 🚪 Reached the safe room | same |
 | Survival, timer not started | Survival · Gun Shop | ⏱️ Waiting to start the round · best 3:21 (no timer) | poster (tooltip: the campaign) + survivor |
 | Survival, round on | Survival · Gun Shop | same rotation and alerts as in game, plus 🏆 Best here: 3:21 (or 🏆 Beating the best (3:21)!); **the timer counts the round** | same |
@@ -32,60 +35,65 @@ Dark Carnival · Highway                        ← details: where you are
 | Survival, dead (online, team still up) | same | 💀 Dead — the round goes on | same |
 | Versus, as infected | The Parish · Waterfront | 🧟 Playing as the Hunter · 250 HP | poster + Hunter |
 | No keyboard/mouse for 5 min | same | 💤 Idle | same |
-| Game closed, Ctrl+C, window closed | — | the card disappears | — |
+| Game closed | — | the card disappears | — |
 
 ## Installation (5 minutes)
 
 ### What you need
 
 - **Windows 10 or 11** and **Left 4 Dead 2** on Steam.
-- **Discord**, the desktop app (Stable, PTB or Canary), running on the same PC. The browser version cannot show
-  game activities.
-- **Python 3.10 or newer**: <https://www.python.org/downloads/> → *Download Python*, run the installer and tick
-  *Add python.exe to PATH*. Nothing else to install: the program only uses Python's standard library.
+- **Discord**, the desktop app (Stable, PTB or Canary), open on the same PC. The browser version cannot show game
+  activities.
+- **Python 3.10 or newer** (free). Not sure? `Install.bat` checks it and opens the download page if needed. On
+  <https://www.python.org/downloads/>, run the installer and **tick "Add python.exe to PATH"** on its first screen.
 
-No Discord application to create: the card uses Discord's own "Left 4 Dead 2" application, so you get one
-enriched "Playing Left 4 Dead 2" instead of two activities.
+Nothing else: no Discord application to create, no mod in the game, no account.
 
 ### Steps
 
-1. **Put this folder somewhere it can stay**, for example `Documents\L4D2 Better Presence`.
-2. **Double-click `Setup.bat`.** It prints a line of Steam launch options with a new random password and copies
-   it to the clipboard. In Steam: *Library* → right-click **Left 4 Dead 2** → *Properties…* → *General* →
-   **Launch options**: replace the content with Ctrl+V. Any option you already had is kept.
-   *Check:* the box now contains `-netconport 27015 -netconpassword <16 characters> -g15`.
-3. **Double-click `L4D2RPC.bat`.** A console opens: `Waiting for Left 4 Dead 2…`.
-4. **Start Left 4 Dead 2 from Steam.**
-   *Check:* the console prints `Game detected`, then `Connected to the game console` (it can take up to a minute
-   while the game starts), and `Card sent: In the main menu | …`. Your Discord profile shows the card.
-5. In Discord, make sure **Settings → Activity Privacy → "Share my activity"** is on.
-6. *Optional:* **double-click `Startup-on.bat`** to start it silently with Windows from now on. It then waits in
-   the background for the game, at almost no cost. `Startup-off.bat` undoes it.
+1. **Download** [L4D2-Better-Presence.zip](https://github.com/TheUnknownMurda/L4D2-Better-Presence/releases/latest/download/L4D2-Better-Presence.zip),
+   right-click it → **Extract All…**, and put the extracted folder where it can stay (for example
+   `Documents\L4D2-Better-Presence`). The program runs from this folder.
+2. **Double-click `Install.bat`** and follow it. It:
+   - copies a line of **Steam launch options** to your clipboard. In Steam: *Library* → right-click
+     **Left 4 Dead 2** → *Properties…* → *General* → **Launch options**: paste it with Ctrl+V (it keeps any option
+     you already had), close the window, then press Enter in `Install.bat`;
+   - asks whether to **start with Windows** (press Enter = yes): it then waits in the background for the game, at
+     almost no cost;
+   - starts it right away.
 
-`Doctor.bat` checks everything (Python, Discord, the game, its launch options, the console) and says what to fix.
+   *Check:* it ends with `All set.`
+3. **Start Left 4 Dead 2 from Steam** (restart it if it was already running).
+   *Check:* within a minute your Discord profile shows **Playing Left 4 Dead 2** with the menu, then your campaign.
+4. In Discord, keep **Settings → Activity Privacy → "Share my activity"** on.
+
+That's it. If something looks wrong, **double-click `Doctor.bat`**: it checks Python, Discord, the game, its launch
+options and the game's console, and says what to fix.
+
+*Windows may say "Windows protected your PC" the first time you open a `.bat`:* click *More info* → *Run anyway*.
+The scripts only start Python.
 
 ### Not working?
 
 | Problem | Fix |
 |---|---|
-| Nothing on Discord | Discord desktop app open? "Share my activity" on (step 5)? Run `Doctor.bat`. The log `%LOCALAPPDATA%\L4D2RPC\l4d2rpc.log` lists every card sent and Discord's answer. |
-| The card stays on "In the main menu" in game | The game was started without the launch options: redo step 2, then **restart the game**. The console says `The game was not started with -netconport`. |
-| `The game refused the console password` | The launch options changed while the game was running: restart the game. |
-| No health or weapon, only the chapter | `-g15` is missing from the launch options (step 2), then restart the game. |
+| Nothing on Discord | Discord desktop app open? "Share my activity" on (step 4)? Run `Doctor.bat`. The log `%LOCALAPPDATA%\L4D2RPC\l4d2rpc.log` lists every card sent and Discord's answer. |
+| The card stays on "In the main menu" in game | The game was started before the launch options were pasted: **restart the game**. `Doctor.bat` shows the options Steam has. |
+| `The game refused the console password` (log) | The launch options changed while the game was running: restart the game. |
+| No health or weapon, only the chapter | `-g15` is missing from the launch options: run `Install.bat` again, then restart the game. |
 | Two activities on the profile | You changed `client_id`: keep the default `356954277803065354` (Discord's own L4D2 application), or hide the game in Discord → *Settings → Registered Games*. |
-| Images missing (empty squares) | Discord fetches each image the first time it sees it: wait a few seconds. If your `cover_image` link stopped working, change it or set it to `""` (Steam art is used). |
+| Images missing (empty squares) | Discord fetches each image the first time it sees it: wait a few seconds. |
 | Card late by a few seconds when a new campaign loads | Normal the first time a campaign's poster is used: Discord downloads it before answering. |
-| Windows "protected your PC" on a `.bat` | *More info* → *Run anyway*. The scripts only start Python. |
-| Bitdefender (or another antivirus) blocks something | Nothing here hides a process or downloads code. Add the project folder to the exceptions if needed. `Startup-on.bat` creates a normal shortcut in your Startup folder. |
-| Windows firewall question about Left 4 Dead 2 | The game's console listens on port 27015 (TCP). It is password-protected by step 2. Answering "Cancel" is fine: the program connects locally. |
+| Python not found | Install it (see *What you need*) with "Add python.exe to PATH" ticked, then run `Install.bat` again. |
+| Bitdefender (or another antivirus) blocks something | Nothing here hides a process or downloads code; the start with Windows is a normal shortcut in your Startup folder. Add the folder to the exceptions if needed. |
+| Windows firewall question about Left 4 Dead 2 | The game's console listens on port 27015 (TCP), password-protected by the launch options. Answering "Cancel" is fine: the program connects locally. |
+| I moved the folder | Run `Install.bat` again from the new place (the start with Windows points to the folder). |
 
 ### Uninstall
 
-1. Double-click `Startup-off.bat` if you turned on the start with Windows.
-2. In Steam, remove `-netconport 27015 -netconpassword … -g15` from the game's launch options.
-3. Delete the folder, and `%LOCALAPPDATA%\L4D2RPC` (the log and your survival best times).
-
-Nothing was ever written to the game folder or to Steam.
+**Double-click `Uninstall.bat`**: it stops the program, removes the start with Windows, shows which launch options to
+remove in Steam, and can delete its log and your Survival best times. Then delete the folder. Nothing was ever
+written to the game folder or to Steam.
 
 ## What the card shows
 
@@ -148,8 +156,8 @@ replaced by its default.
 | `timer` | `"campaign"` | `"campaign"` (kept across chapters), `"chapter"`, `"session"` (since the game started), `"none"`. |
 | `emoji` | `true` | Emoji markers (❤️ 🔫 🧟 💀…). |
 | `images` | `true` | Poster and survivor images. |
-| `character_images` | your 8 guns.lol portraits | Survivor portraits by name (`"Coach": "https://…"`). A survivor missing here uses the game's HUD portrait from the wiki. |
-| `cover_image` | your guns.lol link | Image used in the menu and when a map has no poster (`https://`, ≤256 characters). `""` = Steam's art. |
+| `character_images` | the project's 8 portraits | Survivor portraits by name (`"Coach": "https://…"`). A survivor missing here uses the game's HUD portrait from the wiki. |
+| `cover_image` | the project's cover image | Image used in the menu and when a map has no poster (`https://`, ≤256 characters). `""` = Steam's art. |
 | `buttons` | `[]` | Up to 2 `{"label": "…", "url": "https://…"}` (label ≤32 characters). You cannot see your own buttons. |
 | `state_rotation` | `["vitals", "team", "record"]` | Order of line 2 when nothing urgent happens: `vitals` (health & weapon), `team` (online), `record` (Survival best), `specials` (specials alive, off by default). Items without anything to say are skipped. |
 | `rotate_seconds` | `20` | Seconds per rotation step (5 minimum). |
@@ -176,17 +184,17 @@ replaced by its default.
 
 | Command | What it does |
 |---|---|
-| `L4D2RPC.bat` | Runs with a console (log on screen). Ctrl+C or closing the window removes the card. |
-| `L4D2RPC-silent.bat` | Runs without a window (`pythonw`). |
-| `Setup.bat` | Prints and copies the launch options with a new password. |
+| `Install.bat` | Launch options (copied to the clipboard), start with Windows, starts it now. Safe to run again. |
+| `Uninstall.bat` | Stops it, removes the start with Windows, optional cleanup. |
 | `Doctor.bat` | Checks Python, Discord, the game, the launch options and the console. |
-| `Startup-on.bat` / `Startup-off.bat` | Start (or not) silently with Windows (a shortcut in `shell:startup`). |
+| `L4D2RPC.bat` | Runs with a console showing every card sent. Ctrl+C or closing the window removes the card. |
 | `L4D2RPC.bat --dry-run` | Computes the card without sending it. |
 | `L4D2RPC.bat --simulate` | A fake game through every situation, on your real profile (add `--dry-run` to only print). |
 | `L4D2RPC.bat --dump` | Raw console answer and state read from the running game. |
 | `L4D2RPC.bat -v` | Logs every console line and event. |
+| `L4D2RPC.bat setup` / `startup on` / `startup off` | Only the launch options / only the start with Windows. |
 | `python tools/build_data.py [--images]` | Rebuilds the name tables from the game files (and the image links from the Left 4 Dead Wiki). |
-| `python tools/extract_portraits.py` | Saves the 8 portraits of the "Survivor Better Materials" workshop preview to `assets/portraits/` (to host them yourself). |
+| `python tools/extract_portraits.py` | Saves the 8 portraits of the "Survivor Better Materials" workshop preview to `assets/portraits/`. |
 | `python tools/vtf.py <vpk> <file.vtf> <out.png>` | Converts one of the game's textures to PNG. |
 | `python tools/netcon_probe.py` | Records the game console (reconnaissance). |
 | `python tools/analyze_netcon.py <recording>` | Turns a recording into a readable timeline. |

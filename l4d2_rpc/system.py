@@ -52,6 +52,9 @@ _k32.CloseHandle.argtypes = [wt.HANDLE]
 _k32.CreateMutexW.restype = wt.HANDLE
 _k32.CreateMutexW.argtypes = [ctypes.c_void_p, wt.BOOL, wt.LPCWSTR]
 _k32.GetTickCount.restype = wt.DWORD
+_k32.QueryFullProcessImageNameW.argtypes = [wt.HANDLE, wt.DWORD, wt.LPWSTR, ctypes.POINTER(wt.DWORD)]
+_k32.TerminateProcess.argtypes = [wt.HANDLE, wt.UINT]
+PROCESS_TERMINATE = 0x0001
 _u32.GetLastInputInfo.argtypes = [ctypes.POINTER(_LASTINPUTINFO)]
 
 
@@ -108,6 +111,23 @@ def find_game(exe: str = GAME_EXE) -> GameProcess | None:
     finally:
         _k32.CloseHandle(snapshot)
     return None
+
+
+def terminate_python(pid: int) -> bool:
+    """Ends a process only if it is python.exe/pythonw.exe (a PID file can be stale and point elsewhere)."""
+    handle = _k32.OpenProcess(PROCESS_TERMINATE | PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+    if not handle:
+        return False
+    try:
+        buf = ctypes.create_unicode_buffer(1024)
+        size = wt.DWORD(len(buf))
+        if not _k32.QueryFullProcessImageNameW(handle, 0, buf, ctypes.byref(size)):
+            return False
+        if buf.value.lower().rsplit("\\", 1)[-1] not in ("python.exe", "pythonw.exe"):
+            return False
+        return bool(_k32.TerminateProcess(handle, 0))
+    finally:
+        _k32.CloseHandle(handle)
 
 
 def idle_seconds() -> float:

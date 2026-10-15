@@ -282,6 +282,12 @@ class App:
 
     def run(self) -> int:
         guard = ConsoleCloseGuard()
+        pid_file = log_dir() / "companion.pid"  # lets Uninstall.bat stop this program
+        if not self.dry_run:
+            try:
+                pid_file.write_text(str(os.getpid()))
+            except OSError:
+                pid_file = None
         log.info("L4D2 Better Presence started%s. Log: %s", " (dry run)" if self.dry_run else "", log_dir())
         log.info("Waiting for Left 4 Dead 2…")
         try:
@@ -299,4 +305,9 @@ class App:
             self.netcon.close()
         self.sender.offer(None, None, time.monotonic())
         self.client.stop()
+        if not self.dry_run and pid_file is not None:
+            try:
+                pid_file.unlink()
+            except OSError:
+                pass
         return 0

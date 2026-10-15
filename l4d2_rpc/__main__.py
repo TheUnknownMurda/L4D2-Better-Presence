@@ -6,7 +6,9 @@
     python -m l4d2_rpc --dump          raw state read from the running game, then exit
     python -m l4d2_rpc -v              log every console line and event
     python -m l4d2_rpc doctor          check Python, Discord, the game, its launch options and the console
-    python -m l4d2_rpc setup           print the Steam launch options to paste (new console password)
+    python -m l4d2_rpc install         Install.bat: launch options, start with Windows, start now
+    python -m l4d2_rpc uninstall       Uninstall.bat: stop, remove the start with Windows, clean up
+    python -m l4d2_rpc setup           print the Steam launch options to paste
     python -m l4d2_rpc startup on|off  start (or not) silently with Windows
 """
 
@@ -15,10 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-import os
-import secrets
 import socket
-import subprocess
 import sys
 import time
 from dataclasses import asdict
@@ -26,7 +25,7 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 from . import config as config_mod
-from . import data, steam, system
+from . import data, install, steam, system
 from .app import App, DryRunClient, Sender
 from .discord_ipc import DiscordClient, discord_running, handshake_test
 from .parser import ConsoleParser
@@ -36,7 +35,6 @@ from .state import Tracker
 
 log = logging.getLogger("l4d2rpc")
 ROOT = Path(__file__).resolve().parent.parent
-STARTUP_LINK_NAME = "L4D2 Better Presence.lnk"
 
 
 def setup_logging(verbose: bool, console: bool = True) -> Path:
@@ -225,60 +223,35 @@ def run_doctor(cfg: dict, problems: list[str]) -> int:
 
 # ------------------------------------------------------------------------------------------------ setup
 def run_setup() -> int:
-    opts = steam.launch_options()
-    current = opts.raw if opts else ""
-    password = secrets.token_hex(8)
-    line = steam.suggested_launch_options(password, (opts.netcon_port if opts and opts.netcon_port else 27015),
-                                          current)
+    """Prints (and copies) the launch options; the password is kept when one is already set."""
+    line, must_change = install.launch_options_line(steam.launch_options())
+    if not must_change:
+        print("The launch options are already set: " + line)
+        return 0
     print("Paste this line in Steam: Library > right-click Left 4 Dead 2 > Properties > General > Launch options")
     print("(replace what is there; it keeps your other options):\n")
     print("    " + line + "\n")
-    try:
-        subprocess.run(["clip"], input=line.encode("ascii"), check=True)
+    if install.copy_to_clipboard(line):
         print("It is already copied: just press Ctrl+V in the Launch options box.")
-    except (OSError, subprocess.CalledProcessError):
-        pass
     print("Then restart the game. Nothing else to change: the program reads these options from Steam itself.")
     return 0
 
 
-# ------------------------------------------------------------------------------------------------ startup
-def startup_folder() -> Path:
-    return Path(os.environ["APPDATA"]) / "Microsoft" / "Windows" / "Start Menu" / "Programs" / "Startup"
-
-
 def run_startup(action: str) -> int:
-    link = startup_folder() / STARTUP_LINK_NAME
     if action == "off":
-        if link.exists():
-            link.unlink()
-            print(f"Removed {link}")
-        else:
-            print("Start with Windows was not on.")
+        print("Removed the start with Windows." if install.remove_startup_link() else "It did not start with Windows.")
         return 0
-    pythonw = Path(sys.executable).with_name("pythonw.exe")
-    if not pythonw.exists():
-        print(f"pythonw.exe not found next to {sys.executable}.")
-        return 1
-
-    def q(p) -> str:  # single-quoted PowerShell string
-        return "'" + str(p).replace("'", "''") + "'"
-
-    command = (f"$s=(New-Object -ComObject WScript.Shell).CreateShortcut({q(link)});"
-               f"$s.TargetPath={q(pythonw)};$s.Arguments='-m l4d2_rpc';$s.WorkingDirectory={q(ROOT)};"
-               f"$s.Description='L4D2 Better Presence';$s.Save()")
-    result = subprocess.run(["powershell", "-NoProfile", "-Command", command], capture_output=True, text=True)
-    if result.returncode != 0 or not link.exists():
-        print("Could not create the shortcut:", result.stderr.strip())
-        return 1
-    print(f"Created {link}\nThe program will start silently with Windows and wait for the game.")
-    return 0
+    error = install.create_startup_link()
+    print(f"Could not create the shortcut: {error}" if error
+          else "It will start silently with Windows and wait for the game.")
+    return 1 if error else 0
 
 
 # ------------------------------------------------------------------------------------------------ main
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="l4d2_rpc", description="Detailed Discord Rich Presence for Left 4 Dead 2")
-    ap.add_argument("command", nargs="?", choices=["run", "doctor", "setup", "startup"], default="run")
+    ap.add_argument("command", nargs="?", choices=["run", "install", "uninstall", "doctor", "setup", "startup"],
+                    default="run")
     ap.add_argument("action", nargs="?", choices=["on", "off"])
     ap.add_argument("--dry-run", action="store_true", help="compute the card without sending it")
     ap.add_argument("--simulate", action="store_true", help="fake game through every situation")
@@ -292,6 +265,10 @@ def main(argv: list[str] | None = None) -> int:
         except (AttributeError, ValueError):
             pass
 
+    if args.command == "install":
+        return install.run_install()
+    if args.command == "uninstall":
+        return install.run_uninstall()
     if args.command == "setup":
         return run_setup()
     if args.command == "startup":
