@@ -195,7 +195,7 @@ def run_doctor(cfg: dict, problems: list[str]) -> int:
     gd = steam.game_dir()
     check(gd is not None, f"Left 4 Dead 2 installed: {gd}", "Left 4 Dead 2 not found in the Steam libraries.")
     port, password, opts = netcon_settings(cfg)
-    check(bool(opts), f"Launch options read from Steam: {opts.raw if opts else ''}",
+    check(bool(opts), f"Launch options read from Steam: {steam.masked(opts.raw) if opts else ''}",
           "Could not read the launch options from Steam (userdata/<id>/config/localconfig.vdf).", fatal=False)
     check(bool(port), f"-netconport {port}", "No -netconport: run 'L4D2RPC.bat setup' and paste the line in Steam.")
     check(bool(password), "-netconpassword set (console closed to the network)",
@@ -226,7 +226,7 @@ def run_setup() -> int:
     """Prints (and copies) the launch options; the password is kept when one is already set."""
     line, must_change = install.launch_options_line(steam.launch_options())
     if not must_change:
-        print("The launch options are already set: " + line)
+        print("The launch options are already set: " + steam.masked(line))
         return 0
     print("Paste this line in Steam: Library > right-click Left 4 Dead 2 > Properties > General > Launch options")
     print("(replace what is there; it keeps your other options):\n")

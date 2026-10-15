@@ -149,7 +149,7 @@ def run_install(ask=input) -> int:
     opts = steam.launch_options()
     line, must_change = launch_options_line(opts)
     if not must_change:
-        _ok("Already set: " + line)
+        _ok("Already set: " + steam.masked(line))
     else:
         copied = copy_to_clipboard(line)
         print("   In Steam: Library > right-click Left 4 Dead 2 > Properties... > General > LAUNCH OPTIONS.")
@@ -204,7 +204,7 @@ def run_uninstall(ask=input) -> int:
     if opts and (opts.netcon_port or opts.netcon_password or opts.g15):
         print("\n   In Steam (Library > right-click Left 4 Dead 2 > Properties... > General > LAUNCH OPTIONS),")
         print("   remove: -netconport … -netconpassword … -g15")
-        print(f"   They are now: {opts.raw}")
+        print(f"   They are now: {steam.masked(opts.raw)}")
     data = config_mod.log_dir()
     if data.exists() and _ask_yes(f"\n   Also delete the log and your Survival best times ({data})?", False, ask):
         shutil.rmtree(data, ignore_errors=True)

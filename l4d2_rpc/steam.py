@@ -125,6 +125,12 @@ def launch_options(steam: Path | None = None, account_id: int | None = None) -> 
     return None
 
 
+def masked(raw: str) -> str:
+    """The launch options with the console password hidden, for screens people may share."""
+    args = (raw or "").split()
+    return " ".join("••••••" if i and args[i - 1].lower() == "-netconpassword" else a for i, a in enumerate(args))
+
+
 def suggested_launch_options(password: str, port: int = 27015, current: str = "") -> str:
     """The launch options line to paste in Steam, keeping any other option already there."""
     kept = []

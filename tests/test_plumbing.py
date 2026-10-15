@@ -59,6 +59,10 @@ class SteamFiles(unittest.TestCase):
         self.assertEqual((o.netcon_port, o.netcon_password, o.g15), (27015, None, False))
         self.assertEqual(steam.parse_launch_options("").netcon_port, None)
 
+    def test_password_masked_on_screen(self):
+        self.assertEqual(steam.masked("-novid -netconport 27015 -netconpassword abc123 -g15"),
+                         "-novid -netconport 27015 -netconpassword •••••• -g15")
+
     def test_suggested_line_keeps_other_options(self):
         line = steam.suggested_launch_options("newpw", 27015, "-novid -netconport 27015 -netconpassword old -g15")
         self.assertEqual(line, "-novid -netconport 27015 -netconpassword newpw -g15")
