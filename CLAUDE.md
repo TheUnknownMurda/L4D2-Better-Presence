@@ -76,7 +76,14 @@ See `../_Prompt Better Presence.md` (`<regles_discord>`, `<sources_de_donnees>`,
 - Never write `\uXXXX` escapes or raw control characters in sources with the editing tools (use `chr()`).
 - PowerShell from code: one line for `-Command`, no double quotes, never `-EncodedCommand`.
 
-## Current state — v1.0 (2026-10-15)
+## Current state — v1.0.0 published (2026-10-15)
+
+- GitHub: https://github.com/TheUnknownMurda/L4D2-Better-Presence (public). Release v1.0.0 with
+  `L4D2-Better-Presence.zip` (built by `git archive`; `.gitattributes` keeps tests/tools/CLAUDE.md out of it).
+  New release: commit, push, `git archive --format=zip --prefix=L4D2-Better-Presence/ -o <zip> HEAD`, then
+  `gh release create vX.Y.Z <zip>`; the README links `releases/latest/download/L4D2-Better-Presence.zip`.
+- Install path checked from a fresh folder (the release zip): `Install.bat`, `Doctor.bat`, `--simulate --dry-run`;
+  46 tests green from a fresh clone.
 
 Done and verified:
 - Tests green (`python -m unittest discover -s tests`): real recordings (solo campaign, vitals, Survival), Discord
