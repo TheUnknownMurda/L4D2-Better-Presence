@@ -10,7 +10,7 @@ talks to the game's own console.
 ```
 Playing Left 4 Dead 2                             [campaign poster]  [your survivor]
 Dark Carnival · Highway · Easy                     ← details: where you are, difficulty
-❤️ 81 HP · 🔫 Submachine Gun 50/650                 ← state: what moves (changes every 20 s):
+❤️ 81 HP · 🔫 Submachine Gun                       ← state: what moves (changes every 20 s):
                                                       health & weapon / team (online) / best time (Survival)
 12:34 elapsed                                      (2 of 4 online)
 ```
@@ -19,12 +19,12 @@ Dark Carnival · Highway · Easy                     ← details: where you are,
 |---|---|---|---|
 | Main menu | In the main menu | Last game: Dark Carnival (or Getting ready) | cover image, tooltip "Left 4 Dead 2" |
 | Loading | Dark Carnival · Highway · Easy (only "Dark Carnival" from the menu, until the mode is known) | ⏳ Loading… | poster |
-| In game | Dark Carnival · Highway · Easy | rotates: ❤️ 81 HP · 🔫 Submachine Gun 50/650 / 👥 2 players + 2 bots (online only) | poster + your survivor (Rochelle) |
+| In game | Dark Carnival · Highway · Easy | rotates: ❤️ 81 HP · 🔫 Submachine Gun / 👥 2 players + 2 bots (online only) | poster + your survivor (Rochelle) |
 | Finale | Dead Center · Finale: Atrium · Expert | same | same |
-| Tank alive | same | 🔥 TANK! · ❤️ 64 HP · 🔫 Submachine Gun 50/650 | same |
+| Tank alive | same | 🔥 TANK! · ❤️ 64 HP · 🔫 Submachine Gun | same |
 | Incapacitated | same | 🩸 Incapacitated — needs help! | same |
 | Just revived | same | 🦯 Revived — 45 HP, or 🦯 Revived — limping, 1 HP under 30 HP (20 s) | same |
-| Two revives without a kit | same | 🖤 1 HP (last life) · 🔫 Pistol 15 | same |
+| Two revives without a kit | same | 🖤 1 HP (last life) · 🔫 Pistol | same |
 | Paused (solo) | same | ⏸️ Paused | same |
 | Dead | same | 💀 Dead (solo) / 💀 Dead — waiting for a rescue | same |
 | Chapter restarts | same | 🔁 Retry #2 (20 s), then "Attempt 2" in the poster tooltip | same |
@@ -101,7 +101,7 @@ written to the game folder or to Steam.
   Atrium`), "Survival · Gun Shop", or "In the main menu". During a chapter change it already shows the next chapter.
 - **Line 2**: a strong state while it lasts — 💀 dead, 🩸 incapacitated, ⏸️ paused (solo), 🦯 just revived,
   🚪 safe room, 🔥 Tank alive, 🔁 retry, 👀 spectating, 🧟 playing a special infected, 💤 idle — otherwise it
-  rotates every 20 s between your health and weapon (with ammo: clip/reserve), the team (online only) and, in
+  rotates every 20 s between your health and weapon, the team (online only) and, in
   Survival, your best time. "Limping" is only written when you are revived under 30 HP.
 - **Line 1 ends with the difficulty** (the game's names: Easy, Normal, Advanced, Expert), except in Survival.
 - **Big image**: the campaign poster; tooltip: attempt number, "online".
@@ -164,13 +164,14 @@ replaced by its default.
 | `idle_minutes` | `5` | Minutes without keyboard/mouse before 💤 Idle (`0` = never). |
 | `show_health` | `true` | Health on line 2. |
 | `show_weapon` | `true` | Weapon in hand. |
-| `show_ammo` | `true` | Clip/reserve after the weapon. |
+| `show_ammo` | `false` | Clip/reserve (and "reloading") after the weapon name. |
 | `show_specials` | `true` | The Tank alert (and the `specials` rotation item if you add it). |
 | `show_team` | `true` | "2 players + 2 bots" online (never in solo). |
 | `show_character` | `true` | Your survivor's image. |
 | `show_difficulty` | `true` | Difficulty at the end of line 1. |
 | `show_attempts` | `true` | 🔁 Retry and "attempt n". |
 | `show_records` | `true` | Survival best times (🏆). |
+| `survival_records` | `{}` | Your records from the game's own Survival menu, typed once, e.g. `{"Gun Shop": "4:32", "Concert": "7:10"}` (map names as in that menu, in English or French, or the map code like `c1m2_streets` when a name is used twice, e.g. "Port"). The card shows the best of these and the times it measured itself. |
 | `show_online` | `true` | "(2 of 4)" and "online". |
 | `show_pause` | `true` | ⏸️ Paused. |
 | `show_idle` | `true` | 💤 Idle. |
@@ -207,11 +208,9 @@ replaced by its default.
   queries and Steam were all tried, see FINDINGS.md). Versus shows when you play infected.
 - **Survival timer**: the game prints nothing when the round starts; the card starts its timer at the first special
   infected or the first damage, a few seconds after the real start.
-- **Survival best times** are the program's own: the game's records (and medals) cannot be read from outside —
-  Steam's stats have no per-map survival time and L4D2's leaderboards are not public. Every round played while the
-  program runs is measured (detected start → your death in solo, or → your death / the next round online) and the
-  best per map is kept in `%LOCALAPPDATA%\L4D2RPC\survival_records.json`. Being measured from the detected
-  start, they can be a few seconds shorter than the game's. Records made before installing it are unknown.
+- **Survival best times**: the game's own records cannot be read from outside. The game fetches them from a Steam leaderboard when a Survival map starts and passes them on internally (the console only prints `Unknown command: survival_record`, without the time); L4D2's leaderboards are not public and Steam's stats only hold medals. So the card shows the best of:
+  - the records you type once in `survival_records` (copy them from the game's Survival menu), and
+  - every round measured while the program runs (detected start → your death in solo, or → your death / the next round online), kept in `%LOCALAPPDATA%\L4D2RPC\survival_records.json`. Being measured from the detected start, they can be a few seconds shorter than the game's.
 - **Temporary health** (pills, adrenaline) is not in the dump: only permanent health is shown.
 - **Melee weapon type** (katana, bat…) is not in the dump: "Melee weapon".
 - **The Witch** is not a player, so `status` does not list her.

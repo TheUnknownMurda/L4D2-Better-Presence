@@ -22,7 +22,9 @@ The full specification of the series is `../_Prompt Better Presence.md`.
 - Card in English. Line 1 = campaign · chapter · difficulty (no chapter number n/N). Line 2 rotates health &
   weapon / team (online only, never "Solo with N bots") / Survival best; no specials line by default; "limping"
   only when revived under 30 HP.
-- Survival has its own card; best times are kept by the companion (`survival_records.json`).
+- Weapon name only (no ammo, no "reloading"; `show_ammo` stays as an option).
+- Survival has its own card; best = max(times measured by the companion in `survival_records.json`,
+  records typed by the user in config `survival_records` — the game's own are not readable).
 - Realism dropped: undetectable in solo without an add-on, and Sam does not want an add-on.
 - Images: cover and the 8 survivor portraits are Sam's links (guns.lol), defaults of `cover_image` /
   `character_images`. config.json only holds the keys a user changes (defaults stay live).

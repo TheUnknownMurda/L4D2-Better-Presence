@@ -77,7 +77,7 @@ class SoloVitals(unittest.TestCase):
         self.assertEqual((s.clip, s.reserve), (5, 72))
         self.assertEqual(s.team, 2)
         card, _ = build_activity(s, dict(DEFAULTS, state_rotation=["vitals"]), stamp("17:30:57"))
-        self.assertEqual(card["state"], "❤️ 100 HP · 🔫 Chrome Shotgun 5/72")
+        self.assertEqual(card["state"], "❤️ 100 HP · 🔫 Chrome Shotgun")
 
     def test_pause(self):
         s = self.r.until("17:31:22")

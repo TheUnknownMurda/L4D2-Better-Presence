@@ -50,13 +50,14 @@ DEFAULTS: dict = {
     "idle_minutes": 5,
     "show_health": True,
     "show_weapon": True,
-    "show_ammo": True,
+    "show_ammo": False,  # Sam: weapon name only
     "show_specials": True,
     "show_team": True,
     "show_character": True,
     "show_difficulty": True,
     "show_attempts": True,
     "show_records": True,
+    "survival_records": {},  # your in-game records, typed once: {"Gun Shop": "4:32"}
     "show_online": True,
     "show_pause": True,
     "show_idle": True,
@@ -97,6 +98,14 @@ def validate(raw: dict) -> tuple[dict, list[str]]:
                     isinstance(v, str) and v.startswith("https://") and len(v) <= 256 for v in value.values()):
                 problems.append(_problem(key, value, '{"Coach": "https://…", …} with links of 256 characters at most'))
                 continue
+        elif key == "survival_records":
+            from .records import parse_manual  # here to avoid an import cycle
+            _parsed, bad = parse_manual(value)
+            if bad:
+                problems.append(_problem(key, {k: value[k] for k in bad} if isinstance(value, dict) else value,
+                                         "map names as in the game's Survival menu (or c1m2_streets) and times "
+                                         'like "4:32"'))
+            value = {k: v for k, v in value.items() if k not in bad} if isinstance(value, dict) else {}
         elif key == "cover_image":
             if not (isinstance(value, str) and (value == "" or (value.startswith("https://") and len(value) <= 256))):
                 problems.append(_problem(key, value, 'an "https://…" image link of 256 characters at most, or ""'))

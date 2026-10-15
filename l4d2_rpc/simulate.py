@@ -68,7 +68,8 @@ def scenario() -> list[Step]:
                                      "Initializing Director's script", "Initializing Director's script",
                                      "Sending UDP connect to public IP 127.0.0.1:27015"]),
         Step("In game: health and weapon", ["Left 4 Dead 2", "Map: c2m1_highway",
-                                            "Players: 1 (0 bots) / 4 humans", "#Cstrike_TitlesTXT_Game_connected"]
+                                            "Players: 1 (0 bots) / 4 humans", "#Cstrike_TitlesTXT_Game_connected",
+                                            '"z_difficulty" = "Easy" ( def. "Normal" )']
              + status_lines() + dump_lines(health=81, tick=t), seconds=22),
         Step("In game: specials alive (rotation)", status_lines(bots=("Coach", "Nick", "Ellis", "Charger", "Jockey"))
              + dump_lines(health=81, clip=37, tick=t + 300), seconds=22),
@@ -93,7 +94,8 @@ def scenario() -> list[Step]:
             "BinkOpen( c:\\program files (x86)\\steam\\steamapps\\common\\left 4 dead 2\\left4dead2\\media\\l4d2_background01.bik )",
             "Dropped Sam from server (Server shutting down)"]),
         Step("Online co-op on a server", ["Connecting to 203.0.113.7:27015", "Left 4 Dead 2", "Map: c8m2_subway",
-                                          "Players: 3 (1 bots) / 4 humans", "#Cstrike_TitlesTXT_Game_connected"]
+                                          "Players: 3 (1 bots) / 4 humans", "#Cstrike_TitlesTXT_Game_connected",
+                                          '"z_difficulty" = "Hard"']
              + status_lines("c8m2_subway", humans=[("Sam", "198.51.100.2:27005"), ("Friend", "198.51.100.3:27005"),
                                                    ("Other", "198.51.100.4:27005")], bots=("Bill",), local=False)
              + dump_lines(health=72, weapon="CShotgun_Chrome", clip=8, ammo_type=7, reserve=72, tick=5000),

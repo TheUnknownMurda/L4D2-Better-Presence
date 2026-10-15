@@ -78,7 +78,7 @@ class Scenario(unittest.TestCase):
             check_limits(self, card)
         self.assertEqual(cards["Main menu (game just started)"]["details"], "In the main menu")
         self.assertEqual(cards["Loading a solo game"]["state"], "⏳ Loading…")
-        self.assertEqual(cards["In game: health and weapon"]["state"], "❤️ 81 HP · 🔫 Submachine Gun 50/650")
+        self.assertEqual(cards["In game: health and weapon"]["state"], "❤️ 81 HP · 🔫 Submachine Gun")
         self.assertTrue(cards["Tank!"]["state"].startswith("🔥 TANK!"))
         self.assertEqual(cards["Incapacitated"]["state"], "🩸 Incapacitated — needs help!")
         self.assertEqual(cards["Paused (Esc in solo)"]["state"], "⏸️ Paused")
@@ -111,7 +111,7 @@ class Scenario(unittest.TestCase):
         cfg = dict(DEFAULTS, state_rotation=["vitals", "specials", "team"])
         seen = [build_activity(tracker.state, cfg, T0 + k * 20)[0]["state"] for k in range(4)]
         self.assertIn("🧟 Specials: Charger, Jockey", seen)
-        self.assertIn("❤️ 81 HP · 🔫 Submachine Gun 50/650", seen)
+        self.assertIn("❤️ 81 HP · 🔫 Submachine Gun", seen)
         self.assertFalse(any("Solo" in line or "bots" in line for line in seen))  # no team line in solo
         # The key does not change with the rotation: those updates go at the slow pace
         keys = {build_activity(tracker.state, cfg, T0 + k * 20)[1] for k in range(4)}
@@ -124,7 +124,7 @@ class Scenario(unittest.TestCase):
             check_limits(self, card)
         self.assertEqual(cards["Main menu (game just started)"]["details"], "Au menu principal")
         self.assertEqual(cards["In game: health and weapon"]["details"], "Lugubre carnaval · Autoroute · Facile")
-        self.assertEqual(cards["In game: health and weapon"]["state"], "81 PV · Mitrailleuse 50/650")
+        self.assertEqual(cards["In game: health and weapon"]["state"], "81 PV · Mitrailleuse")
         self.assertEqual(cards["Incapacitated"]["state"], "À terre — a besoin d'aide !")
         self.assertEqual(cards["Finale"]["details"], "Lugubre carnaval · Finale : Concert · Facile")
         self.assertEqual(cards["In game: health and weapon"]["assets"]["large_text"], "Left 4 Dead 2")
@@ -160,6 +160,24 @@ class Scenario(unittest.TestCase):
         self.assertNotIn("timestamps", card)
         self.assertNotIn("assets", card)
         self.assertEqual(card["buttons"][0]["label"], "Left 4 Dead 2 on Steam")
+
+
+class Ammo(unittest.TestCase):
+    def card_with(self, cfg, **dump):
+        parser, tracker = ConsoleParser(), Tracker()
+        tracker.game_started(T0, T0)
+        for line in ["Host_NewGame on map c1m1_hotel", "Map: c1m1_hotel", "#Cstrike_TitlesTXT_Game_connected"]                 + dump_lines(health=81, **dump):
+            for ev in parser.feed(line):
+                tracker.apply(ev, T0)
+        return build_activity(tracker.state, dict(DEFAULTS, state_rotation=["vitals"], **cfg), T0 + 1)[0]["state"]
+
+    def test_weapon_name_only_by_default(self):
+        self.assertEqual(self.card_with({}), "❤️ 81 HP · 🔫 Submachine Gun")
+        self.assertEqual(self.card_with({}, reloading=True), "❤️ 81 HP · 🔫 Submachine Gun")
+
+    def test_ammo_option(self):
+        self.assertEqual(self.card_with({"show_ammo": True}), "❤️ 81 HP · 🔫 Submachine Gun 50/650")
+        self.assertEqual(self.card_with({"show_ammo": True}, reloading=True), "❤️ 81 HP · 🔫 Submachine Gun (reloading)")
 
 
 class Revived(unittest.TestCase):
@@ -208,7 +226,7 @@ class LastLife(unittest.TestCase):
             for ev in parser.feed(line):
                 tracker.apply(ev, t)
         card, _ = build_activity(s, dict(DEFAULTS, state_rotation=["vitals"]), t)
-        self.assertEqual(card["state"], "🖤 1 HP (last life) · 🔫 Submachine Gun 50/650")
+        self.assertEqual(card["state"], "🖤 1 HP (last life) · 🔫 Submachine Gun")
         t += 3
         for line in dump_lines(health=80, tick=5000):  # first-aid kit
             for ev in parser.feed(line):

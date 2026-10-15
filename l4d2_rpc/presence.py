@@ -133,7 +133,7 @@ def _vitals(s: GameState, cfg: dict, lang: str) -> str | None:
         icon = {"primary": "weapon", "secondary": "weapon"}.get(kind, kind)
         label = _e(cfg, icon) + data.weapon_name(s.weapon_class, lang)
         if cfg["show_ammo"] and (kind in ("primary", "secondary") or s.weapon_class == "CChainsaw"):
-            if s.reloading:
+            if s.reloading:  # only with the ammo (Sam: weapon name alone by default)
                 label += f" ({text(lang, 'reloading')})"
             elif s.clip is not None and s.clip >= 0:
                 infinite_reserve = kind == "secondary" or s.weapon_class == "CChainsaw"

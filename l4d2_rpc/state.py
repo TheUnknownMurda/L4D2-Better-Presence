@@ -171,6 +171,7 @@ class Tracker:
         s.attempt = 1
         if new_game:
             s.mode = None  # a chapter change keeps the mode
+            s.difficulty = None  # the menu may have changed it: shown again once read in the new game
         self._reset_round()
         self._chapter_dumps = 0
         self._reset_vitals()

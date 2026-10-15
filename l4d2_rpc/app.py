@@ -15,7 +15,7 @@ from .discord_ipc import DiscordClient
 from .netcon import NetconClient
 from .parser import ConsoleParser
 from .presence import build_activity
-from .records import SurvivalRecords, clock
+from .records import SurvivalRecords, clock, parse_manual
 from .state import Tracker
 
 log = logging.getLogger("l4d2rpc")
@@ -121,6 +121,7 @@ class App:
         self._next_difficulty = 0.0
         self._warned: set[str] = set()
         self.records = SurvivalRecords(log_dir() / "survival_records.json")
+        self.manual_records = parse_manual(cfg.get("survival_records") or {})[0]  # typed from the game's menu
 
     # ------------------------------------------------------------------ helpers
     def _warn_once(self, key: str, message: str, *args) -> None:
@@ -227,6 +228,8 @@ class App:
     def _log_change(self, before, ev) -> None:
         s = self.tracker.state
         if (s.phase, s.map) != before:
+            if s.phase in ("loading", "ingame"):
+                self._next_difficulty = 0.0  # read the difficulty again at the first poll in the new map
             if s.phase == "loading":
                 log.info("Loading %s.", s.map or "a map")
             elif s.phase == "ingame":
@@ -252,11 +255,15 @@ class App:
         s = self.tracker.state
         while self.tracker.finished_rounds:
             map_name, seconds, end = self.tracker.finished_rounds.pop(0)
-            new_best = self.records.add(map_name, seconds, end)
+            new_best = self.records.add(map_name, seconds, end, floor=self.manual_records.get(map_name))
             if map_name == s.map:
                 s.last_round_record = new_best
             log.info("Survival round on %s: %s%s.", map_name, clock(seconds), " (new best)" if new_best else "")
-        s.survival_best = self.records.best(s.map) if s.survival else None
+        if s.survival:
+            bests = [b for b in (self.records.best(s.map), self.manual_records.get(s.map or "")) if b]
+            s.survival_best = max(bests) if bests else None
+        else:
+            s.survival_best = None
 
     # ------------------------------------------------------------------ loop
     def step(self) -> None:

@@ -170,6 +170,22 @@ Survival game on "Concert" (`c2m5_concert`) left before starting the timer.
 death 18:52:29, restart 18:52:38) or → local death / restart − 9 s online (not verified online). Saved in
 `%LOCALAPPDATA%\L4D2RPC\survival_records.json`.
 
+### The game's own Survival records (verified 2026-10-15, `tools/steam_stats.py`)
+
+Sam asked for the records already set in the game. Where they live:
+- client.dll strings: `OnProfileLeaderboardData`, `besttime`, `Leaderboard`, `cmd%d survival_record %llu %u`,
+  `m_flSurvivalRecordTime[0]`, `m_nSurvivalTopMedal`; server.dll: `survival_record`, `m_flSurvivalRecordTime`.
+  → The client fetches its record from a **Steam leaderboard** when a Survival map starts and sends it to the
+  server as `survival_record <SteamID> <time>`; the server networks it in the player resource. Our console only
+  shows `Unknown command: survival_record`, **without the arguments**, and the player resource is not in
+  `g15_dumpplayer`.
+- Steam's local stats (`appcache/stats/UserGameStats_<account>_550.bin`, binary KeyValues, read by
+  `tools/steam_stats.py`): Survival only has `Stat.SurvivalGamesPlayed.Total` (= 5 for Sam) and the medal
+  bitfields `TD2.COMP.ACH_EARN_ALL_{BRONZE,SILVER,GOLD}_MEDALS.{0,1}` (absent for Sam: no medal yet). No time.
+- The leaderboards are not public (see above).
+→ Not readable. The card uses the records typed in `survival_records` (from the game's Survival menu) together with
+its own measurements (best of both).
+
 ## Realism: not detectable from outside in solo (verified 2026-10-14, 22:10, `recordings/realism_session.log`)
 
 Solo Realism, The Parish "Waterfront" (`c5m1_waterfront`), Advanced (`z_difficulty "Hard"`).

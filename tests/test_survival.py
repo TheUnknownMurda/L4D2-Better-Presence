@@ -8,7 +8,7 @@ from helpers import Replay, stamp
 from l4d2_rpc.config import DEFAULTS
 from l4d2_rpc.parser import ConsoleParser
 from l4d2_rpc.presence import build_activity
-from l4d2_rpc.records import SurvivalRecords, clock
+from l4d2_rpc.records import SurvivalRecords, clock, parse_manual, parse_time
 from l4d2_rpc.simulate import dump_lines, status_lines
 from l4d2_rpc.state import Tracker
 
@@ -81,6 +81,7 @@ class LoadingCard(unittest.TestCase):
                     tracker.apply(ev, when)
 
         feed(['"z_difficulty" = "Normal"', "---- Host_NewGame ----", "Host_NewGame on map c1m2_streets"], t)
+        self.assertIsNone(tracker.state.difficulty)  # the old difficulty is not shown while the new game loads
         card, _ = build_activity(tracker.state, dict(DEFAULTS), t + 1)
         self.assertEqual((card["details"], card["state"]), ("Dead Center", "⏳ Loading…"))
         feed(["Map: c1m2_streets", "#Cstrike_TitlesTXT_Game_connected"], t + 15)
@@ -95,8 +96,8 @@ class LoadingCard(unittest.TestCase):
         parser, tracker = ConsoleParser(), Tracker()
         t = 1000.0
         tracker.game_started(t, t)
-        for line in ['"z_difficulty" = "Hard"', "Host_NewGame on map c1m2_streets", "Map: c1m2_streets",
-                     "#Cstrike_TitlesTXT_Game_connected"] + dump_lines(health=100, tick=5):
+        for line in ["Host_NewGame on map c1m2_streets", "Map: c1m2_streets", "#Cstrike_TitlesTXT_Game_connected",
+                     '"z_difficulty" = "Hard"'] + dump_lines(health=100, tick=5):
             for ev in parser.feed(line):
                 tracker.apply(ev, t)
         card, _ = build_activity(tracker.state, dict(DEFAULTS), t + 2)
@@ -150,6 +151,22 @@ class BestTimes(unittest.TestCase):
         self.feed(tracker, parser, ["Initializing Director's script"], 1200)
         [(_, seconds, _)] = tracker.finished_rounds
         self.assertEqual(seconds, 90)  # our death, not the restart
+
+    def test_records_typed_from_the_game_menu(self):
+        parsed, bad = parse_manual({"Gun Shop": "4:32", "L'armerie": "3:00", "c2m5_concert": "1:02:05",
+                                    "Port": "5:00", "Nowhere": "1:00", "Mall Atrium": "soon"})
+        self.assertEqual(parsed, {"c1m2_streets": 272.0, "c2m5_concert": 3725.0})  # the best of two names kept
+        self.assertEqual(sorted(bad), ["Mall Atrium", "Nowhere", "Port"])  # "Port" is two maps: use the code
+        self.assertEqual(parse_time("0:59"), 59)
+        self.assertIsNone(parse_time("1:75"))
+
+    def test_typed_record_raises_the_bar(self):
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as d:
+            r = SurvivalRecords(Path(d) / "survival_records.json")
+            self.assertFalse(r.add("c1m2_streets", 200, 1_791_000_000, floor=272))  # better than ours, not the game's
+            self.assertTrue(r.add("c1m2_streets", 300, 1_791_000_100, floor=272))
 
     def test_records_file(self):
         import tempfile
