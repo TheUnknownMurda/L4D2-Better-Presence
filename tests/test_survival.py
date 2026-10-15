@@ -67,6 +67,42 @@ class SurvivalRecording(unittest.TestCase):
         self.assertEqual(card["assets"]["large_text"], "Dead Center · round 2")
 
 
+class LoadingCard(unittest.TestCase):
+    """Sam: a Survival load showed the campaign's chapter ("Dead Center · Streets") until the game was in."""
+
+    def test_survival_load_does_not_name_the_campaign_chapter(self):
+        parser, tracker = ConsoleParser(), Tracker()
+        t = 1000.0
+        tracker.game_started(t, t)
+
+        def feed(lines, when):
+            for line in lines:
+                for ev in parser.feed(line):
+                    tracker.apply(ev, when)
+
+        feed(['"z_difficulty" = "Normal"', "---- Host_NewGame ----", "Host_NewGame on map c1m2_streets"], t)
+        card, _ = build_activity(tracker.state, dict(DEFAULTS), t + 1)
+        self.assertEqual((card["details"], card["state"]), ("Dead Center", "⏳ Loading…"))
+        feed(["Map: c1m2_streets", "#Cstrike_TitlesTXT_Game_connected"], t + 15)
+        card, _ = build_activity(tracker.state, dict(DEFAULTS), t + 15)
+        self.assertEqual((card["details"], card["state"]), ("Dead Center", "⏳ Loading…"))
+        feed(["Unknown command: survival_record"] + status_lines("c1m2_streets", bots=("Ellis", "Rochelle", "Coach"))
+             + dump_lines(health=100, tick=5), t + 16)
+        card, _ = build_activity(tracker.state, dict(DEFAULTS), t + 16)
+        self.assertEqual(card["details"], "Survival · Gun Shop")
+
+    def test_campaign_load_shows_the_chapter_once_in(self):
+        parser, tracker = ConsoleParser(), Tracker()
+        t = 1000.0
+        tracker.game_started(t, t)
+        for line in ['"z_difficulty" = "Hard"', "Host_NewGame on map c1m2_streets", "Map: c1m2_streets",
+                     "#Cstrike_TitlesTXT_Game_connected"] + dump_lines(health=100, tick=5):
+            for ev in parser.feed(line):
+                tracker.apply(ev, t)
+        card, _ = build_activity(tracker.state, dict(DEFAULTS), t + 2)
+        self.assertEqual(card["details"], "Dead Center · Streets · Advanced")
+
+
 class BestTimes(unittest.TestCase):
     def feed(self, tracker, parser, lines, t):
         for line in lines:

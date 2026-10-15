@@ -32,7 +32,8 @@ RESULTS_SCREEN_SECONDS = 9  # Survival: death -> next round's "Initializing Dire
 class GameState:
     phase: str = "closed"  # closed | menu | loading | ingame
     map: str | None = None
-    mode: str | None = None  # "survival" when recognised, else unknown (campaign, realism…)
+    mode: str | None = None  # "survival" or "realism" when recognised, else unknown (campaign…)
+    menu_load: bool = False  # this map was loaded from the menu (its mode is only known once in)
     round_start: float | None = None  # Survival: when the round was seen starting
     round_end: float | None = None  # Survival: when the round ended (solo: the player's death)
     last_round: float | None = None  # Survival: length of the round that just ended, seconds
@@ -83,6 +84,10 @@ class GameState:
     @property
     def survival(self) -> bool:
         return self.mode == "survival"
+
+    @property
+    def realism(self) -> bool:
+        return self.mode == "realism"
 
     @property
     def round_waiting(self) -> bool:
@@ -167,10 +172,12 @@ class Tracker:
         s.phase = "loading"
         s.chapter_start = now
         s.attempt = 1
-        s.mode = None
+        if new_game:
+            s.mode = None  # a chapter change keeps the mode (Realism stays Realism)
         self._reset_round()
         self._chapter_dumps = 0
         self._reset_vitals()
+        s.menu_load = new_game
         if new_game or s.campaign_start is None or (s.campaign and s.campaign != previous_campaign):
             s.campaign_start = now
             s.revives = 0

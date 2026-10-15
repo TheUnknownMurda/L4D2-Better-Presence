@@ -85,13 +85,13 @@ class Scenario(unittest.TestCase):
         self.assertEqual(cards["Dead"]["state"], "💀 Dead")
         self.assertEqual(cards["Chapter restarts (retry)"]["state"], "🔁 Retry #2")
         self.assertEqual(cards["Safe room reached"]["state"], "🚪 Reached the safe room")
-        self.assertEqual(cards["Next chapter loading"]["details"], "Dark Carnival · Fairground")
-        self.assertEqual(cards["Finale"]["details"], "Dark Carnival · Finale: Concert")
+        self.assertEqual(cards["Next chapter loading"]["details"], "Dark Carnival · Fairground · Easy")
+        self.assertEqual(cards["Finale"]["details"], "Dark Carnival · Finale: Concert · Easy")
         self.assertEqual(cards["Idle (no keyboard/mouse for 5 min)"]["state"], "💤 Idle")
         self.assertEqual(cards["Back to the main menu"]["state"], "Last game: Dark Carnival")
         online = cards["Online co-op on a server"]
         self.assertEqual(online["party"]["size"], [3, 4])
-        self.assertIn("online", online["assets"]["large_text"])
+        self.assertEqual(online["assets"]["large_text"], "Online")
         self.assertNotIn("small_image", online.get("assets", {}))  # character unknown with other humans
         versus = cards["Versus, playing a Hunter"]
         self.assertTrue(versus["state"].startswith("🧟 Playing as the Hunter"))
@@ -123,11 +123,11 @@ class Scenario(unittest.TestCase):
         for card in cards.values():
             check_limits(self, card)
         self.assertEqual(cards["Main menu (game just started)"]["details"], "Au menu principal")
-        self.assertEqual(cards["In game: health and weapon"]["details"], "Lugubre carnaval · Autoroute")
+        self.assertEqual(cards["In game: health and weapon"]["details"], "Lugubre carnaval · Autoroute · Facile")
         self.assertEqual(cards["In game: health and weapon"]["state"], "81 PV · Mitrailleuse 50/650")
         self.assertEqual(cards["Incapacitated"]["state"], "À terre — a besoin d'aide !")
-        self.assertEqual(cards["Finale"]["details"], "Lugubre carnaval · Finale : Concert")
-        self.assertEqual(cards["In game: health and weapon"]["assets"]["large_text"], "Difficulté Facile")
+        self.assertEqual(cards["Finale"]["details"], "Lugubre carnaval · Finale : Concert · Facile")
+        self.assertEqual(cards["In game: health and weapon"]["assets"]["large_text"], "Left 4 Dead 2")
 
     def test_language_auto_follows_game(self):
         cfg = dict(DEFAULTS, language="auto")

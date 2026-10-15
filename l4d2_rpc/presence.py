@@ -77,10 +77,36 @@ def _join(parts: list[str]) -> str:
 
 
 # ------------------------------------------------------------------------------------------------ lines
-def _where(s: GameState, lang: str) -> str:
+def _where(s: GameState, cfg: dict, lang: str, now: float) -> str:
+    """Line 1: campaign · chapter (or Survival · map), then the difficulty."""
+    place = _place(s, lang, now)
+    if _mode_pending(s, now):
+        return place  # Survival has no difficulty: wait to know the mode
+    if cfg["show_difficulty"] and s.difficulty and not s.survival and s.team != TEAM_INFECTED and s.map_info             and s.map_info.campaign:
+        return f"{place} · {data.difficulty_name(s.difficulty, lang, realism=s.realism)}"
+    if cfg["show_difficulty"] and s.realism:
+        return f"{place} · {data.mode_name('realism', lang)}"
+    return place
+
+
+def _loading(s: GameState, now: float) -> bool:
+    return s.phase == "loading" or (s.phase == "ingame" and s.last_dump is None and s.chapter_start is not None
+                                    and now - s.chapter_start < SETTLE_SECONDS)
+
+
+def _mode_pending(s: GameState, now: float) -> bool:
+    """Loading from the menu a map that Survival/Scavenge also use: the mode is only known once in."""
+    return s.mode is None and s.menu_load and _loading(s, now) and data.has_other_modes(s.map)
+
+
+def _place(s: GameState, lang: str, now: float) -> str:
     info = s.map_info
     if info is None:
         return text(lang, "unknown_map")
+    if _mode_pending(s, now):
+        # Loading from the menu a map that Survival/Scavenge also use: its mode is only known once in, so
+        # don't name the campaign's chapter yet (Sam: Survival loads showed "Dead Center · Streets")
+        return data.campaign_name(info.campaign, lang) or text(lang, "unknown_map")
     if s.survival:
         place = data.mode_map_name(info.map, "survival", lang) or data.chapter_name(info.map, lang) or info.map
         return f"{data.mode_name('survival', lang)} · {place}"
@@ -236,11 +262,9 @@ def build_activity(s: GameState, cfg: dict, now: float, idle: float = 0.0) -> tu
         start = s.session_start if cfg["timer"] != "none" else None
         key = ("menu", state == text(lang, "menu_idle"))
     else:
-        details = _where(s, lang)
+        details = _where(s, cfg, lang, now)
         # Just in: the first health/weapon read is ~2 s away, keep "Loading…" rather than an empty line
-        settling = (s.phase == "ingame" and s.last_dump is None and s.chapter_start is not None
-                    and now - s.chapter_start < SETTLE_SECONDS)
-        if s.phase == "loading" or settling:
+        if _loading(s, now):
             state = _e(cfg, "loading") + text(lang, "loading")
             kind = "loading"
         else:
@@ -256,8 +280,6 @@ def build_activity(s: GameState, cfg: dict, now: float, idle: float = 0.0) -> tu
             tip = []
             if s.survival:
                 tip.append(data.campaign_name(s.campaign, lang))  # the map's campaign, not on line 1 here
-            elif cfg["show_difficulty"] and s.difficulty and s.team != TEAM_INFECTED:
-                tip.append(text(lang, "difficulty", difficulty=data.difficulty_name(s.difficulty, lang)))
             if cfg["show_attempts"] and s.attempt > 1:
                 tip.append(text(lang, "round_n" if s.survival else "attempt", n=s.attempt))
             if cfg["show_online"] and s.remote:

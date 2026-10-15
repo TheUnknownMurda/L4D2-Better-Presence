@@ -88,15 +88,23 @@ def mode_map_name(map_name: str | None, mode: str, lang: str) -> str | None:
     return names.get(lang) or names.get("en")
 
 
+def has_other_modes(map_name: str | None) -> bool:
+    """True when another mode (Survival, Scavenge) also uses this map under its own name."""
+    info = map_info(map_name)
+    return bool(info and game_data()["maps"].get(info.map, {}).get("mode_names"))
+
+
 def mode_name(mode: str | None, lang: str) -> str | None:
     names = game_data()["modes"].get(mode or "") or {}
     return names.get(lang) or names.get("en")
 
 
-def difficulty_name(value: str | None, lang: str) -> str | None:
+def difficulty_name(value: str | None, lang: str, realism: bool = False) -> str | None:
+    """The game's name for a z_difficulty value ("Hard" -> "Advanced"), "Realism Advanced" in Realism."""
     if not value:
         return None
-    for key, names in game_data()["difficulties"].items():
+    table = game_data().get("difficulties_realism") if realism else None
+    for key, names in (table or game_data()["difficulties"]).items():
         if key.lower() == value.lower():
             return names.get(lang) or names.get("en")
     return None

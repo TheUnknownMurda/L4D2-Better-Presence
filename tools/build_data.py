@@ -181,8 +181,12 @@ def build_game_data(game: Path) -> dict:
                     maps[key].setdefault("mode_names", {})[mode] = mode_names
 
     difficulties = {}
+    difficulties_realism = {}  # "Realism - Expert" -> "Realism Expert"
     for value, key in DIFFICULTIES.items():
         difficulties[value] = {SHORT[l]: localise(strings[l], f"L4D360UI_Difficulty_{key}") for l in LANGS}
+        difficulties_realism[value] = {
+            SHORT[l]: (localise(strings[l], f"L4D360UI_Difficulty_{key}_realism") or "").replace(" - ", " ")
+            for l in LANGS}
     modes = {m: {SHORT[l]: localise(strings[l], f"L4D360UI_Mode_{m}") for l in LANGS} for m in MODES}
 
     weapons = {}
@@ -201,6 +205,7 @@ def build_game_data(game: Path) -> dict:
         "campaigns": campaigns,
         "maps": dict(sorted(maps.items())),
         "difficulties": difficulties,
+        "difficulties_realism": difficulties_realism,
         "modes": modes,
         "weapons": weapons,
         "survivors": SURVIVORS_L4D2 + SURVIVORS_L4D1,
