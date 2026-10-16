@@ -172,6 +172,8 @@ replaced by its default.
 | `show_attempts` | `true` | 🔁 Retry and "attempt n". |
 | `show_records` | `true` | Survival best times (🏆). |
 | `survival_records` | `{}` | Your records from the game's own Survival menu, typed once, e.g. `{"Gun Shop": "4:32", "Concert": "7:10"}` (map names as in that menu, in English or French, or the map code like `c1m2_streets` when a name is used twice, e.g. "Port"). The card shows the best of these and the times it measured itself. |
+| `gm_demo_archive` | `false` | Also take your best times from the Gold Miners community [GM Demo Archive](http://survival.site.nfoservers.com/DemoArchive/) (rounds played on their servers). Sends your SteamID64 to that site, at most every 6 hours, in the background. |
+| `steam_id64` | `""` | The SteamID64 used for the archive; empty = the Steam account logged in on this PC. |
 | `show_online` | `true` | "(2 of 4)" and "online". |
 | `show_pause` | `true` | ⏸️ Paused. |
 | `show_idle` | `true` | 💤 Idle. |
@@ -210,6 +212,7 @@ replaced by its default.
   infected or the first damage, a few seconds after the real start.
 - **Survival best times**: the game's own records cannot be read from outside. The game fetches them from a Steam leaderboard when a Survival map starts and passes them on internally (the console only prints `Unknown command: survival_record`, without the time); L4D2's leaderboards are not public and Steam's stats only hold medals. So the card shows the best of:
   - the records you type once in `survival_records` (copy them from the game's Survival menu), and
+  - with `gm_demo_archive` on, your rounds archived by the Gold Miners servers' GM Demo Archive (only rounds played on their servers), and
   - every round measured while the program runs (detected start → your death in solo, or → your death / the next round online), kept in `%LOCALAPPDATA%\L4D2RPC\survival_records.json`. Being measured from the detected start, they can be a few seconds shorter than the game's.
 - **Temporary health** (pills, adrenaline) is not in the dump: only permanent health is shown.
 - **Melee weapon type** (katana, bat…) is not in the dump: "Melee weapon".

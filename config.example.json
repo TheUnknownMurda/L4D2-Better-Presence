@@ -35,6 +35,8 @@
   "show_attempts": true,
   "show_records": true,
   "survival_records": {},
+  "gm_demo_archive": false,
+  "steam_id64": "",
   "show_online": true,
   "show_pause": true,
   "show_idle": true,

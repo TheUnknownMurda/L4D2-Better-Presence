@@ -58,6 +58,8 @@ DEFAULTS: dict = {
     "show_attempts": True,
     "show_records": True,
     "survival_records": {},  # your in-game records, typed once: {"Gun Shop": "4:32"}
+    "gm_demo_archive": False,  # also read your times from the Gold Miners "GM Demo Archive" site
+    "steam_id64": "",  # for the archive; empty = the Steam account logged in on this PC
     "show_online": True,
     "show_pause": True,
     "show_idle": True,
@@ -106,6 +108,10 @@ def validate(raw: dict) -> tuple[dict, list[str]]:
                                          "map names as in the game's Survival menu (or c1m2_streets) and times "
                                          'like "4:32"'))
             value = {k: v for k, v in value.items() if k not in bad} if isinstance(value, dict) else {}
+        elif key == "steam_id64":
+            if not (isinstance(value, str) and (value == "" or (value.isdigit() and len(value) == 17))):
+                problems.append(_problem(key, value, 'a 17-digit SteamID64 in quotes, or ""'))
+                continue
         elif key == "cover_image":
             if not (isinstance(value, str) and (value == "" or (value.startswith("https://") and len(value) <= 256))):
                 problems.append(_problem(key, value, 'an "https://…" image link of 256 characters at most, or ""'))

@@ -24,7 +24,8 @@ The full specification of the series is `../_Prompt Better Presence.md`.
   only when revived under 30 HP.
 - Weapon name only (no ammo, no "reloading"; `show_ammo` stays as an option).
 - Survival has its own card; best = max(times measured by the companion in `survival_records.json`,
-  records typed by the user in config `survival_records` — the game's own are not readable).
+  records typed by the user in config `survival_records`, the Gold Miners GM Demo Archive when
+  `gm_demo_archive` is on — on for Sam; the game's own are not readable).
 - Realism dropped: undetectable in solo without an add-on, and Sam does not want an add-on.
 - Images: cover and the 8 survivor portraits are Sam's links (guns.lol), defaults of `cover_image` /
   `character_images`. config.json only holds the keys a user changes (defaults stay live).

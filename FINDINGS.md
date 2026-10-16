@@ -186,6 +186,24 @@ Sam asked for the records already set in the game. Where they live:
 → Not readable. The card uses the records typed in `survival_records` (from the game's Survival menu) together with
 its own measurements (best of both).
 
+### GM Demo Archive (verified 2026-10-15)
+
+Sam plays on the Gold Miners community servers; their site archives the demos of rounds played there:
+http://survival.site.nfoservers.com/DemoArchive/ (pages `index.php`, `leaderboard.php`, `history.php`,
+`stats.php`, `personal.php`; PHP warnings about a missing `navigation.php` on some pages).
+- `personal.php?id=<SteamID64>` is a shell; its script loads `personal.php?id=<SteamID64>&view=times`, which answers
+  JSON `{"html": …, "bbcode": …}`. The html has a heading per map ("Gun Shop", "The Bridge (cc)"…, sometimes with a
+  `material-icons` icon) followed by rows Category | Players | Final Time (`364:09.27`, minutes can exceed 60) |
+  SI/min | Date | Download, then per-player sub-tables (Time Alive…).
+- Map names: the site's list (index.php) disambiguates the game's duplicates: "Port Passing" / "Port Sacrifice",
+  "Bridge" (The Parish) / "The Bridge (cc)" / "The Bridge (BH)", "Junkyard (CS)" / "Junkyard (LS)",
+  "Bedlam/Underground", "Traincar". 43 names ↔ the 43 official Survival maps (`gm_archive.SITE_MAPS`, test).
+  Custom maps (Simplex Survival, Vinefall, … Alternate) are ignored.
+- Sam's SteamID64: `{"html": "No recorded runs found."}` — none of his rounds is archived yet. A public profile from
+  the leaderboard parses to 42 maps (only counts were looked at, nothing stored).
+→ Optional source (`gm_demo_archive`), cached in `%LOCALAPPDATA%\L4D2RPC\gm_records.json`, refreshed every 6 h in a
+background thread; best = max(measured, typed, archive).
+
 ## Realism: not detectable from outside in solo (verified 2026-10-14, 22:10, `recordings/realism_session.log`)
 
 Solo Realism, The Parish "Waterfront" (`c5m1_waterfront`), Advanced (`z_difficulty "Hard"`).
